@@ -184,7 +184,7 @@ input:focus-visible {
 }
 
 .logo-image img {
-  height: 480px;
+  height: 240px;
   width: auto;
   max-width: 96vw;
   object-fit: contain;
