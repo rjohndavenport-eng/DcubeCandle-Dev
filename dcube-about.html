@@ -7,663 +7,116 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="dcube-quick-wins.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --lavender: #C7B8EA;
-            --charcoal: #2A2A2A;
-            --off-white: #FAF9F6;
-            --honey-gold: #D4AF6A;
-            --lavender-mist: #EDE8F5;
-            --white: #FFFFFF;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--charcoal);
-            background: var(--off-white);
-            line-height: 1.6;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            line-height: 1.2;
-        }
-
-        /* Announcement Bar */
-        .announcement-bar {
-            background: var(--lavender-mist);
-            color: var(--charcoal);
-            text-align: center;
-            padding: 12px 20px;
-            font-size: 14px;
-            letter-spacing: 0.3px;
-        }
-
-        /* Header */
-        header {
-            background: var(--off-white);
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(199, 184, 234, 0.15);
-            backdrop-filter: blur(10px);
-        }
-
-        .logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            color: var(--charcoal);
-            text-decoration: none;
-        }
-
-        nav {
-            display: flex;
-            gap: 40px;
-        }
-
-        nav a {
-            color: var(--charcoal);
-            text-decoration: none;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--lavender);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--lavender);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .header-icons {
-            display: flex;
-            gap: 24px;
-            font-size: 20px;
-        }
-
-        .header-icons a {
-            color: var(--charcoal);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .header-icons a:hover {
-            color: var(--lavender);
-        }
-
-        /* Page Hero */
-        .page-hero {
-            background: linear-gradient(180deg, var(--lavender-mist) 0%, var(--off-white) 100%);
-            padding: 120px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-hero::before {
-            content: '';
-            position: absolute;
-            top: 56px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 24px;
-            opacity: 0.45;
-            background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237b5aa6' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='3'/%3E%3Cellipse cx='12' cy='14' rx='4' ry='6'/%3E%3Cline x1='8' y1='11' x2='6' y2='9'/%3E%3Cline x1='16' y1='11' x2='18' y2='9'/%3E%3Cline x1='8' y1='13' x2='6' y2='15'/%3E%3Cline x1='16' y1='13' x2='18' y2='15'/%3E%3C/svg%3E");
-        }
-
-        .page-hero h1 {
-            font-size: 48px;
-            margin-bottom: 16px;
-            color: var(--charcoal);
-            margin-top: 40px;
-        }
-
-        .page-hero p {
-            font-size: 20px;
-            opacity: 0.75;
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-        }
-
-        /* Story Section */
-        .story-section {
-            background: var(--white);
-            padding: 80px 40px;
-        }
-
-        .story-content {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        .story-content h2 {
-            font-size: 32px;
-            margin-bottom: 32px;
-            color: var(--charcoal);
-        }
-
-        .story-content p {
-            font-size: 18px;
-            line-height: 1.7;
-            margin-bottom: 24px;
-            opacity: 0.85;
-        }
-
-        .story-divider {
-            width: 80px;
-            height: 2px;
-            background: var(--lavender-mist);
-            margin: 40px 0;
-        }
-
-        .family-photo {
-            width: 480px;
-            max-width: 100%;
-            aspect-ratio: 4/3;
-            background: linear-gradient(135deg, var(--off-white) 0%, var(--lavender-mist) 100%);
-            border-radius: 4px;
-            margin: 40px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 20px;
-            color: var(--lavender);
-            box-shadow: 0 12px 40px rgba(42, 42, 42, 0.1);
-        }
-
-        .story-signature {
-            text-align: center;
-            margin-top: 48px;
-        }
-
-        .story-signature p {
-            font-family: 'Italiana', serif;
-            font-size: 20px;
-            color: var(--lavender);
-            margin-bottom: 8px;
-        }
-
-        .bee-icon-signature {
-            font-size: 20px;
-            opacity: 0.4;
-            color: var(--lavender);
-            margin-top: 16px;
-        }
-
-        /* Values Section */
-        .values-section {
-            background: var(--lavender-mist);
-            padding: 80px 40px;
-        }
-
-        .values-header {
-            text-align: center;
-            margin-bottom: 64px;
-        }
-
-        .values-header h2 {
-            font-size: 36px;
-            margin-bottom: 16px;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 48px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .value-card {
-            text-align: center;
-            background: var(--white);
-            padding: 48px 32px;
-            border-radius: 4px;
-            box-shadow: 0 4px 16px rgba(42, 42, 42, 0.06);
-            transition: all 0.3s ease;
-        }
-
-        .value-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(199, 184, 234, 0.15);
-        }
-
-        .value-icon {
-            font-size: 40px;
-            margin-bottom: 24px;
-            opacity: 0.8;
-        }
-
-        .value-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            font-weight: 400;
-        }
-
-        .value-card p {
-            font-size: 16px;
-            line-height: 1.6;
-            opacity: 0.75;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: var(--white);
-            padding: 100px 40px;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 40px;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 18px 48px;
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-decoration: none;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-family: 'Inter', sans-serif;
-            background: var(--lavender);
-            color: var(--charcoal);
-        }
-
-        .btn:hover {
-            background: var(--honey-gold);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(199, 184, 234, 0.3);
-        }
-
-        /* Quote Section */
-        .quote-section {
-            background: var(--off-white);
-            padding: 80px 40px;
-            text-align: center;
-        }
-
-        .quote-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .quote-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
-            font-style: italic;
-            line-height: 1.5;
-            color: var(--charcoal);
-            margin-bottom: 24px;
-            opacity: 0.85;
-        }
-
-        .quote-author {
-            font-size: 16px;
-            color: var(--lavender);
-            font-weight: 500;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--charcoal);
-            color: var(--off-white);
-            padding: 64px 40px 32px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(199, 184, 234, 0.02) 40px, rgba(199, 184, 234, 0.02) 80px),
-                repeating-linear-gradient(-60deg, transparent, transparent 40px, rgba(199, 184, 234, 0.02) 40px, rgba(199, 184, 234, 0.02) 80px);
-            pointer-events: none;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 48px;
-            max-width: 1280px;
-            margin: 0 auto 48px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-column h4 {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column li {
-            margin-bottom: 12px;
-        }
-
-        .footer-column a {
-            color: var(--off-white);
-            text-decoration: none;
-            font-size: 15px;
-            opacity: 0.75;
-            transition: all 0.3s ease;
-        }
-
-        .footer-column a:hover {
-            color: var(--lavender);
-            opacity: 1;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 32px;
-            border-top: 1px solid rgba(250, 249, 246, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-bee {
-            font-size: 20px;
-            margin-bottom: 16px;
-            opacity: 0.6;
-        }
-
-        .footer-bottom p {
-            font-size: 14px;
-            opacity: 0.6;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .values-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 16px 20px;
-            }
-
-            nav {
-                gap: 20px;
-            }
-
-            .page-hero {
-                padding: 80px 20px;
-            }
-
-            .page-hero h1 {
-                font-size: 36px;
-            }
-
-            .story-section {
-                padding: 60px 20px;
-            }
-
-            .values-section {
-                padding: 60px 20px;
-            }
-
-            .cta-section {
-                padding: 60px 20px;
-            }
-
-            .cta-section h2 {
-                font-size: 32px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/site.css">
+    <script src="assets/js/includes.js" defer></script>
 </head>
-<body>
-    <!-- Announcement Bar -->
-    <div class="announcement-bar">
-        Free shipping on orders $75+
-    </div>
+<body class="template-about">
+    <div data-include="components/common/announcement.html"></div>
+    <div data-include="components/common/header.html"></div>
 
-    <!-- Header -->
-    <header>
-        <a href="dcube-home.html" class="logo">DCube</a>
-        <nav>
-            <a href="dcube-shop.html">Shop</a>
-            <a href="dcube-about.html">Our Story</a>
-            <a href="#contact">Contact</a>
-        </nav>
-        <div class="header-icons">
-            <a href="#search" aria-label="Search">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-            </a>
-            <a href="#cart" aria-label="Cart">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <path d="M16 10a4 4 0 0 1-8 0"></path>
-                </svg>
-            </a>
-        </div>
-    </header>
+    <main>
+        <div data-include="components/sections/page-hero.html" data-modifier="page-hero--about" data-title="Our Story" data-subtitle="A light that continues to shine"></div>
 
-    <!-- Page Hero -->
-    <section class="page-hero">
-        <h1>Our Story</h1>
-        <p>A light that continues to shine</p>
-    </section>
+        <section class="story-section">
+            <div class="story-content">
+                <h2>A Light That Continues to Shine</h2>
+                <p>
+                    DCube is more than a candle company. It's a family bonded by love, united in purpose, and inspired by the extraordinary light of our beloved Brianna.
+                </p>
 
-    <!-- Story Section -->
-    <section class="story-section">
-        <div class="story-content">
-            <h2>A Light That Continues to Shine</h2>
-            <p>
-                DCube is more than a candle company. It's a family bonded by love, united in purpose, and inspired by the extraordinary light of our beloved Brianna.
-            </p>
+                <div class="story-divider"></div>
 
-            <div class="story-divider"></div>
+                <p>
+                    Brianna was a beacon of joy. She had a gift for making people feel seen, valued, and loved exactly as they were. Her warmth was magnetic, her laughter infectious, and her kindness boundless. She approached life with a gentle strength and an unwavering belief in the good of others.
+                </p>
 
-            <p>
-                Brianna was a beacon of joy. She had a gift for making people feel seen, valued, and loved exactly as they were. Her warmth was magnetic, her laughter infectious, and her kindness boundless. She approached life with a gentle strength and an unwavering belief in the good of others.
-            </p>
+                <p>
+                    Brianna's symbol was the bee—a reminder of her tireless generosity, her ability to create something beautiful wherever she went, and the sweetness she brought to every life she touched.
+                </p>
 
-            <p>
-                Brianna's symbol was the bee—a reminder of her tireless generosity, her ability to create something beautiful wherever she went, and the sweetness she brought to every life she touched.
-            </p>
+                <div class="story-divider"></div>
 
-            <div class="story-divider"></div>
+                <p>
+                    When Brianna passed, our world dimmed. But even in our grief, we felt her presence—a gentle nudge to continue her mission of spreading love and light. So we created DCube as a living tribute to her spirit.
+                </p>
 
-            <p>
-                When Brianna passed, our world dimmed. But even in our grief, we felt her presence—a gentle nudge to continue her mission of spreading love and light. So we created DCube as a living tribute to her spirit.
-            </p>
+                <p>
+                    Every candle we make is hand-poured with intention and care. We use clean, natural soy wax and carefully chosen fragrances that evoke comfort, peace, and warmth. But what truly sets our candles apart is what you can't see: they're infused with the same love Brianna gave so freely.
+                </p>
 
-            <p>
-                Every candle we make is hand-poured with intention and care. We use clean, natural soy wax and carefully chosen fragrances that evoke comfort, peace, and warmth. But what truly sets our candles apart is what you can't see: they're infused with the same love Brianna gave so freely.
-            </p>
+                <div class="family-photo">
+                    The DeCubellis Family
+                </div>
 
-            <div class="family-photo">
-                The DeCubellis Family
-            </div>
+                <p>
+                    Each flame is a continuation of her light, meant to illuminate spaces and uplift hearts. We believe that even the smallest acts—lighting a candle, taking a quiet moment, creating space for reflection—can transform a day. That's what Brianna taught us.
+                </p>
 
-            <p>
-                Each flame is a continuation of her light, meant to illuminate spaces and uplift hearts. We believe that even the smallest acts—lighting a candle, taking a quiet moment, creating space for reflection—can transform a day. That's what Brianna taught us.
-            </p>
+                <p>
+                    She showed us that love doesn't end; it transforms. It becomes something you carry forward, something you share, something that glows softly in the dark.
+                </p>
 
-            <p>
-                She showed us that love doesn't end; it transforms. It becomes something you carry forward, something you share, something that glows softly in the dark.
-            </p>
+                <div class="story-divider"></div>
 
-            <div class="story-divider"></div>
+                <p>
+                    When you light a DCube candle, you're not just filling your home with fragrance. You're honoring a life lived with purpose. You're inviting warmth into your space. And you're joining us in keeping Brianna's light burning bright.
+                </p>
 
-            <p>
-                When you light a DCube candle, you're not just filling your home with fragrance. You're honoring a life lived with purpose. You're inviting warmth into your space. And you're joining us in keeping Brianna's light burning bright.
-            </p>
+                <p>
+                    Thank you for being part of this journey. Thank you for letting us share her story with you. And thank you for bringing her light into your home.
+                </p>
 
-            <p>
-                Thank you for being part of this journey. Thank you for letting us share her story with you. And thank you for bringing her light into your home.
-            </p>
-
-            <div class="story-signature">
-                <p>With love,<br>The DeCubellis Family</p>
-                <div class="bee-icon-signature" aria-hidden="true">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="8" r="3"></circle>
-                        <ellipse cx="12" cy="14" rx="4" ry="6"></ellipse>
-                        <line x1="8" y1="11" x2="6" y2="9"></line>
-                        <line x1="16" y1="11" x2="18" y2="9"></line>
-                        <line x1="8" y1="13" x2="6" y2="15"></line>
-                        <line x1="16" y1="13" x2="18" y2="15"></line>
-                    </svg>
+                <div class="story-signature">
+                    <p>With love,<br>The DeCubellis Family</p>
+                    <div class="bee-icon-signature bee-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="3"></circle>
+                            <ellipse cx="12" cy="14" rx="4" ry="6"></ellipse>
+                            <line x1="8" y1="11" x2="6" y2="9"></line>
+                            <line x1="16" y1="11" x2="18" y2="9"></line>
+                            <line x1="8" y1="13" x2="6" y2="15"></line>
+                            <line x1="16" y1="13" x2="18" y2="15"></line>
+                        </svg>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Values Section -->
-    <section class="values-section">
-        <div class="values-header">
-            <h2>What We Believe</h2>
-        </div>
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon">01</div>
-                <h3>Quality</h3>
-                <p>Natural materials, carefully chosen. Each candle is crafted with premium soy wax and thoughtfully selected fragrances.</p>
+        <section class="values-section">
+            <div class="values-header">
+                <h2>What We Believe</h2>
             </div>
-            <div class="value-card">
-                <div class="value-icon">02</div>
-                <h3>Intention</h3>
-                <p>Every candle is made with purpose. We pour more than wax—we pour love, care, and the spirit of Brianna into each vessel.</p>
+            <div class="values-grid">
+                <div class="value-card card">
+                    <div class="value-icon">01</div>
+                    <h3>Quality</h3>
+                    <p>Natural materials, carefully chosen. Each candle is crafted with premium soy wax and thoughtfully selected fragrances.</p>
+                </div>
+                <div class="value-card card">
+                    <div class="value-icon">02</div>
+                    <h3>Intention</h3>
+                    <p>Every candle is made with purpose. We pour more than wax—we pour love, care, and the spirit of Brianna into each vessel.</p>
+                </div>
+                <div class="value-card card">
+                    <div class="value-icon">03</div>
+                    <h3>Community</h3>
+                    <p>Spreading light and love to others. When you choose DCube, you become part of a family dedicated to honoring Brianna's legacy.</p>
+                </div>
             </div>
-            <div class="value-card">
-                <div class="value-icon">03</div>
-                <h3>Community</h3>
-                <p>Spreading light and love to others. When you choose DCube, you become part of a family dedicated to honoring Brianna's legacy.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Quote Section -->
-    <section class="quote-section">
-        <div class="quote-content">
-            <p class="quote-text">
-                "Love doesn't end; it transforms. It becomes something you carry forward, something you share, something that glows softly in the dark."
-            </p>
-            <p class="quote-author">— The DeCubellis Family</p>
-        </div>
-    </section>
+        <section class="quote-section">
+            <div class="quote-content">
+                <p class="quote-text">
+                    "Love doesn't end; it transforms. It becomes something you carry forward, something you share, something that glows softly in the dark."
+                </p>
+                <p class="quote-author">— The DeCubellis Family</p>
+            </div>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <h2>Bring Brianna's Light Into Your Home</h2>
-        <a href="dcube-shop.html" class="btn">Shop Our Collection</a>
-    </section>
+        <div data-include="components/sections/cta-block.html" data-title="Bring Brianna's Light Into Your Home" data-href="dcube-shop.html" data-label="Shop Our Collection"></div>
+    </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Shop</h4>
-                <ul>
-                    <li><a href="#candles">Candles</a></li>
-                    <li><a href="#gift-sets">Gift Sets</a></li>
-                    <li><a href="#new">New Arrivals</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>About</h4>
-                <ul>
-                    <li><a href="dcube-about.html">Our Story</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li><a href="#wholesale">Wholesale</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#shipping">Shipping</a></li>
-                    <li><a href="#returns">Returns</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#instagram">Instagram</a></li>
-                    <li><a href="#email">Email</a></li>
-                    <li><a href="#subscribe">Subscribe</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-bee" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="8" r="3"></circle>
-                    <ellipse cx="12" cy="14" rx="4" ry="6"></ellipse>
-                    <line x1="8" y1="11" x2="6" y2="9"></line>
-                    <line x1="16" y1="11" x2="18" y2="9"></line>
-                    <line x1="8" y1="13" x2="6" y2="15"></line>
-                    <line x1="16" y1="13" x2="18" y2="15"></line>
-                </svg>
-            </div>
-            <p>© 2024 DCube Candle Co. All rights reserved.</p>
-        </div>
-    </footer>
+    <div data-include="components/common/footer.html"></div>
 </body>
 </html>
