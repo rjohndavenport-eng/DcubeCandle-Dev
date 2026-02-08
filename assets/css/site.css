@@ -181,6 +181,7 @@ input:focus-visible {
 .logo-image {
   display: flex;
   align-items: center;
+  align-self: flex-start;
 }
 
 .logo-image img {
