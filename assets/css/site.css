@@ -162,8 +162,10 @@ input:focus-visible {
   margin: 0 auto;
   padding: 20px 40px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 24px;
 }
 
 .site-logo,
@@ -182,14 +184,18 @@ input:focus-visible {
 }
 
 .logo-image img {
-  height: 48px;
+  height: 480px;
   width: auto;
+  max-width: 96vw;
+  object-fit: contain;
 }
 
 .site-nav,
 nav {
   display: flex;
   gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .site-nav a,
@@ -230,6 +236,7 @@ nav a:hover::after {
   display: flex;
   gap: 24px;
   align-items: center;
+  justify-content: center;
   font-size: 0;
 }
 
