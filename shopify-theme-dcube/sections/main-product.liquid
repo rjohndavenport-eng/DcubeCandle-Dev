@@ -1,0 +1,79 @@
+<div class="product-page">
+  <div class="breadcrumb">
+    <a href="/">Home</a> &gt;
+    {%- if collection -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a> &gt;
+    {%- endif -%}
+    {{ product.title }}
+  </div>
+
+  <div class="product-detail">
+    <div class="gallery">
+      <div class="main-image">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 800 }}"
+               alt="{{ product.featured_image.alt | escape }}"
+               width="800"
+               height="auto">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="thumbnails">
+          {%- for image in product.images -%}
+            <button class="thumbnail {% if forloop.first %}active{% endif %}"
+                    data-image-index="{{ forloop.index0 }}">
+              <img src="{{ image | image_url: width: 100 }}"
+                   alt="{{ image.alt | escape }}">
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product-info">
+      <h1>{{ product.title }}</h1>
+      <div class="product-price">{{ product.price | money }}</div>
+
+      {%- if product.description != blank -%}
+        <div class="product-description">{{ product.description }}</div>
+      {%- endif -%}
+
+      <div class="handmade-badge">
+        <span class="bee-icon bee-mark" aria-hidden="true">
+          {%- render 'icon-bee' -%}
+        </span>
+        Handcrafted with love
+      </div>
+
+      <form action="/cart/add" method="post" class="product-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <div class="quantity-selector">
+          <label for="quantity">Quantity:</label>
+          <div class="quantity-controls">
+            <button type="button" data-qty-decrement>−</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+            <button type="button" data-qty-increment>+</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          {%- if product.available -%}
+            Add to Cart
+          {%- else -%}
+            Sold Out
+          {%- endif -%}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": []
+}
+{% endschema %}

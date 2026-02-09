@@ -1,0 +1,124 @@
+<footer class="site-footer site-footer--dcube" role="contentinfo">
+  <div class="footer-content">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="footer-column" {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.title }}</h4>
+          {% assign footer_menu = linklists[block.settings.menu] %}
+          {% if footer_menu != blank and footer_menu.links.size > 0 %}
+            <ul>
+              {% for link in footer_menu.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <ul>
+              <li><a href="{{ routes.all_products_collection_url }}">Candles</a></li>
+              <li><a href="/pages/about">Our Story</a></li>
+              <li><a href="/pages/contact">Contact</a></li>
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="{{ routes.all_products_collection_url }}">Candles</a></li>
+          <li><a href="{{ routes.collections_url }}">Collections</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>About</h4>
+        <ul>
+          <li><a href="/pages/about">Our Story</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/pages/contact">FAQ</a></li>
+          <li><a href="/policies/refund-policy">Returns</a></li>
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="footer-column">
+      <h4>Connect</h4>
+      <p>{{ settings.tagline | default: 'Purveyor of Luxury Scents' }}</p>
+      {% render 'social-links' %}
+      {% if section.settings.show_newsletter %}
+        {% form 'customer', class: 'footer-newsletter' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail-{{ section.id }}">Email address</label>
+          <input id="FooterEmail-{{ section.id }}" type="email" name="contact[email]" placeholder="Email address" required>
+          <button type="submit">Subscribe</button>
+        {% endform %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-bee bee-mark" aria-hidden="true">
+      {% render 'icon-bee' %}
+    </div>
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Footer links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "menu_column",
+        "settings": {
+          "title": "Shop"
+        }
+      },
+      {
+        "type": "menu_column",
+        "settings": {
+          "title": "About"
+        }
+      },
+      {
+        "type": "menu_column",
+        "settings": {
+          "title": "Support"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

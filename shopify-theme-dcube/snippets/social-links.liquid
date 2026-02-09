@@ -1,0 +1,22 @@
+{%- liquid
+  assign has_social_links = false
+  if settings.social_instagram_link != blank or settings.social_tiktok_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank
+    assign has_social_links = true
+  endif
+-%}
+{% if has_social_links %}
+  <ul class="social-links" role="list">
+    {% if settings.social_instagram_link != blank %}
+      <li><a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    {% endif %}
+    {% if settings.social_tiktok_link != blank %}
+      <li><a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+    {% endif %}
+    {% if settings.social_facebook_link != blank %}
+      <li><a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+    {% endif %}
+    {% if settings.social_pinterest_link != blank %}
+      <li><a href="{{ settings.social_pinterest_link }}" target="_blank" rel="noopener noreferrer">Pinterest</a></li>
+    {% endif %}
+  </ul>
+{% endif %}

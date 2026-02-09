@@ -1,0 +1,36 @@
+{%- liquid
+  assign target_product = product
+  assign quick_add_enabled = show_quick_add | default: false
+-%}
+{% if target_product != blank %}
+  <article class="product-card card">
+    <a class="product-card-link" href="{{ target_product.url }}">
+      <div class="product-image">
+        {% if target_product.featured_image %}
+          {{ target_product.featured_image | image_url: width: 900 | image_tag: class: 'product-image-media', loading: 'lazy', alt: target_product.featured_image.alt | default: target_product.title }}
+        {% else %}
+          <span class="product-image-label">{{ target_product.title }}</span>
+        {% endif %}
+      </div>
+      <div class="product-info">
+        <div class="product-name">{{ target_product.title }}</div>
+        <div class="product-price">
+          {% if target_product.compare_at_price_max > target_product.price %}
+            <span class="price--sale">{{ target_product.price | money }}</span>
+            <s class="price--compare">{{ target_product.compare_at_price_max | money }}</s>
+          {% else %}
+            {{ target_product.price | money }}
+          {% endif %}
+        </div>
+      </div>
+    </a>
+    {% if quick_add_enabled and target_product.available %}
+      <div class="quick-add-wrap">
+        {% form 'product', target_product, class: 'quick-add-form' %}
+          <input type="hidden" name="id" value="{{ target_product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="quick-add">Quick Add</button>
+        {% endform %}
+      </div>
+    {% endif %}
+  </article>
+{% endif %}

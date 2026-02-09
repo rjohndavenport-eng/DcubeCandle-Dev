@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_accent }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {% render 'meta-tags' %}
+    {{ content_for_header }}
+    <style>
+      :root {
+        --color-bg: {{ settings.color_bg }};
+        --color-surface: {{ settings.color_surface }};
+        --color-text: {{ settings.color_text }};
+        --color-muted: {{ settings.color_muted }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-punch: {{ settings.color_accent }};
+        --color-accent-soft: {{ settings.color_accent_soft }};
+        --color-accent-strong: {{ settings.color_accent }};
+        --color-gold: {{ settings.color_gold }};
+        --color-border: {{ settings.color_border }};
+        --font-serif: {{ settings.font_heading_stack }};
+        --font-sans: {{ settings.font_body_stack }};
+        --font-accent: {{ settings.font_accent_stack }};
+      }
+
+      .logo-image img {
+        max-height: {{ settings.logo_width }}px;
+      }
+    </style>
+  </head>
+  {%- liquid
+    assign body_template_class = 'template-' | append: template.name | handle
+    case template.name
+      when 'index'
+        assign body_template_class = 'template-home'
+      when 'collection'
+        assign body_template_class = 'template-shop'
+      when 'product'
+        assign body_template_class = 'template-product'
+      when 'page'
+        if template.suffix == 'about'
+          assign body_template_class = 'template-about'
+        elsif template.suffix == 'contact'
+          assign body_template_class = 'template-contact'
+        else
+          assign body_template_class = 'template-page'
+        endif
+    endcase
+  -%}
+  <body class="{{ body_template_class }}">
+    <a class="skip-to-content-link" href="#MainContent">Skip to content</a>
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+    {% section 'footer' %}
+    {{ 'theme.js' | asset_url | script_tag }}
+    {% render 'organization-schema' %}
+  </body>
+</html>

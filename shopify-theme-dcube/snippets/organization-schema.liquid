@@ -1,0 +1,41 @@
+{%- liquid
+  assign logo_url = ''
+  if settings.logo != blank
+    assign logo_url = settings.logo | image_url: width: 600 | prepend: 'https:'
+  else
+    assign fallback_logo = 'dcube_350x.webp' | asset_url
+    if fallback_logo contains '//'
+      assign logo_url = fallback_logo | prepend: 'https:'
+    else
+      assign logo_url = shop.url | append: fallback_logo
+    endif
+  endif
+
+  assign has_social_links = false
+  if settings.social_instagram_link != blank or settings.social_tiktok_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank
+    assign has_social_links = true
+  endif
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | default: 'DCube' | json }},
+    "description": {{ settings.meta_description_default | default: 'Purveyor of Luxury Scents' | json }},
+    "url": {{ shop.url | json }},
+    "logo": {{ logo_url | json }},
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Sarasota",
+      "addressRegion": "FL",
+      "addressCountry": "US"
+    }{% if has_social_links %},
+    "sameAs": [
+      {% assign comma = false %}
+      {% if settings.social_instagram_link != blank %}{{ settings.social_instagram_link | json }}{% assign comma = true %}{% endif %}
+      {% if settings.social_tiktok_link != blank %}{% if comma %}, {% endif %}{{ settings.social_tiktok_link | json }}{% assign comma = true %}{% endif %}
+      {% if settings.social_facebook_link != blank %}{% if comma %}, {% endif %}{{ settings.social_facebook_link | json }}{% assign comma = true %}{% endif %}
+      {% if settings.social_pinterest_link != blank %}{% if comma %}, {% endif %}{{ settings.social_pinterest_link | json }}{% endif %}
+    ]{% endif %}
+  }
+</script>

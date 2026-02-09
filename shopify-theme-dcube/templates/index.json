@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Illuminate Every Moment",
+        "subheading": "Hand-poured candles crafted with love to bring warmth and light into your home.",
+        "button_text": "Shop Our Collection",
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "hero"
+  ]
+}

@@ -1,0 +1,42 @@
+{%- liquid
+  assign seo_title = page_title | default: shop.name
+  if current_tags
+    assign meta_tags = current_tags | join: ', '
+    assign seo_title = seo_title | append: ' - ' | append: meta_tags
+  endif
+  if current_page != 1
+    assign seo_title = seo_title | append: ' - Page ' | append: current_page
+  endif
+  unless seo_title contains shop.name
+    assign seo_title = seo_title | append: ' | ' | append: shop.name
+  endunless
+
+  assign seo_description = page_description | default: settings.meta_description_default | default: shop.meta_description | default: 'Purveyor of Luxury Scents'
+  assign seo_image = page_image | default: settings.og_image | default: settings.logo
+-%}
+<title>{{ seo_title | escape }}</title>
+<meta name="description" content="{{ seo_description | strip_html | escape }}">
+<link rel="canonical" href="{{ canonical_url }}">
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ seo_title | escape }}">
+<meta property="og:type" content="{% if request.page_type == 'product' %}product{% elsif request.page_type == 'article' %}article{% else %}website{% endif %}">
+<meta property="og:description" content="{{ seo_description | strip_html | escape }}">
+{% if seo_image != blank %}
+  <meta property="og:image" content="https:{{ seo_image | image_url: width: 1600 }}">
+{% endif %}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo_title | escape }}">
+<meta name="twitter:description" content="{{ seo_description | strip_html | escape }}">
+{% if seo_image != blank %}
+  <meta name="twitter:image" content="https:{{ seo_image | image_url: width: 1600 }}">
+{% endif %}
+{% if settings.social_twitter_handle != blank %}
+  <meta name="twitter:site" content="@{{ settings.social_twitter_handle | replace: '@', '' }}">
+{% endif %}
+
+{% if request.page_type == 'search' or request.page_type == 'cart' %}
+  <meta name="robots" content="noindex,follow">
+{% endif %}

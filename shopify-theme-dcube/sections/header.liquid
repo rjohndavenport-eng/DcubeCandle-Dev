@@ -1,0 +1,58 @@
+<header class="site-header site-header--dcube" role="banner">
+  <div class="site-header__inner">
+    <a href="{{ routes.root_url }}" class="logo site-logo logo-image" aria-label="{{ shop.name }}">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 900 | image_tag: alt: shop.name, widths: '160,240,320,480,640,900', loading: 'eager' }}
+      {% else %}
+        <img src="{{ 'dcube_350x.webp' | asset_url }}" alt="{{ shop.name }} — {{ settings.tagline | default: 'Purveyor of Luxury Scents' }}">
+      {% endif %}
+    </a>
+
+    <div class="site-header__nav-row">
+      <button type="button" class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="SiteNav-{{ section.id }}">
+        Menu
+      </button>
+      <nav id="SiteNav-{{ section.id }}" class="site-nav" data-site-nav>
+        {% assign nav_menu = linklists[section.settings.menu] %}
+        {% if nav_menu != blank and nav_menu.links.size > 0 %}
+          {% for link in nav_menu.links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        {% else %}
+          <a href="{{ routes.all_products_collection_url }}">Shop</a>
+          <a href="/pages/about">Our Story</a>
+          <a href="/pages/contact">Contact</a>
+        {% endif %}
+      </nav>
+      <div class="header-icons">
+        {% if section.settings.show_search %}
+          <a href="{{ routes.search_url }}" aria-label="Search">
+            {% render 'icon-search' %}
+          </a>
+        {% endif %}
+        <a href="{{ routes.cart_url }}" class="cart-count" data-count="{{ cart.item_count }}" aria-label="Cart">
+          {% render 'icon-cart' %}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search icon",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
