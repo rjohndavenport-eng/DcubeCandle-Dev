@@ -1,77 +1,113 @@
-<footer class="site-footer site-footer--dcube" role="contentinfo">
-  <div class="footer-content">
-    {% if section.blocks.size > 0 %}
-      {% for block in section.blocks %}
-        <div class="footer-column" {{ block.shopify_attributes }}>
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer__inner">
+
+    {%- comment -%} ── Brand column (always first) ── {%- endcomment -%}
+    <div class="footer-brand">
+      <a href="{{ routes.root_url }}" class="footer-brand__logo" aria-label="{{ shop.name }} — Home">
+        <img src="{{ 'dcube_350x.webp' | asset_url }}"
+             width="140"
+             height="44"
+             loading="lazy"
+             alt="{{ shop.name }}">
+      </a>
+      <p class="footer-brand__tagline">
+        {{- section.settings.tagline | default: 'Purveyor of Luxury Scents' -}}
+      </p>
+      <p class="footer-brand__motto">
+        {{- section.settings.motto | default: "Keeping Brianna\u2019s light burning bright." -}}
+      </p>
+      {%- render 'social-links' -%}
+      {%- if section.settings.show_newsletter -%}
+        {%- form 'customer', class: 'footer-newsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail-{{ section.id }}">Email address</label>
+          <input id="FooterEmail-{{ section.id }}"
+                 type="email"
+                 name="contact[email]"
+                 placeholder="Your email address"
+                 required>
+          <button type="submit">Subscribe</button>
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ── Menu columns from blocks, or 3 fallback columns ── {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="footer-col" {{ block.shopify_attributes }}>
           <h4>{{ block.settings.title }}</h4>
-          {% assign footer_menu = linklists[block.settings.menu] %}
-          {% if footer_menu != blank and footer_menu.links.size > 0 %}
+          {%- assign footer_menu = linklists[block.settings.menu] -%}
+          {%- if footer_menu != blank and footer_menu.links.size > 0 -%}
             <ul>
-              {% for link in footer_menu.links %}
+              {%- for link in footer_menu.links -%}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-              {% endfor %}
+              {%- endfor -%}
             </ul>
-          {% else %}
+          {%- else -%}
             <ul>
               <li><a href="{{ routes.all_products_collection_url }}">Candles</a></li>
               <li><a href="/pages/about">Our Story</a></li>
               <li><a href="/pages/contact">Contact</a></li>
             </ul>
-          {% endif %}
+          {%- endif -%}
         </div>
-      {% endfor %}
-    {% else %}
-      <div class="footer-column">
+      {%- endfor -%}
+    {%- else -%}
+      <div class="footer-col">
         <h4>Shop</h4>
         <ul>
-          <li><a href="{{ routes.all_products_collection_url }}">Candles</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">All Candles</a></li>
           <li><a href="{{ routes.collections_url }}">Collections</a></li>
+          <li><a href="/pages/about#story">Our Story</a></li>
         </ul>
       </div>
-      <div class="footer-column">
+      <div class="footer-col">
         <h4>About</h4>
         <ul>
-          <li><a href="/pages/about">Our Story</a></li>
-          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="/pages/about">About DCube</a></li>
+          <li><a href="/pages/about#brianna">Brianna\u2019s Story</a></li>
+          <li><a href="/pages/contact">Contact Us</a></li>
         </ul>
       </div>
-      <div class="footer-column">
-        <h4>Support</h4>
+      <div class="footer-col">
+        <h4>Help</h4>
         <ul>
-          <li><a href="/pages/contact">FAQ</a></li>
           <li><a href="/policies/refund-policy">Returns</a></li>
+          <li><a href="/policies/shipping-policy">Shipping</a></li>
+          <li><a href="/pages/contact">FAQ</a></li>
         </ul>
       </div>
-    {% endif %}
+    {%- endif -%}
 
-    <div class="footer-column">
-      <h4>Connect</h4>
-      <p>{{ settings.tagline | default: 'Purveyor of Luxury Scents' }}</p>
-      {% render 'social-links' %}
-      {% if section.settings.show_newsletter %}
-        {% form 'customer', class: 'footer-newsletter' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <label class="visually-hidden" for="FooterEmail-{{ section.id }}">Email address</label>
-          <input id="FooterEmail-{{ section.id }}" type="email" name="contact[email]" placeholder="Email address" required>
-          <button type="submit">Subscribe</button>
-        {% endform %}
-      {% endif %}
-    </div>
   </div>
 
   <div class="footer-bottom">
-    <div class="footer-bee bee-mark" aria-hidden="true">
-      {% render 'icon-bee' %}
+    <div class="footer-bee" aria-hidden="true">
+      {%- render 'icon-bee' -%}
     </div>
-    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    <p class="footer-bottom__copy">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </p>
   </div>
 </footer>
 
 {% schema %}
 {
   "name": "Footer",
-  "max_blocks": 4,
+  "max_blocks": 3,
   "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Brand tagline",
+      "default": "Purveyor of Luxury Scents"
+    },
+    {
+      "type": "text",
+      "id": "motto",
+      "label": "Brand motto",
+      "default": "Keeping Brianna\u2019s light burning bright."
+    },
     {
       "type": "checkbox",
       "id": "show_newsletter",
@@ -115,7 +151,7 @@
       {
         "type": "menu_column",
         "settings": {
-          "title": "Support"
+          "title": "Help"
         }
       }
     ]

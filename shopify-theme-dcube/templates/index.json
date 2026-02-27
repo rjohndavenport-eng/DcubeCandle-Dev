@@ -3,10 +3,13 @@
     "hero": {
       "type": "home-hero",
       "settings": {
-        "heading": "Illuminate Every Moment",
-        "text": "Hand-poured candles crafted with love to bring warmth and light into your home.",
-        "button_label": "Shop Our Collection",
-        "button_link": "/collections/all"
+        "label": "Purveyor of Luxury Scents",
+        "heading": "Light That Carries Love",
+        "text": "Hand-poured soy candles from Sarasota, FL — crafted in memory of Brianna, to bring warmth into your home.",
+        "button_label": "Shop the Collection",
+        "button_link": "/collections/all",
+        "secondary_button_label": "Our Story",
+        "secondary_button_link": "/pages/about"
       }
     },
     "benefits": {
@@ -15,25 +18,25 @@
         "benefit_1": {
           "type": "benefit",
           "settings": {
-            "icon": "clean",
-            "heading": "Clean Ingredients",
-            "text": "Natural soy wax"
+            "icon": "burn",
+            "heading": "50-Hour Burn",
+            "text": "Long-lasting, clean burn from premium soy wax"
           }
         },
         "benefit_2": {
           "type": "benefit",
           "settings": {
-            "icon": "bee",
-            "heading": "Handcrafted",
-            "text": "Small batch quality"
+            "icon": "shield",
+            "heading": "100% Vegan",
+            "text": "Paraffin-free, phthalate-free, sustainably made"
           }
         },
         "benefit_3": {
           "type": "benefit",
           "settings": {
-            "icon": "love",
+            "icon": "heart",
             "heading": "Made with Love",
-            "text": "Family legacy"
+            "text": "Each candle poured in honor of Brianna's light"
           }
         }
       },
@@ -47,10 +50,11 @@
     "story": {
       "type": "home-story",
       "settings": {
-        "heading": "Honoring Brianna's Light",
-        "paragraph_1": "DCube began as a way to celebrate the life and spirit of our beloved Brianna—a soul who radiated warmth, joy, and unconditional love.",
-        "paragraph_2": "Each candle we create carries her light forward, crafted with care to bring peace and beauty into your space.",
-        "button_label": "Read Our Full Story",
+        "label": "Our Story",
+        "heading": "A Light That Continues to Shine",
+        "paragraph_1": "DCube is more than a candle company. It\u2019s a family bonded by love, united in purpose, and inspired by the extraordinary light of our beloved Brianna.",
+        "paragraph_2": "Brianna\u2019s symbol was the bee \u2014 tireless, generous, creating something beautiful wherever she went.",
+        "button_label": "Read Her Story",
         "button_link": "/pages/about",
         "signature_line_one": "With love,",
         "signature_line_two": "The DeCubellis Family"
@@ -59,10 +63,47 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Discover Our Signature Scents",
+        "label": "Signature Collection",
+        "heading": "Our Best Sellers",
+        "subheading": "Clean burning \u00b7 Natural soy wax \u00b7 Premium fragrance",
         "products_to_show": 4,
         "button_label": "View All Candles",
         "button_link": "/collections/all"
+      }
+    },
+    "scent-families": {
+      "type": "scent-families",
+      "blocks": {
+        "family_1": {
+          "type": "family",
+          "settings": {
+            "title": "Floral",
+            "link_label": "Explore"
+          }
+        },
+        "family_2": {
+          "type": "family",
+          "settings": {
+            "title": "Warm \u0026 Spiced",
+            "link_label": "Explore"
+          }
+        },
+        "family_3": {
+          "type": "family",
+          "settings": {
+            "title": "Fresh \u0026 Clean",
+            "link_label": "Explore"
+          }
+        }
+      },
+      "block_order": [
+        "family_1",
+        "family_2",
+        "family_3"
+      ],
+      "settings": {
+        "label": "Browse by Mood",
+        "heading": "Shop by Scent"
       }
     }
   },
@@ -70,6 +111,7 @@
     "hero",
     "benefits",
     "story",
-    "featured"
+    "featured",
+    "scent-families"
   ]
 }

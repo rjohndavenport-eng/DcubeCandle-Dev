@@ -5,33 +5,47 @@
     assign fallback_link = featured_collection.url
   endif
 -%}
+
 <section class="featured">
-  <div class="featured-header">
-    <h2>{{ section.settings.heading }}</h2>
-  </div>
+  <div class="featured__inner">
 
-  <div class="product-grid">
-    {% if featured_collection != blank and featured_collection.products_count > 0 %}
-      {% for product in featured_collection.products limit: section.settings.products_to_show %}
-        {% render 'product-card', product: product %}
-      {% endfor %}
-    {% else %}
-      {% for i in (1..4) %}
-        <article class="product-card card">
-          <a class="product-card-link" href="{{ fallback_link }}">
-            <div class="product-image">Signature Scent {{ i }}</div>
-            <div class="product-info">
-              <div class="product-name">DCube Candle {{ i }}</div>
-              <div class="product-price">$38.00</div>
+    <div class="section-header">
+      {%- if section.settings.label != blank -%}
+        <span class="label">{{ section.settings.label }}</span>
+      {%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p>{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- if featured_collection != blank and featured_collection.products_count > 0 -%}
+        {%- for product in featured_collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product, show_quick_add: true %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <article class="product-card">
+            <a class="product-card__image" href="{{ fallback_link }}" aria-label="View collection">
+              <span class="product-card__placeholder">Signature<br>Scent {{ i }}</span>
+            </a>
+            <div class="product-card__info">
+              <div class="product-card__type">Jar Candle &middot; 8 oz</div>
+              <div class="product-card__name">DCube Candle {{ i }}</div>
+              <div class="product-card__price">$25.00</div>
             </div>
-          </a>
-        </article>
-      {% endfor %}
-    {% endif %}
-  </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
 
-  <div class="featured-cta">
-    <a href="{{ section.settings.button_link | default: fallback_link }}" class="btn btn-secondary">{{ section.settings.button_label }}</a>
+    <div class="featured__cta">
+      <a href="{{ section.settings.button_link | default: fallback_link }}" class="btn">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -41,9 +55,21 @@
   "settings": [
     {
       "type": "text",
+      "id": "label",
+      "label": "Overline label",
+      "default": "Signature Collection"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Discover Our Signature Scents"
+      "default": "Our Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Sub-copy (optional)",
+      "default": "Clean burning \u00b7 Natural soy wax \u00b7 Premium fragrance"
     },
     {
       "type": "collection",
