@@ -1,45 +1,75 @@
 :root {
-  --color-bg: #faf9f6;
-  --color-surface: #ffffff;
-  --color-text: #2a2a2a;
-  --color-muted: #6a6763;
-  --color-accent: #8f6db7;
-  --color-accent-punch: #5f3a8f;
-  --color-accent-soft: #efe7f9;
+  /* ── Core palette (updated to match reference dcube-home.html) ── */
+  --color-bg: #f8f5f0;
+  --color-surface: #fefdfb;
+  --color-text: #1e1a20;
+  --color-muted: #5a5560;
+  --color-accent: #6b45a1;
+  --color-accent-punch: #4a2d75;
+  --color-accent-soft: #ede5f6;
   --color-accent-strong: var(--color-accent-punch);
-  --color-gold: #d4af6a;
-  --color-border: #e4d8f2;
+  --color-gold: #c8973a;
+  --color-border: rgba(95, 58, 143, 0.12);
 
+  /* ── Border radii ── */
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 20px;
 
+  /* ── Spacing scale ── */
   --space-1: 8px;
   --space-2: 12px;
   --space-3: 16px;
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 48px;
+  /* Reference-aligned s-scale aliases */
+  --s1: 8px;  --s2: 16px; --s3: 24px; --s4: 32px;
+  --s5: 48px; --s6: 64px; --s7: 80px; --s8: 120px;
 
-  --font-serif: 'Cormorant Garamond', serif;
-  --font-sans: 'Inter', sans-serif;
+  /* ── Typography ── */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-accent: 'Italiana', serif;
+  /* Reference-aligned aliases */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-script: 'Italiana', serif;
 
-  --lavender: var(--color-accent-punch);
+  /* ── Elevation shadows (new) ── */
+  --shadow-sm: 0 1px 4px rgba(30, 26, 32, 0.06);
+  --shadow-md: 0 4px 20px rgba(30, 26, 32, 0.08);
+  --shadow-lg: 0 12px 40px rgba(30, 26, 32, 0.12);
+
+  /* ── Semantic aliases — existing names preserved for compat ── */
+  --lavender: var(--color-accent);
   --lavender-mist: var(--color-accent-soft);
   --charcoal: var(--color-text);
   --off-white: var(--color-bg);
   --white: var(--color-surface);
   --honey-gold: var(--color-gold);
-
-  --deep-lavender: #5f3a8f;
+  --deep-lavender: var(--color-accent-punch);
   --muted-lavender: #9f80bf;
   --lavender-whisper: #f1e8fa;
-  --parchment: #f7f5f2;
-  --warm-charcoal: #2e2a2d;
-  --stone-gray: #8c8984;
-  --antique-white: #fefdfb;
-  --aged-honey: #c4a574;
+  --parchment: var(--color-bg);
+  --warm-charcoal: var(--color-text);
+  --stone-gray: var(--color-muted);
+  --antique-white: var(--color-surface);
+  --aged-honey: var(--color-gold);
+
+  /* ── Reference-aligned token names (new additions) ── */
+  --ink: var(--color-text);
+  --ink-muted: var(--color-muted);
+  --surface: var(--color-surface);
+  --border: var(--color-border);
+  --lavender-deep: var(--color-accent-punch);
+  --lavender-pale: var(--color-accent-soft);
+  --lavender-line: rgba(107, 69, 161, 0.18);
+  --gold: var(--color-gold);
+  --gold-light: #e8c97a;
+
+  /* ── Layout ── */
+  --max-width: 1280px;
 }
 
 * {
@@ -95,6 +125,37 @@ input:focus-visible {
 .grid {
   display: grid;
   gap: var(--space-5);
+}
+
+/* ── Overline label — small uppercase tag above section headings ── */
+.label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lavender);
+}
+
+/* ── Section header — centered label + heading + optional sub-copy ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-header .label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  margin-bottom: 0;
+}
+
+.section-header p {
+  font-size: 17px;
+  max-width: 480px;
+  margin: 8px auto 0;
 }
 
 .stack {
@@ -197,7 +258,6 @@ input:focus-visible {
 }
 
 .logo-image img {
-  height: 240px;
   width: auto;
   max-width: 96vw;
   object-fit: contain;
@@ -357,6 +417,17 @@ nav a:hover::after {
 .btn-secondary:hover {
   background: var(--lavender-mist);
   border-color: var(--honey-gold);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--lavender-line);
+  color: var(--lavender);
+}
+
+.btn-ghost:hover {
+  background: var(--lavender-pale);
+  border-color: var(--lavender);
 }
 
 .btn-wax-seal {
@@ -1848,11 +1919,7 @@ nav a:hover::after {
   }
 }
 /* Shopify OS 2.0 additions */
-:root {
-  --font-serif: var(--font-serif, 'Cormorant Garamond', serif);
-  --font-sans: var(--font-sans, 'Inter', sans-serif);
-  --font-accent: var(--font-accent, 'Italiana', serif);
-}
+/* Note: font vars are set in the main :root block above — no override needed */
 
 .visually-hidden {
   position: absolute !important;

@@ -47,43 +47,43 @@
         "type": "color",
         "id": "color_accent",
         "label": "Accent color (Lavender)",
-        "default": "#8f6db7"
+        "default": "#6b45a1"
       },
       {
         "type": "color",
         "id": "color_accent_soft",
-        "label": "Accent soft (Lavender mist)",
-        "default": "#efe7f9"
+        "label": "Accent soft (Lavender pale)",
+        "default": "#ede5f6"
       },
       {
         "type": "color",
         "id": "color_gold",
         "label": "Gold accent",
-        "default": "#d4af6a"
+        "default": "#c8973a"
       },
       {
         "type": "color",
         "id": "color_bg",
         "label": "Background color",
-        "default": "#faf9f6"
+        "default": "#f8f5f0"
       },
       {
         "type": "color",
         "id": "color_surface",
         "label": "Surface color (cards)",
-        "default": "#ffffff"
+        "default": "#fefdfb"
       },
       {
         "type": "color",
         "id": "color_text",
         "label": "Text color",
-        "default": "#2a2a2a"
+        "default": "#1e1a20"
       },
       {
         "type": "color",
         "id": "color_muted",
         "label": "Muted text color",
-        "default": "#6a6763"
+        "default": "#5a5560"
       },
       {
         "type": "color",
@@ -141,6 +141,7 @@
         "type": "textarea",
         "id": "meta_description_default",
         "label": "Default meta description",
+        "default": "Hand-poured luxury candles by DCube Candle Co. — natural soy wax, small batch, crafted with love in Sarasota, FL.",
         "info": "Used for pages without specific descriptions. 120-155 characters recommended."
       }
     ]
