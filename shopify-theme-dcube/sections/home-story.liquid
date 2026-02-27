@@ -1,16 +1,38 @@
-<section class="story">
-  <div class="story-content">
-    <figure class="story-photo story-photo--brianna">
-      {% if section.settings.story_image != blank %}
-        {{ section.settings.story_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: section.settings.story_image.alt | default: 'Brianna holding flowers and smiling' }}
-      {% else %}
-        <img src="{{ '90d902bf-d848-4ba3-984a-76fd7fa5fd04.png' | asset_url }}" alt="Brianna holding flowers and smiling" loading="lazy">
-      {% endif %}
-    </figure>
+<section class="story-strip">
+  <div class="story-strip__inner">
+    {%- if section.settings.label != blank -%}
+      <span class="label">{{ section.settings.label }}</span>
+    {%- endif -%}
+
     <h2>{{ section.settings.heading }}</h2>
+
+    <div class="story-strip__photo">
+      {%- if section.settings.story_image != blank -%}
+        {{ section.settings.story_image | image_url: width: 600 | image_tag:
+           loading: 'lazy',
+           width: 240,
+           height: 240,
+           alt: section.settings.story_image.alt | default: 'Brianna' }}
+      {%- else -%}
+        <img
+          src="{{ '90d902bf-d848-4ba3-984a-76fd7fa5fd04.png' | asset_url }}"
+          alt="Brianna holding flowers and smiling"
+          width="240"
+          height="240"
+          loading="lazy"
+        >
+      {%- endif -%}
+    </div>
+
     <p>{{ section.settings.paragraph_1 }}</p>
     <p>{{ section.settings.paragraph_2 }}</p>
-    <a href="{{ section.settings.button_link | default: '/pages/about' }}" class="btn btn-secondary btn-wax-seal">{{ section.settings.button_label }}</a>
+
+    <div class="story-strip__cta">
+      <a href="{{ section.settings.button_link | default: '/pages/about' }}" class="btn btn-ghost">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+
     <div class="story-signature">
       <p>{{ section.settings.signature_line_one }}<br>{{ section.settings.signature_line_two }}</p>
       <span class="bee-icon-signature bee-mark" aria-hidden="true">
@@ -26,21 +48,27 @@
   "settings": [
     {
       "type": "text",
+      "id": "label",
+      "label": "Overline label",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Honoring Brianna's Light"
+      "default": "A Light That Continues to Shine"
     },
     {
       "type": "textarea",
       "id": "paragraph_1",
       "label": "Paragraph 1",
-      "default": "DCube began as a way to celebrate the life and spirit of our beloved Brianna—a soul who radiated warmth, joy, and unconditional love."
+      "default": "DCube is more than a candle company. It\u2019s a family bonded by love, united in purpose, and inspired by the extraordinary light of our beloved Brianna."
     },
     {
       "type": "textarea",
       "id": "paragraph_2",
       "label": "Paragraph 2",
-      "default": "Each candle we create carries her light forward, crafted with care to bring peace and beauty into your space."
+      "default": "Brianna\u2019s symbol was the bee \u2014 tireless, generous, creating something beautiful wherever she went."
     },
     {
       "type": "image_picker",
@@ -51,7 +79,7 @@
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Read Our Full Story"
+      "default": "Read Her Story"
     },
     {
       "type": "url",
