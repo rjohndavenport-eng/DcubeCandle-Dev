@@ -70,12 +70,48 @@
         "button_label": "View All Candles",
         "button_link": "/collections/all"
       }
+    },
+    "scent-families": {
+      "type": "scent-families",
+      "blocks": {
+        "family_1": {
+          "type": "family",
+          "settings": {
+            "title": "Floral",
+            "link_label": "Explore"
+          }
+        },
+        "family_2": {
+          "type": "family",
+          "settings": {
+            "title": "Warm \u0026 Spiced",
+            "link_label": "Explore"
+          }
+        },
+        "family_3": {
+          "type": "family",
+          "settings": {
+            "title": "Fresh \u0026 Clean",
+            "link_label": "Explore"
+          }
+        }
+      },
+      "block_order": [
+        "family_1",
+        "family_2",
+        "family_3"
+      ],
+      "settings": {
+        "label": "Browse by Mood",
+        "heading": "Shop by Scent"
+      }
     }
   },
   "order": [
     "hero",
     "benefits",
     "story",
-    "featured"
+    "featured",
+    "scent-families"
   ]
 }
