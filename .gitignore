@@ -1,0 +1,13 @@
+# Claude Code internal files
+.claude/
+
+# Loose scratch images at project root (not theme assets)
+e4ec5e3c-cffa-4197-b974-c5200c81297d.png
+09a67748-4f01-477a-b839-73e695277bb8.png
+90d902bf-d848-4ba3-984a-76fd7fa5fd04.png
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

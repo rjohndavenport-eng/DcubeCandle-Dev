@@ -1,0 +1,75 @@
+<section class="search-template">
+  <div class="search-template__inner">
+    <h1>{{ section.settings.heading }}</h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <label class="visually-hidden" for="Search-In-Template-{{ section.id }}">Search store</label>
+      <input id="Search-In-Template-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search candles, collections, and stories">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    {% if search.performed %}
+      <p>{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "{{ search.terms }}"</p>
+
+      {% paginate search.results by section.settings.results_per_page %}
+        <div class="search-grid">
+          {% for item in search.results %}
+            {% if item.object_type == 'product' %}
+              {% render 'product-card', product: item %}
+            {% else %}
+              <article class="search-card card">
+                <div class="search-card__body">
+                  <p>{{ item.object_type | capitalize }}</p>
+                  <h2><a href="{{ item.url }}">{{ item.title }}</a></h2>
+                  <p>{{ item.content | strip_html | truncate: 140 }}</p>
+                </div>
+              </article>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+          <nav class="pagination" role="navigation" aria-label="Pagination">
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" aria-label="Previous page">&larr;</a>
+            {% endif %}
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}">{{ part.title }}</a>
+              {% else %}
+                <span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" aria-label="Next page">&rarr;</a>
+            {% endif %}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main search",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Search"
+    },
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "Results per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

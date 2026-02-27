@@ -1,0 +1,224 @@
+<section class="page-hero page-hero--about">
+  <h1>{{ section.settings.hero_title }}</h1>
+  <p>{{ section.settings.hero_subtitle }}</p>
+</section>
+
+<section class="story-section">
+  <div class="story-content">
+    <h2>{{ section.settings.story_heading }}</h2>
+    <p>
+      DCube is more than a candle company. It is a family bonded by love, united in purpose, and inspired by the extraordinary light of our beloved Brianna.
+    </p>
+
+    <div class="story-divider"></div>
+
+    <p>
+      Brianna was a beacon of joy. She had a gift for making people feel seen, valued, and loved exactly as they were. Her warmth was magnetic, her laughter infectious, and her kindness boundless.
+    </p>
+
+    <p>
+      Brianna's symbol was the bee. It reminds us of her tireless generosity and her ability to create beauty wherever she went.
+    </p>
+
+    <figure class="story-photo story-photo--brianna">
+      {% if section.settings.story_image_one != blank %}
+        {{ section.settings.story_image_one | image_url: width: 1200 | image_tag: loading: 'lazy', alt: section.settings.story_image_one.alt | default: 'Brianna smiling while holding flowers' }}
+      {% else %}
+        <img src="{{ '90d902bf-d848-4ba3-984a-76fd7fa5fd04.png' | asset_url }}" alt="Brianna smiling while holding flowers" loading="lazy">
+      {% endif %}
+    </figure>
+
+    <div class="story-divider"></div>
+
+    <p>
+      When Brianna passed, our world dimmed. But even in our grief, we felt her presence and a gentle nudge to continue her mission of spreading love and light. DCube was created as a living tribute to her spirit.
+    </p>
+
+    <p>
+      Every candle we make is hand-poured with intention and care. We use clean, natural wax and carefully chosen fragrances that evoke comfort, peace, and warmth.
+    </p>
+
+    <figure class="story-photo story-photo--family">
+      {% if section.settings.story_image_two != blank %}
+        {{ section.settings.story_image_two | image_url: width: 1600 | image_tag: loading: 'lazy', alt: section.settings.story_image_two.alt | default: 'The DeCubellis Family together' }}
+      {% else %}
+        <img src="{{ '09a67748-4f01-477a-b839-73e695277bb8.png' | asset_url }}" alt="The DeCubellis Family together" loading="lazy">
+      {% endif %}
+      <figcaption>The DeCubellis Family</figcaption>
+    </figure>
+
+    <p>
+      When you light a DCube candle, you are not just filling your home with fragrance. You are honoring a life lived with purpose and joining us in keeping Brianna's light burning bright.
+    </p>
+
+    <div class="story-signature">
+      <p>With love,<br>The DeCubellis Family</p>
+      <div class="bee-icon-signature bee-mark" aria-hidden="true">
+        {% render 'icon-bee' %}
+      </div>
+    </div>
+
+    {% if page.content != blank %}
+      <div class="story-divider"></div>
+      <div class="rte">{{ page.content }}</div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="values-header">
+    <h2>{{ section.settings.values_heading }}</h2>
+  </div>
+  <div class="values-grid">
+    {% for block in section.blocks %}
+      <div class="value-card card" {{ block.shopify_attributes }}>
+        <div class="value-icon">{{ block.settings.number }}</div>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="quote-section">
+  <div class="quote-content">
+    <p class="quote-text">{{ section.settings.quote_text }}</p>
+    <p class="quote-author">{{ section.settings.quote_author }}</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>{{ section.settings.cta_heading }}</h2>
+  <a href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}" class="btn btn-wax-seal">
+    {{ section.settings.cta_label }}
+  </a>
+</section>
+
+{% schema %}
+{
+  "name": "About page",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Hero title",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "hero_subtitle",
+      "label": "Hero subtitle",
+      "default": "A light that continues to shine"
+    },
+    {
+      "type": "text",
+      "id": "story_heading",
+      "label": "Story heading",
+      "default": "A Light That Continues to Shine"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image_one",
+      "label": "Story image one"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image_two",
+      "label": "Story image two"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "label": "Values heading",
+      "default": "What We Believe"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote",
+      "default": "\"Love doesn't end; it transforms. It becomes something you carry forward, something you share, something that glows softly in the dark.\""
+    },
+    {
+      "type": "text",
+      "id": "quote_author",
+      "label": "Quote author",
+      "default": "— The DeCubellis Family"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "CTA heading",
+      "default": "Bring Brianna's Light Into Your Home"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop Our Collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_card",
+      "name": "Value card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Natural materials, carefully chosen. Each candle is crafted with premium ingredients."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About page",
+      "blocks": [
+        {
+          "type": "value_card",
+          "settings": {
+            "number": "01",
+            "title": "Quality",
+            "text": "Natural materials, carefully chosen. Each candle is crafted with premium soy wax and thoughtfully selected fragrances."
+          }
+        },
+        {
+          "type": "value_card",
+          "settings": {
+            "number": "02",
+            "title": "Intention",
+            "text": "Every candle is made with purpose. We pour more than wax—we pour love, care, and Brianna's spirit into each vessel."
+          }
+        },
+        {
+          "type": "value_card",
+          "settings": {
+            "number": "03",
+            "title": "Community",
+            "text": "Spreading light and love to others. When you choose DCube, you become part of a family dedicated to honoring Brianna's legacy."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

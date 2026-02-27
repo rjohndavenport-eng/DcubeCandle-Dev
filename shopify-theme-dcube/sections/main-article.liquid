@@ -1,0 +1,26 @@
+<article class="article-template">
+  <div class="article-template__inner">
+    <p><a href="{{ blog.url }}">&larr; Back to {{ blog.title }}</a></p>
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.published_at | date: '%B %d, %Y' }} &middot; {{ article.author }}</p>
+
+    {% if article.image %}
+      <figure>
+        {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.image.alt | default: article.title }}
+      </figure>
+    {% endif %}
+
+    <div class="rte">
+      {{ article.content }}
+    </div>
+
+    {% render 'share-buttons', title: article.title, label: 'Share article' %}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Main article",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+<section class="cart-template">
+  <div class="cart-template__inner">
+    <h1>{{ section.settings.heading }}</h1>
+
+    {% if cart.item_count == 0 %}
+      <p>Your cart is currently empty.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Continue shopping</a>
+    {% else %}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr>
+                <td>
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                  {% if item.variant.title != 'Default Title' %}
+                    <div>{{ item.variant.title }}</div>
+                  {% endif %}
+                  <div><a href="{{ item.url_to_remove }}">Remove</a></div>
+                </td>
+                <td>{{ item.final_price | money }}</td>
+                <td>
+                  <label class="visually-hidden" for="Updates_{{ item.key }}">Quantity</label>
+                  <input id="Updates_{{ item.key }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                </td>
+                <td>{{ item.final_line_price | money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="cart-actions">
+          <div class="cart-note">
+            <label for="CartNote-{{ section.id }}">Order note</label>
+            <textarea id="CartNote-{{ section.id }}" name="note">{{ cart.note }}</textarea>
+          </div>
+          <div>
+            <p><strong>Subtotal:</strong> {{ cart.total_price | money }}</p>
+            <button type="submit" class="btn">Update cart</button>
+            <button type="submit" name="checkout" class="btn btn-primary">Checkout</button>
+          </div>
+        </div>
+      </form>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main cart",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your Cart"
+    }
+  ]
+}
+{% endschema %}

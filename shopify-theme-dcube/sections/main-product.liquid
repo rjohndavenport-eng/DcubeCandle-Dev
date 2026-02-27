@@ -1,79 +1,194 @@
-<div class="product-page">
-  <div class="breadcrumb">
-    <a href="/">Home</a> &gt;
-    {%- if collection -%}
-      <a href="{{ collection.url }}">{{ collection.title }}</a> &gt;
-    {%- endif -%}
-    {{ product.title }}
-  </div>
-
-  <div class="product-detail">
-    <div class="gallery">
-      <div class="main-image">
-        {%- if product.featured_image -%}
-          <img src="{{ product.featured_image | image_url: width: 800 }}"
-               alt="{{ product.featured_image.alt | escape }}"
-               width="800"
-               height="auto">
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag }}
-        {%- endif -%}
-      </div>
-      {%- if product.images.size > 1 -%}
-        <div class="thumbnails">
-          {%- for image in product.images -%}
-            <button class="thumbnail {% if forloop.first %}active{% endif %}"
-                    data-image-index="{{ forloop.index0 }}">
-              <img src="{{ image | image_url: width: 100 }}"
-                   alt="{{ image.alt | escape }}">
-            </button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    </div>
-
-    <div class="product-info">
-      <h1>{{ product.title }}</h1>
-      <div class="product-price">{{ product.price | money }}</div>
-
-      {%- if product.description != blank -%}
-        <div class="product-description">{{ product.description }}</div>
-      {%- endif -%}
-
-      <div class="handmade-badge">
-        <span class="bee-icon bee-mark" aria-hidden="true">
-          {%- render 'icon-bee' -%}
-        </span>
-        Handcrafted with love
-      </div>
-
-      <form action="/cart/add" method="post" class="product-form">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-        <div class="quantity-selector">
-          <label for="quantity">Quantity:</label>
-          <div class="quantity-controls">
-            <button type="button" data-qty-decrement>−</button>
-            <input type="number" id="quantity" name="quantity" value="1" min="1">
-            <button type="button" data-qty-increment>+</button>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-          {%- if product.available -%}
-            Add to Cart
-          {%- else -%}
-            Sold Out
-          {%- endif -%}
-        </button>
-      </form>
-    </div>
-  </div>
+{%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+<div class="breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a> &gt;
+  {% if collection %}
+    <a href="{{ collection.url }}">{{ collection.title }}</a> &gt;
+  {% else %}
+    <a href="{{ routes.all_products_collection_url }}">Shop</a> &gt;
+  {% endif %}
+  {{ product.title }}
 </div>
+
+<section class="product-detail bee-watermark" data-product-root>
+  <div class="gallery">
+    <div class="main-image" data-main-image>
+      {% if featured_media %}
+        {{ featured_media | image_url: width: 1800 | image_tag: class: 'main-image-media', loading: 'eager', alt: featured_media.alt | default: product.title }}
+      {% elsif product.featured_image %}
+        {{ product.featured_image | image_url: width: 1800 | image_tag: class: 'main-image-media', loading: 'eager', alt: product.featured_image.alt | default: product.title }}
+      {% else %}
+        {{ product.title }}<br>Main Product Shot
+      {% endif %}
+    </div>
+    {% if product.media.size > 1 %}
+      <div class="thumbnails">
+        {% assign image_count = 0 %}
+        {% for media in product.media %}
+          {% if media.media_type == 'image' and image_count < 3 %}
+            {% assign image_count = image_count | plus: 1 %}
+            <button class="thumbnail{% if image_count == 1 %} active{% endif %}" type="button" data-thumb data-image="{{ media | image_url: width: 1800 }}">
+              {% case image_count %}
+                {% when 1 %}
+                  Main
+                {% when 2 %}
+                  Detail
+                {% else %}
+                  Lifestyle
+              {% endcase %}
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="product-info">
+    <h1>{{ product.title }}</h1>
+    <div class="product-price">
+      {% if product.compare_at_price_max > product.price %}
+        <s>{{ product.compare_at_price_max | money }}</s> {{ product.price | money }}
+      {% else %}
+        {{ product.price | money }}
+      {% endif %}
+    </div>
+    <p class="product-description">{{ product.description | strip_html }}</p>
+
+    <div class="handmade-badge">
+      <span class="bee-icon bee-mark" aria-hidden="true">
+        {% render 'icon-bee' %}
+      </span>
+      Handcrafted with love
+    </div>
+
+    {% form 'product', product, class: 'product-form' %}
+      {% if product.has_only_default_variant == false %}
+        <div class="variant-selector">
+          <label for="Variant-{{ section.id }}">Choose a scent profile</label>
+          <select id="Variant-{{ section.id }}" name="id">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                {{ variant.title }}{% unless variant.available %} - Sold out{% endunless %}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% else %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+      {% endif %}
+
+      <div class="quantity-selector">
+        <label for="Quantity-{{ section.id }}">Quantity:</label>
+        <div class="quantity-controls" data-qty-wrap>
+          <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+          <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1">
+          <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit" name="add" {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}Add to Cart{% else %}Sold Out{% endif %}
+      </button>
+      {{ form | payment_button }}
+    {% endform %}
+
+    {% render 'share-buttons', title: product.title, label: 'Share this scent' %}
+
+    <div class="product-details">
+      <div class="detail-section">
+        <details open>
+          <summary class="detail-header">Details</summary>
+          <div class="detail-content">{{ section.settings.details_text }}</div>
+        </details>
+      </div>
+
+      <div class="detail-section">
+        <details>
+          <summary class="detail-header">Shipping &amp; Returns</summary>
+          <div class="detail-content">{{ section.settings.shipping_text }}</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="bee-divider">
+  <span class="bee-icon bee-mark" aria-hidden="true">
+    {% render 'icon-bee' %}
+  </span>
+</div>
+
+<section class="product-story">
+  <h2>{{ section.settings.story_title }}</h2>
+  <p>{{ section.settings.story_text }}</p>
+</section>
+
+{%- assign related_collection = collection -%}
+{% if related_collection == blank and product.collections.size > 0 %}
+  {% assign related_collection = product.collections.first %}
+{% endif %}
+
+{% if related_collection != blank and related_collection.products_count > 1 %}
+  <section class="related-products">
+    <div class="related-header">
+      <h2>{{ section.settings.related_heading }}</h2>
+    </div>
+    <div class="product-grid">
+      {% assign shown_count = 0 %}
+      {% for related_product in related_collection.products %}
+        {% if related_product.id != product.id and shown_count < section.settings.related_products_limit %}
+          {% render 'product-card', product: related_product %}
+          {% assign shown_count = shown_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+
+{% render 'product-schema', product: product %}
 
 {% schema %}
 {
-  "name": "Product",
-  "settings": []
+  "name": "Main product",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "details_text",
+      "label": "Details content",
+      "default": "<ul><li>10 oz natural soy-coconut wax blend</li><li>Approx. 55 hour burn time</li><li>Cotton wick and reusable glass vessel</li><li>Hand-poured in small batches</li></ul>"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "Shipping and returns content",
+      "default": "<p>Free shipping on orders over $75. Orders ship in 2-3 business days. 30-day return policy for unopened candles.</p>"
+    },
+    {
+      "type": "text",
+      "id": "story_title",
+      "label": "Story title",
+      "default": "Each Candle Carries Brianna's Light"
+    },
+    {
+      "type": "textarea",
+      "id": "story_text",
+      "label": "Story text",
+      "default": "Every DCube candle is hand-poured with intention and care, honoring the warmth and love Brianna brought to the world."
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Related heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "related_products_limit",
+      "label": "Related products limit",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ]
 }
 {% endschema %}

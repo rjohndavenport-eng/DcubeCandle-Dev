@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "heading": "This page has drifted out of sight.",
+        "text": "Return to the shop and continue exploring our signature scents.",
+        "button_label": "Back to home"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

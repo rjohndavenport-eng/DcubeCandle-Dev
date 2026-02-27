@@ -1,7 +1,13 @@
 {
   "sections": {
     "main": {
-      "type": "main-product"
+      "type": "main-product",
+      "settings": {
+        "story_title": "Each Candle Carries Brianna's Light",
+        "story_text": "Every DCube candle is hand-poured with intention and care, honoring the warmth and love Brianna brought to the world.",
+        "related_heading": "You May Also Like",
+        "related_products_limit": 4
+      }
     }
   },
   "order": [

@@ -1,0 +1,33 @@
+<section class="not-found-template">
+  <div class="not-found-template__inner">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.text }}</p>
+    <a class="btn btn-primary" href="{{ routes.root_url }}">{{ section.settings.button_label }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main 404",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "This page has drifted out of sight."
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Return to the shop and continue exploring our signature scents."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Back to home"
+    }
+  ]
+}
+{% endschema %}

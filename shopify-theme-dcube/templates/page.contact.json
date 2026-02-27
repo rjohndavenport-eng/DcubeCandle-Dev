@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "page-contact",
+      "settings": {
+        "heading": "Contact Us",
+        "subheading": "We would love to hear from you. Reach out about products, wholesale, and collaborations.",
+        "info_heading": "Get in touch",
+        "info_text": "Our family-run team is here to answer product and order questions.",
+        "email": "hello@dcubecandles.com",
+        "form_heading": "Send us a message"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,95 @@
+<section class="page-hero page-hero--shop">
+  <h1>{{ section.settings.heading }}</h1>
+  <p>{{ section.settings.subheading }}</p>
+</section>
+
+<section class="contact-section">
+  <div class="contact-grid">
+    <div class="contact-card">
+      <h2>{{ section.settings.info_heading }}</h2>
+      <p>{{ section.settings.info_text }}</p>
+      <p><strong>Email:</strong> {{ section.settings.email }}</p>
+      <p><strong>Location:</strong> Sarasota, FL</p>
+      <p><strong>Hours:</strong> Monday-Friday, 9:00 AM-5:00 PM EST</p>
+      {% render 'social-links' %}
+    </div>
+
+    <div class="contact-card">
+      <h2>{{ section.settings.form_heading }}</h2>
+      {% form 'contact', class: 'contact-form' %}
+        {% if form.posted_successfully? %}
+          <div class="form-success">Thank you. We received your message and will be in touch soon.</div>
+        {% endif %}
+        {% if form.errors %}
+          <div class="form-errors">{{ form.errors | default_errors }}</div>
+        {% endif %}
+
+        <div>
+          <label for="ContactFormName-{{ section.id }}">Name</label>
+          <input id="ContactFormName-{{ section.id }}" type="text" name="contact[name]" value="{{ form.name }}" required>
+        </div>
+
+        <div>
+          <label for="ContactFormEmail-{{ section.id }}">Email</label>
+          <input id="ContactFormEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" required>
+        </div>
+
+        <div>
+          <label for="ContactFormPhone-{{ section.id }}">Phone</label>
+          <input id="ContactFormPhone-{{ section.id }}" type="tel" name="contact[phone]" value="{{ form.phone }}">
+        </div>
+
+        <div>
+          <label for="ContactFormMessage-{{ section.id }}">Message</label>
+          <textarea id="ContactFormMessage-{{ section.id }}" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Send Message</button>
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Contact Us"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "We would love to hear from you. Reach out about products, wholesale, and collaborations."
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Info heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "textarea",
+      "id": "info_text",
+      "label": "Info text",
+      "default": "Our family-run team is here to answer product and order questions."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Contact email",
+      "default": "hello@dcubecandles.com"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Send us a message"
+    }
+  ]
+}
+{% endschema %}

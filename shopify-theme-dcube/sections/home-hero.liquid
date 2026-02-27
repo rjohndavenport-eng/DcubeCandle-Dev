@@ -1,0 +1,57 @@
+<section class="hero">
+  <div class="hero-image bee-watermark">
+    {% if section.settings.hero_image != blank %}
+      {{ section.settings.hero_image | image_url: width: 2200 | image_tag: class: 'hero-image-media', loading: 'eager', alt: section.settings.hero_image.alt | default: 'DCube candles styled in a warm lifestyle setting' }}
+    {% else %}
+      <img class="hero-image-media" src="{{ 'Untitled_design_17_2000x.webp' | asset_url }}" alt="DCube candles styled in a warm lifestyle setting">
+    {% endif %}
+  </div>
+  <div class="hero-content">
+    <h1>{{ section.settings.heading }}</h1>
+    <p>{{ section.settings.text }}</p>
+    <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn-primary btn-wax-seal">
+      {{ section.settings.button_label }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Illuminate Every Moment"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Body",
+      "default": "Hand-poured candles crafted with love to bring warmth and light into your home."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Our Collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home hero"
+    }
+  ]
+}
+{% endschema %}

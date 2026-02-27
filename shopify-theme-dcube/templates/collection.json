@@ -1,7 +1,11 @@
 {
   "sections": {
     "main": {
-      "type": "main-collection"
+      "type": "main-collection-product-grid",
+      "settings": {
+        "default_subtitle": "Hand-poured candles to illuminate your life",
+        "products_per_page": 12
+      }
     }
   },
   "order": [

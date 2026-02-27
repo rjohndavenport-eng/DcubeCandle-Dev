@@ -1,16 +1,75 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "home-hero",
       "settings": {
         "heading": "Illuminate Every Moment",
-        "subheading": "Hand-poured candles crafted with love to bring warmth and light into your home.",
-        "button_text": "Shop Our Collection",
+        "text": "Hand-poured candles crafted with love to bring warmth and light into your home.",
+        "button_label": "Shop Our Collection",
+        "button_link": "/collections/all"
+      }
+    },
+    "benefits": {
+      "type": "home-benefits",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clean",
+            "heading": "Clean Ingredients",
+            "text": "Natural soy wax"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "bee",
+            "heading": "Handcrafted",
+            "text": "Small batch quality"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "love",
+            "heading": "Made with Love",
+            "text": "Family legacy"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3"
+      ],
+      "settings": {}
+    },
+    "story": {
+      "type": "home-story",
+      "settings": {
+        "heading": "Honoring Brianna's Light",
+        "paragraph_1": "DCube began as a way to celebrate the life and spirit of our beloved Brianna—a soul who radiated warmth, joy, and unconditional love.",
+        "paragraph_2": "Each candle we create carries her light forward, crafted with care to bring peace and beauty into your space.",
+        "button_label": "Read Our Full Story",
+        "button_link": "/pages/about",
+        "signature_line_one": "With love,",
+        "signature_line_two": "The DeCubellis Family"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Discover Our Signature Scents",
+        "products_to_show": 4,
+        "button_label": "View All Candles",
         "button_link": "/collections/all"
       }
     }
   },
   "order": [
-    "hero"
+    "hero",
+    "benefits",
+    "story",
+    "featured"
   ]
 }

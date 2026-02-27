@@ -1,0 +1,85 @@
+<section class="page-hero page-hero--shop">
+  <h1>{{ collection.title | default: 'Our Collection' }}</h1>
+  <p>{{ collection.description | strip_html | default: section.settings.default_subtitle }}</p>
+</section>
+
+<div class="filter-bar">
+  <div class="filter-group">
+    {% if collection.all_tags.size > 0 %}
+      <label class="visually-hidden" for="CollectionTag-{{ section.id }}">Filter by scent</label>
+      <select id="CollectionTag-{{ section.id }}" data-tag-select>
+        <option value="{{ collection.url }}">Filter by Scent</option>
+        {% for tag in collection.all_tags %}
+          <option value="{{ collection.url }}/{{ tag | handle }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+        {% endfor %}
+      </select>
+    {% endif %}
+  </div>
+
+  <form method="get">
+    <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+    <select id="SortBy-{{ section.id }}" name="sort_by" data-sort-select>
+      {% for option in collection.sort_options %}
+        <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+</div>
+
+<section class="shop-section">
+  <p class="product-count">{{ collection.products_count }} product{% if collection.products_count != 1 %}s{% endif %}</p>
+  {% paginate collection.products by section.settings.products_per_page %}
+    {% if collection.products_count > 0 %}
+      <div class="product-grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product, show_quick_add: true %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No products found in this collection.</p>
+    {% endif %}
+
+    {% if paginate.pages > 1 %}
+      <nav class="pagination" role="navigation" aria-label="Pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" aria-label="Previous page">&larr;</a>
+        {% endif %}
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}">{{ part.title }}</a>
+          {% else %}
+            <span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>
+          {% endif %}
+        {% endfor %}
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" aria-label="Next page">&rarr;</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "default_subtitle",
+      "label": "Default subtitle",
+      "default": "Hand-poured candles to illuminate your life"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}
