@@ -1,0 +1,17 @@
+{
+  "name": "dcube-image-pipeline",
+  "version": "1.0.0",
+  "description": "Batch background removal + styled compositing for DCube product images",
+  "type": "module",
+  "scripts": {
+    "scan": "node scripts/scanner.mjs",
+    "edit": "node scripts/editor.mjs",
+    "qa": "node scripts/qa.mjs",
+    "package": "node scripts/packager.mjs",
+    "run-all": "node scripts/scanner.mjs && node scripts/editor.mjs && node scripts/qa.mjs && node scripts/packager.mjs"
+  },
+  "dependencies": {
+    "@imgly/background-removal-node": "^1.4.5",
+    "sharp": "~0.32.6"
+  }
+}
