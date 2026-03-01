@@ -1,0 +1,731 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "b25f34c3-9adb-4793-8822-2f30c849eada": {
+      "type": "slideshow",
+      "blocks": {
+        "19a387fa-02ce-4fd3-a5e5-4ddeca40022f": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_aac4a520-0334-4914-a144-5fcc0fc148e1.png",
+            "mobile_image": "shopify://shop_images/Untitled_design_2_ac3a0c6f-73f0-41e7-badd-48b4a3c7c7af.png",
+            "text_position": "middle_left",
+            "subheading": "Dedicated To Supporting Special Needs Children And Their Families",
+            "title": "Hand Crafted Luxury Scents",
+            "button_1_text": "SHOP NOW",
+            "button_1_link": "shopify://collections/all",
+            "button_2_text": "",
+            "button_2_link": "",
+            "text_color": "#000000",
+            "button_background": "#000000",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "22177f92-5ab2-42f8-a6bb-556e37cadbfc": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/burning-candles-white-peony-flowers-wooden-table-front-blurred-cityscape_587448-7539.jpg",
+            "text_position": "middle_right",
+            "subheading": "Sophisticated Candles for a Touch of Class",
+            "title": "Glow with the Flow",
+            "button_1_text": "SHOP NOW",
+            "button_1_link": "shopify://collections/all",
+            "button_2_text": "",
+            "button_2_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        },
+        "b76ebc36-5c53-4d38-a2c3-1c5033348d06": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_17.png",
+            "mobile_image": "shopify://shop_images/Untitled_design_3.png",
+            "text_position": "top_center",
+            "subheading": "Dedicated To Supporting Special Needs Children And Their Families",
+            "title": "Purveyor Of Luxury Scents",
+            "button_1_text": "SHOP NOW",
+            "button_1_link": "shopify://collections/all",
+            "button_2_text": "",
+            "button_2_link": "",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#000000",
+            "overlay_color": "#000000",
+            "overlay_opacity": 0
+          }
+        }
+      },
+      "block_order": [
+        "19a387fa-02ce-4fd3-a5e5-4ddeca40022f",
+        "22177f92-5ab2-42f8-a6bb-556e37cadbfc",
+        "b76ebc36-5c53-4d38-a2c3-1c5033348d06"
+      ],
+      "settings": {
+        "section_height": "medium",
+        "transition_type": "sweep",
+        "autoplay": true,
+        "cycle_speed": 9,
+        "background": "rgba(0,0,0,0)"
+      }
+    },
+    "logo_list_6GMYix": {
+      "type": "logo-list",
+      "blocks": {
+        "logo_AJzJy3": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/fair_trade_we_support.webp",
+            "link": "shopify://products/sunset-in-sorrento"
+          }
+        },
+        "logo_w9GXbb": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Women_Owned_2019.webp",
+            "link": "shopify://products/mermaids-laundry"
+          }
+        },
+        "logo_neBdBr": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/B-Corp_1.webp",
+            "link": "shopify://products/desert-serenade"
+          }
+        },
+        "logo_KraB67": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/proudly_made_by_refugees_stamp.webp",
+            "link": ""
+          }
+        },
+        "logo_mMpzN3": {
+          "type": "logo",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        },
+        "logo_GdKk3Y": {
+          "type": "logo",
+          "disabled": true,
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_AJzJy3",
+        "logo_w9GXbb",
+        "logo_neBdBr",
+        "logo_KraB67",
+        "logo_mMpzN3",
+        "logo_GdKk3Y"
+      ],
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "subheading": "",
+        "title": "",
+        "button_text": "",
+        "button_link": "",
+        "stack_logos": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)",
+        "logo_background": "rgba(0,0,0,0)"
+      }
+    },
+    "7ba1b649-5f2e-48a4-98c3-0449ab4e3141": {
+      "type": "image-with-text-block",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": false,
+        "image": "shopify://shop_images/WhatsApp_Image_2024-07-28_at_11.51.31_AM.jpg",
+        "section_url": "shopify://collections/footwear",
+        "subheading": "",
+        "title": "",
+        "content": "<p>dcmdlkcnjjjjjjjjjjkdfjediofudfjdkjfdifjkddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p>",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "full_width",
+        "text_position": "left",
+        "text_alignment": "center",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "#000000",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "fdf53719-fdb8-4ac0-8728-945ff4577d92": {
+      "type": "featured-collections",
+      "blocks": {
+        "template--21720504697133__fdf53719-fdb8-4ac0-8728-945ff4577d92-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "all-products",
+            "label": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        },
+        "3bb768f1-577e-42e8-acbd-f48ddfee1e72": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "footwear",
+            "label": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        },
+        "273798ff-285e-478a-bae1-14c084fd0ce5": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "outwear",
+            "label": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        },
+        "d8abbc45-d058-4310-9a72-1f6b9cd45e59": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "athletic-wear",
+            "label": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--21720504697133__fdf53719-fdb8-4ac0-8728-945ff4577d92-collection-1",
+        "3bb768f1-577e-42e8-acbd-f48ddfee1e72",
+        "273798ff-285e-478a-bae1-14c084fd0ce5",
+        "d8abbc45-d058-4310-9a72-1f6b9cd45e59"
+      ],
+      "settings": {
+        "subheading": "",
+        "title": "Our Collection",
+        "content": "",
+        "products_count": 16,
+        "products_per_row": 5,
+        "stack_products": true,
+        "show_cta": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "#a25fe7",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "rich_text_RbjLHK": {
+      "type": "rich-text",
+      "settings": {
+        "subheading": "",
+        "title": "About Us",
+        "content": "<p>We are more than just a candle company. We are a family bonded by love and inspired by the light of our beloved Briana. Briana was more than a sister and daughter; she was a beacon of joy, warmth, and unconditional love. Briana shared her  light with the world, leaving a lasting impression on all who knew her.</p>",
+        "button_text": "Learn more about us",
+        "button_link": "shopify://pages/about-us",
+        "background_type": "full_width",
+        "text_width": "medium",
+        "text_position": "center",
+        "text_alignment": "center",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "#a25ee7",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "main": {
+      "type": "main-not-found",
+      "disabled": true,
+      "settings": {}
+    },
+    "d6c2bf87-cfd5-42b2-9cdd-7b703f2632cb": {
+      "type": "gallery",
+      "blocks": {
+        "9c08f731-ca86-44c7-84ad-7c59d39cea94": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_13.png",
+            "caption": ""
+          }
+        },
+        "image_mnGyKR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Sharing_Her_Light_Since_1994_Dedicated_to_supporting_Special_Needs_Children_and_their_Families._Light_Up_a_room_and_brighten_lives._With_each_candle_purchased_know_that_a_part_of_our_0e12322a-5e51-46dd-9dd5-a116b3ae7e61.png",
+            "caption": ""
+          }
+        },
+        "template--21720504697133__d6c2bf87-cfd5-42b2-9cdd-7b703f2632cb-image-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2024-07-24_at_6.31.13_PM_2.jpg",
+            "caption": ""
+          }
+        },
+        "image_aEN8DH": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "caption": ""
+          }
+        },
+        "55179cfa-47c3-49ed-a8f1-9636e2d11499": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "caption": ""
+          }
+        },
+        "6bea58e3-9968-49a0-b160-78e4a61de25e": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "caption": ""
+          }
+        },
+        "1ee654c2-4252-48dd-bb88-38df232143a8": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "caption": ""
+          }
+        },
+        "a50e8ade-50f0-41db-b99a-227468d2d670": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "9c08f731-ca86-44c7-84ad-7c59d39cea94",
+        "image_mnGyKR",
+        "template--21720504697133__d6c2bf87-cfd5-42b2-9cdd-7b703f2632cb-image-1",
+        "image_aEN8DH",
+        "55179cfa-47c3-49ed-a8f1-9636e2d11499",
+        "6bea58e3-9968-49a0-b160-78e4a61de25e",
+        "1ee654c2-4252-48dd-bb88-38df232143a8",
+        "a50e8ade-50f0-41db-b99a-227468d2d670"
+      ],
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "The DeCubellis Family",
+        "show_arrows": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "42d97773-892e-43c6-ad85-433660f0351a": {
+      "type": "image-with-text-block",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "image": "shopify://shop_images/brianabwcropped.jpg",
+        "section_url": "",
+        "subheading": "",
+        "title": "",
+        "content": "<p>Dedicated to supporting Special Needs Children and their Families. Sharing Her Light Since 1994❤️Light Up a room and brighten lives !<br/>With each candle purchased, know that a part of our proceeds is dedicated to supporting special needs children and their families.  Your choice not only illuminates your space, but also brings warmth to those who need it most.<br/>Thank you for spreading light and love with us !</p>",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "boxed",
+        "text_position": "center",
+        "text_alignment": "center",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "#000000",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "626b996e-7ce8-49e7-b3a0-2f91ecf36d3f": {
+      "type": "image-with-text-block",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "section_url": "shopify://collections/bags",
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "full_width",
+        "text_position": "left",
+        "text_alignment": "center",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "11bd285e-2799-417e-9cf9-56741fdbc609": {
+      "type": "image-with-text-block",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "section_url": "shopify://collections/outwear",
+        "subheading": "",
+        "title": "",
+        "content": "",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "full_width",
+        "text_position": "left",
+        "text_alignment": "center",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "126c6c72-6d3b-475e-a97b-1fe68b00c4ef": {
+      "type": "image-with-text-block",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "section_url": "shopify://collections/athletic-wear",
+        "subheading": "Subheading",
+        "title": "Image with text block",
+        "content": "<p>Use block text to give your customers insight into your brand. Select impactful text that relates to your brand and story.</p>",
+        "button_text": "",
+        "button_link": "",
+        "background_type": "full_width",
+        "text_position": "left",
+        "text_alignment": "center",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "b3caa8a1-92fe-4691-976f-c6973a08f8a5": {
+      "type": "custom-html",
+      "disabled": true,
+      "settings": {
+        "subheading": "@illyrachi",
+        "title": "illygram",
+        "html": "<script src=\"https://static.elfsight.com/platform/platform.js\" data-use-service-core=\"\" defer></script>\n<div class=\"elfsight-app-e62451a7-4817-4727-b5d7-b3efd0daedae\" data-elfsight-app-lazy=\"\"></div>",
+        "background_type": "full_width",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "image_with_text_XiKqpD": {
+      "type": "image-with-text",
+      "blocks": {
+        "item_GDKx7H": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_9_1.png",
+            "tab_label": "",
+            "subheading": "",
+            "title": "Sharing Her Light Since 1994❤️",
+            "content": "<p>Dedicated to supporting Special Needs Children and their Families. Light Up a room and brighten lives. With each candle purchased, know that a part of our proceeds is dedicated to supporting special needs children and their families.  Your choice not only illuminates your space, but also brings warmth to those who need it most.<br/>Thank you for spreading light and love with us !</p>",
+            "button_text": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_GDKx7H"
+      ],
+      "settings": {
+        "reveal_on_scroll": true,
+        "background_type": "boxed",
+        "background_overlap": "image",
+        "image_position": "left",
+        "text_alignment": "center",
+        "cycle_speed": 8,
+        "accent_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "image_with_text_P77wQx": {
+      "type": "image-with-text",
+      "blocks": {
+        "item_8dwjzg": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design_14.png",
+            "tab_label": "",
+            "subheading": "",
+            "title": "Eco-Friendly Flames 🌿",
+            "content": "<p><strong>Soy/Coconut Blend wax 100 per cent natural for a cleaner and longer burn. Paraffin free, vegan, sustainable. Cotton wicks that are lead and zinc free. Premium luxury fragrance oils with no hazardous chemicals, ecofriendly and safe, phthalate free.</strong></p>",
+            "button_text": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_8dwjzg"
+      ],
+      "settings": {
+        "reveal_on_scroll": true,
+        "background_type": "full_width",
+        "background_overlap": "image",
+        "image_position": "right",
+        "text_alignment": "center",
+        "cycle_speed": 8,
+        "accent_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "testimonials_8wLV3B": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_FtydGy": {
+          "type": "testimonial",
+          "settings": {
+            "content": "These candles smell amazing and last so long! Definitely my new favorite brand",
+            "author": "Emma S."
+          }
+        },
+        "testimonial_PUiWjp": {
+          "type": "testimonial",
+          "settings": {
+            "content": "I can’t get enough of these candles. The fragrance combinations are just perfect.",
+            "author": "Daniel K."
+          }
+        },
+        "testimonial_YPhgdi": {
+          "type": "testimonial",
+          "settings": {
+            "content": "These candles bring such a peaceful ambiance to my space. Highly recommend!",
+            "author": "Isabella D."
+          }
+        },
+        "testimonial_Y7G8TP": {
+          "type": "testimonial",
+          "disabled": true,
+          "settings": {
+            "content": "Write some content about what they are saying about your store.",
+            "author": "John S."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_FtydGy",
+        "testimonial_PUiWjp",
+        "testimonial_YPhgdi",
+        "testimonial_Y7G8TP"
+      ],
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "subheading": "",
+        "title": "Satisfied Customers",
+        "background": "#ffffff",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "image_with_text_overlay_fBiwbp": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "reveal_on_scroll": true,
+        "section_height": "medium",
+        "image": "shopify://shop_images/Untitled_design_15_1.png",
+        "subheading": "With Love from",
+        "title": "THE DECUBELLIS FAMILY",
+        "content": "",
+        "button_text": "SHOP NOW",
+        "button_link": "shopify://collections/all",
+        "link_style": "button",
+        "background_type": "full_width",
+        "text_width": "medium",
+        "text_position": "middle_center",
+        "text_color": "#ffffff",
+        "button_background": "#a25fe7",
+        "button_text_color": "#ffffff",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "image_with_text_XjEYQJ": {
+      "type": "image-with-text",
+      "blocks": {
+        "item_NRzPUV": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Sharing_Her_Light_Since_1994_Dedicated_to_supporting_Special_Needs_Children_and_their_Families._Light_Up_a_room_and_brighten_lives._With_each_candle_purchased_know_that_a_part_of_our_63215a96-e0fa-488c-82de-8c63878c2716.png",
+            "tab_label": "",
+            "subheading": "",
+            "title": "Ingredients",
+            "content": "<p><strong>Soy/Coconut Blend wax 100% natural for a cleaner and longer burn. Paraffin free, vegan, sustainable. Cotton wicks that are lead and zinc free. Premium luxury fragrance oils with no hazardous chemicals,ecofriendly and safe, phthalate free.</strong></p>",
+            "button_text": "",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "item_NRzPUV"
+      ],
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "background_type": "full_width",
+        "background_overlap": "image",
+        "image_position": "left",
+        "text_alignment": "center",
+        "cycle_speed": 8,
+        "accent_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "featured_collections_jLWqdB": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_Mm8ptB": {
+          "type": "collection",
+          "settings": {
+            "collection": "coming-soon",
+            "label": "",
+            "button_text": "",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_Mm8ptB"
+      ],
+      "settings": {
+        "subheading": "",
+        "title": "Coming Soon",
+        "content": "",
+        "products_count": 5,
+        "products_per_row": 5,
+        "stack_products": true,
+        "show_cta": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "#a25fe7",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "multi_column_ENxDth": {
+      "type": "multi-column",
+      "blocks": {
+        "item_MxHtqd": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/Sharing_Her_Light_Since_1994_Dedicated_to_supporting_Special_Needs_Children_and_their_Families._Light_Up_a_room_and_brighten_lives._With_each_candle_purchased_know_that_a_part_of_our_63215a96-e0fa-488c-82de-8c63878c2716.png",
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Isabella D.",
+            "content": "<p>These candles bring such a peaceful ambiance to my space. Highly recommend!</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "item_ndWCUf": {
+          "type": "item",
+          "settings": {
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Column 1",
+            "content": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "item_K3Jxwn": {
+          "type": "item",
+          "settings": {
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Column 1",
+            "content": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "item_XkxTmr": {
+          "type": "item",
+          "settings": {
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Column 1",
+            "content": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "item_MxHtqd",
+        "item_ndWCUf",
+        "item_K3Jxwn",
+        "item_XkxTmr"
+      ],
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "stack_items": false,
+        "subheading": "",
+        "title": "Our Satisfied Customers",
+        "content": "",
+        "column_alignment": "center",
+        "mobile_item_size": "medium",
+        "desktop_item_size": "medium",
+        "spacing": "normal",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    }
+  },
+  "order": [
+    "b25f34c3-9adb-4793-8822-2f30c849eada",
+    "logo_list_6GMYix",
+    "7ba1b649-5f2e-48a4-98c3-0449ab4e3141",
+    "fdf53719-fdb8-4ac0-8728-945ff4577d92",
+    "rich_text_RbjLHK",
+    "main",
+    "d6c2bf87-cfd5-42b2-9cdd-7b703f2632cb",
+    "42d97773-892e-43c6-ad85-433660f0351a",
+    "626b996e-7ce8-49e7-b3a0-2f91ecf36d3f",
+    "11bd285e-2799-417e-9cf9-56741fdbc609",
+    "126c6c72-6d3b-475e-a97b-1fe68b00c4ef",
+    "b3caa8a1-92fe-4691-976f-c6973a08f8a5",
+    "image_with_text_XiKqpD",
+    "image_with_text_P77wQx",
+    "testimonials_8wLV3B",
+    "image_with_text_overlay_fBiwbp",
+    "image_with_text_XjEYQJ",
+    "featured_collections_jLWqdB",
+    "multi_column_ENxDth"
+  ]
+}

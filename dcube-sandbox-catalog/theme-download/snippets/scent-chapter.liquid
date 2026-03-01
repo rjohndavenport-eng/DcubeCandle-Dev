@@ -1,0 +1,28 @@
+<div class="scent-chapter-bloom" style="padding: 40px; border: 1px solid var(--color-border); position: relative; overflow: hidden; background: var(--color-surface);">
+  <style>
+    .bloom-container { position: relative; z-index: 2; text-align: center; }
+    .bloom-rings { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+    .bloom-ring { 
+      position: absolute; border: 1px solid var(--color-accent); border-radius: 50%; 
+      width: 100px; height: 100px; opacity: 0; 
+      transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .scent-chapter-bloom:hover .bloom-ring:nth-child(1) { width: 400px; height: 400px; opacity: 0.1; }
+    .scent-chapter-bloom:hover .bloom-ring:nth-child(2) { width: 600px; height: 600px; opacity: 0.05; transition-delay: 0.2s; }
+    
+    .scent-note-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--color-accent-soft); padding: 15px 0; font-size: 14px; }
+    .scent-note-row strong { font-family: var(--heading-font-family); color: var(--color-accent); text-transform: uppercase; letter-spacing: 1px; }
+  </style>
+
+  <div class="bloom-rings">
+    <div class="bloom-ring"></div>
+    <div class="bloom-ring"></div>
+  </div>
+
+  <div class="bloom-container">
+    <h3 style="font-family: var(--heading-font-family); font-size: 24px; margin-bottom: 25px;">Scent Chapter</h3>
+    <div class="scent-note-row"><strong>Top</strong><span>{{ product.metafields.custom.top_notes | default: 'Wild Bergamot, Mist' }}</span></div>
+    <div class="scent-note-row"><strong>Heart</strong><span>{{ product.metafields.custom.heart_notes | default: 'French Lavender, Sage' }}</span></div>
+    <div class="scent-note-row"><strong>Base</strong><span>{{ product.metafields.custom.base_notes | default: 'Sandalwood, Honey' }}</span></div>
+  </div>
+</div>

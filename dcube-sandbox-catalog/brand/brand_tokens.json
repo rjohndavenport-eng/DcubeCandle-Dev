@@ -1,0 +1,18 @@
+{
+  "colors": {
+    "accent": "#7E6B8F",
+    "mist": "#E6E1EB",
+    "gold": "#C8973A",
+    "text": "#1E1A20",
+    "bg": "#FFFFFF"
+  },
+  "typography": {
+    "heading": "Cormorant Garamond",
+    "body": "Inter",
+    "accent": "Italiana"
+  },
+  "atmosphere": {
+    "shadow": "0 30px 60px rgba(126, 107, 143, 0.1)",
+    "sunbeam_opacity": 0.15
+  }
+}

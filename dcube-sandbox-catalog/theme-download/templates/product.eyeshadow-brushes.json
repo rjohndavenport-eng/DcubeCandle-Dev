@@ -1,0 +1,212 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_mode": "block",
+            "color_mode": "color",
+            "size_chart_page": ""
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "atc_button_background": "#282828",
+            "atc_button_text_color": "#ffffff",
+            "buy_now_button_background": "#f5f5f5",
+            "buy_now_button_text_color": "#282828"
+          }
+        },
+        "d671e58d-d4e5-4471-ae33-f59d18537bd1": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "d671e58d-d4e5-4471-ae33-f59d18537bd1"
+      ],
+      "settings": {
+        "show_vendor": false,
+        "show_sku": false,
+        "show_taxes_included": false,
+        "show_product_rating": false,
+        "show_sticky_add_to_cart": true,
+        "show_share_buttons": true,
+        "help_page": "size-chart",
+        "enable_video_autoplay": true,
+        "enable_video_looping": false,
+        "enable_image_zoom": true,
+        "show_thumbnails_on_mobile": false,
+        "desktop_thumbnails_position": "bottom",
+        "transition_effect": "slide"
+      }
+    },
+    "product-content": {
+      "type": "product-content",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "description"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "loox-product-reviews-app-section": {
+      "type": "apps",
+      "disabled": true,
+      "settings": {
+        "include_horizontal_margins": true,
+        "include_vertical_margins": true
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "0e00d4f7-5195-4d67-b149-52800d6de7fd": {
+          "type": "product",
+          "settings": {
+            "product": "signature-eyeshadow-palette"
+          }
+        },
+        "346db015-f5ca-4ba1-b586-c238c6e3a2d2": {
+          "type": "product",
+          "settings": {
+            "product": "face-and-nose-sculpting-brush-bundle"
+          }
+        },
+        "af624224-319a-473b-b042-fb958f04e718": {
+          "type": "product",
+          "settings": {
+            "product": "two-contour-palette-bundle"
+          }
+        }
+      },
+      "block_order": [
+        "0e00d4f7-5195-4d67-b149-52800d6de7fd",
+        "346db015-f5ca-4ba1-b586-c238c6e3a2d2",
+        "af624224-319a-473b-b042-fb958f04e718"
+      ],
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "You may also like",
+        "recommendations_count": 4,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "165040061992ba3c47": {
+      "type": "multi-column",
+      "blocks": {
+        "1650400619c5cc2f0c-1": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/vanity-makeup-eyeshadow-brushes-0017_654c4fdf-8cb7-4363-b1e1-5db9f9957b5e.jpg",
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "1650400619c5cc2f0c-0": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/B154A263-5BC7-4452-8DD0-D41D6142D859_1_201_a_f3e1883b-5b12-4f04-b03d-4f22c5d2c8ee.jpg",
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "1650400619c5cc2f0c-2": {
+          "type": "item",
+          "settings": {
+            "image": "shopify://shop_images/vanity-makeup-eyeshadow-brushes-0013.jpg",
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "",
+            "content": "",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        },
+        "1650400619c5cc2f0c-3": {
+          "type": "item",
+          "disabled": true,
+          "settings": {
+            "image_width": 100,
+            "image_border": "rgba(0,0,0,0)",
+            "title": "Column 1",
+            "content": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "link_text": "",
+            "link_url": "",
+            "link_style": "link",
+            "text_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "1650400619c5cc2f0c-1",
+        "1650400619c5cc2f0c-0",
+        "1650400619c5cc2f0c-2",
+        "1650400619c5cc2f0c-3"
+      ],
+      "settings": {
+        "reveal_on_scroll": true,
+        "stack_items": true,
+        "subheading": "7 SIGNATURE EYESHADOW BRUSHES",
+        "title": "ENDLESS POSSIBILITIES",
+        "content": "",
+        "column_alignment": "center",
+        "mobile_item_size": "large",
+        "desktop_item_size": "large",
+        "spacing": "tight",
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-content",
+    "loox-product-reviews-app-section",
+    "product-recommendations",
+    "165040061992ba3c47"
+  ]
+}
