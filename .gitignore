@@ -11,3 +11,33 @@ e4ec5e3c-cffa-4197-b974-c5200c81297d.png
 Thumbs.db
 *.swp
 *.swo
+
+# Environment and secrets — NEVER commit these
+.env
+.env.*
+.env.local
+*.secret
+secrets.*
+
+# Shopify CLI state cache — generated, not source of truth
+.shopify/
+*.shopifyignore.cache
+
+# Node / build artifacts
+node_modules/
+dist/
+.cache/
+
+# Diagnostic / transient pull directories — too large/noisy for git
+dcube-sandbox-catalog/diagnostics/remote-pull/
+dcube-sandbox-catalog/diagnostics/remote-full/
+dcube-sandbox-catalog/diagnostics/post-fix-full/
+dcube-sandbox-catalog/diagnostics/post-fix2-full/
+dcube-sandbox-catalog/diagnostics/fix-push/
+dcube-sandbox-catalog/diagnostics/integrity-check/
+dcube-sandbox-catalog/diagnostics/final-verify/
+dcube-sandbox-catalog/diagnostics/sync_log.txt
+
+# Legacy theme download dir (replaced by shopify/themes/sandbox-160399261916/)
+# NOTE: keep this tracked until migration confirmed complete
+# dcube-sandbox-catalog/theme-download/

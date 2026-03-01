@@ -1,0 +1,61 @@
+<section class="unboxing-reveal-section" style="padding: 100px 0; background: var(--color-surface); overflow: hidden;">
+  <style>
+    .unboxing-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 80px; padding: 0 40px; }
+    .unboxing-visual { flex: 1; position: relative; height: 600px; perspective: 1000px; cursor: pointer; }
+    .unboxing-box-outer { 
+      position: absolute; inset: 0; background: var(--color-surface); 
+      border: 1px solid var(--color-border); z-index: 2; 
+      display: flex; align-items: center; justify-content: center;
+      transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: var(--umbra-shadow);
+    }
+    .unboxing-product-inner {
+      position: absolute; width: 70%; height: 70%; top: 15%; left: 15%;
+      background: linear-gradient(135deg, var(--color-accent-soft), #fff);
+      z-index: 1; transition: all 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--color-border);
+    }
+    .unboxing-visual:hover .unboxing-box-outer { transform: translateY(-60px) rotateX(10deg); opacity: 0.95; }
+    .unboxing-visual:hover .unboxing-product-inner { transform: translateY(80px) scale(1.05); }
+    
+    .unboxing-content { flex: 1; }
+    @media (max-width: 768px) { .unboxing-container { flex-direction: column; } .unboxing-visual { height: 400px; width: 100%; } }
+  </style>
+
+  <div class="unboxing-container">
+    <div class="unboxing-visual">
+      <div class="unboxing-box-outer">
+        <div style="font-family: var(--heading-font-family); letter-spacing: 4px; opacity: 0.5;">DCUBE</div>
+      </div>
+      <div class="unboxing-product-inner">
+        {% if section.settings.product != blank %}
+          {{ section.settings.product.featured_image | image_url: width: 800 | image_tag: style: 'width: 100%; height: 100%; object-fit: contain;' }}
+        {% else %}
+          <span style="font-family: var(--font-accent); font-size: 24px;">REVEAL</span>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="unboxing-content">
+      {% render 'icon' with 'dcube-bee', width: 40, height: 40 %}
+      <h2 style="font-family: var(--heading-font-family); font-size: 42px; margin: 20px 0;">{{ section.settings.title }}</h2>
+      <p style="font-size: 18px; line-height: 1.8; opacity: 0.8; margin-bottom: 40px;">{{ section.settings.text }}</p>
+      <a href="{{ section.settings.link }}" class="button button--primary">{{ section.settings.link_text }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Dcube Unboxing Reveal",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product to Reveal" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The Unboxing Ritual" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Luxury is found in the transition. Witness the architectural reveal." },
+    { "type": "url", "id": "link", "label": "Button Link" },
+    { "type": "text", "id": "link_text", "label": "Button Text", "default": "EXPLORE COLLECTION" }
+  ],
+  "presets": [{ "name": "Dcube Unboxing Reveal" }]
+}
+{% endschema %}

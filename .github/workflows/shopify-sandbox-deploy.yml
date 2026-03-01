@@ -1,0 +1,48 @@
+# DCube Candle Co. — Shopify Sandbox Deploy
+# Runs ONLY on push to: sandbox/* branches
+# Deploys to SANDBOX theme ID 160399261916 ONLY
+# NEVER publishes. NEVER touches live theme.
+# Requires secret: SHOPIFY_CLI_THEME_TOKEN
+
+name: Deploy to Shopify Sandbox
+
+on:
+  push:
+    branches:
+      - 'sandbox/**'
+    paths:
+      - 'shopify/themes/sandbox-160399261916/**'
+
+# Prevent concurrent deploys
+concurrency:
+  group: shopify-sandbox-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-sandbox:
+    name: Push to sandbox theme 160399261916
+    runs-on: ubuntu-latest
+    environment: shopify-sandbox
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Push to sandbox theme (--nodelete)
+        env:
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+          SHOPIFY_FLAG_STORE: dcubecandle.myshopify.com
+        run: |
+          shopify theme push \
+            --theme 160399261916 \
+            --path shopify/themes/sandbox-160399261916 \
+            --nodelete \
+            --no-color

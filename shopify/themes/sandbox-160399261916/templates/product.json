@@ -1,0 +1,144 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_mode": "dropdown",
+            "color_mode": "dropdown",
+            "size_chart_page": ""
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "atc_button_background": "#282828",
+            "atc_button_text_color": "#ffffff",
+            "buy_now_button_background": "#f5f5f5",
+            "buy_now_button_text_color": "#282828"
+          }
+        },
+        "d671e58d-d4e5-4471-ae33-f59d18537bd1": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "d671e58d-d4e5-4471-ae33-f59d18537bd1"
+      ],
+      "settings": {
+        "show_vendor": false,
+        "show_sku": false,
+        "show_taxes_included": false,
+        "show_product_rating": false,
+        "show_sticky_add_to_cart": true,
+        "show_share_buttons": true,
+        "help_page": "size-chart",
+        "enable_video_autoplay": true,
+        "enable_video_looping": false,
+        "enable_image_zoom": true,
+        "show_thumbnails_on_mobile": true,
+        "desktop_thumbnails_position": "bottom",
+        "transition_effect": "slide"
+      }
+    },
+    "product-content": {
+      "type": "product-content",
+      "blocks": {
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "reviews_PpWLiV": {
+          "type": "reviews",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "description",
+        "reviews_PpWLiV"
+      ],
+      "custom_css": [
+        "span {font-size: 14pt !important; font-family: var(--text-font-family);}"
+      ],
+      "settings": {}
+    },
+    "loox-product-reviews-app-section": {
+      "type": "apps",
+      "disabled": true,
+      "settings": {
+        "include_horizontal_margins": true,
+        "include_vertical_margins": true
+      }
+    },
+    "312bc198-436b-4991-82f7-54950ce6cc48": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "reveal_on_scroll": true,
+        "image": "{{ shop.brand.cover_image }}",
+        "subheading": "Subscribe to our newsletter",
+        "content": "<p>Promotions, new products and sales. Directly to your inbox.</p>",
+        "text_position": "right",
+        "text_alignment": "left",
+        "text_background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "17337cee-c55b-42eb-a0d6-b3391b314183": {
+      "type": "product-recommendations",
+      "settings": {
+        "subheading": "",
+        "title": "You may also like",
+        "recommendations_count": 4,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    },
+    "cfc9ce06-65e0-421b-b371-1a9684c9c33c": {
+      "type": "video",
+      "disabled": true,
+      "settings": {
+        "subheading": "",
+        "title": "",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "background_type": "full_width",
+        "video_size": "auto",
+        "autoplay": true,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "product-content",
+    "loox-product-reviews-app-section",
+    "312bc198-436b-4991-82f7-54950ce6cc48",
+    "17337cee-c55b-42eb-a0d6-b3391b314183",
+    "cfc9ce06-65e0-421b-b371-1a9684c9c33c"
+  ]
+}

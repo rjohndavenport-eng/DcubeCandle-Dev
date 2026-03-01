@@ -1,0 +1,64 @@
+<style>
+    .video-wrap{
+      min-height: 50vh;
+    }
+    .video-wrap video {
+      width: 100%;
+  }
+    @media screen and (max-width: 550px){
+        .video-wrap video {
+      height: 70vh !important;
+        }
+    }
+    .video-wrap video {
+      width: 100%;
+      height: 90vh;
+      object-fit: cover;
+  }
+</style>
+<div class="video-wrap">
+  <video
+    playsinline="playsinline"
+    {% if section.settings.loop %}
+      loop="loop"
+    {% endif %}
+    muted="muted"
+    {% if section.settings.autoplay %}
+      autoplay="autoplay"
+    {% endif %}
+    preload="metadata"
+  >
+    <source src="{{ section.settings.url_video }}" type="video/mp4">
+  </video>
+</div>
+
+{% schema %}
+{
+  "name": "Video",
+  "settings": [
+          {
+      "type": "text",
+      "id": "url_video",
+      "label": "Video URL"
+    },
+          {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+           {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": true
+    }
+
+  ],
+    "presets": [
+      {
+        "name": "video emb"
+      }
+    ]
+}
+{% endschema %}

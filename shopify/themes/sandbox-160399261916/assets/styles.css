@@ -1,0 +1,8 @@
+/* homepage css */
+.image-with-text-block__content:not(.image-with-text-block__content--tight) {
+    display: none;
+}
+
+.image-with-text-block__image {
+    object-fit: fill;
+}
