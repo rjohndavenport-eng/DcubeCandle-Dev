@@ -41,3 +41,10 @@ dcube-sandbox-catalog/diagnostics/sync_log.txt
 # Legacy theme download dir (replaced by shopify/themes/sandbox-160399261916/)
 # NOTE: keep this tracked until migration confirmed complete
 # dcube-sandbox-catalog/theme-download/
+
+# Diagnostic snapshots and transient theme pulls
+dcube-sandbox-catalog/diagnostics/smoke-verify/
+dcube-sandbox-catalog/diagnostics/current_tree.txt
+
+# Generated image output — large, not source of truth
+dcube-sandbox-catalog/image-export/
