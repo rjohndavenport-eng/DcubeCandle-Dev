@@ -1,0 +1,27 @@
+{%- liquid
+  assign top_notes = top | default: product.metafields.custom.top_notes
+  assign heart_notes = heart | default: product.metafields.custom.heart_notes
+  assign base_notes = base | default: product.metafields.custom.base_notes
+-%}
+<div class="scent-map-container" style="margin: 40px 0; border: 1px solid var(--color-border); padding: 30px; background: var(--color-surface); box-shadow: var(--umbra-shadow);">
+  <style>
+    .scent-map-title { font-family: var(--font-serif); font-size: 22px; margin-bottom: 25px; border-bottom: 1px solid var(--color-accent-soft); padding-bottom: 10px; }
+    .scent-map-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--color-accent-soft); font-size: 14px; }
+    .scent-map-row:last-child { border-bottom: none; }
+    .scent-map-label { font-family: var(--font-serif); font-weight: 500; color: var(--color-accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+    .scent-map-value { color: var(--color-text); opacity: 0.9; text-align: right; }
+  </style>
+  <h3 class="scent-map-title">The Scent Chapter</h3>
+  <div class="scent-map-row">
+    <span class="scent-map-label">Top Notes</span>
+    <span class="scent-map-value">{{ top_notes }}</span>
+  </div>
+  <div class="scent-map-row">
+    <span class="scent-map-label">The Heart</span>
+    <span class="scent-map-value">{{ heart_notes }}</span>
+  </div>
+  <div class="scent-map-row">
+    <span class="scent-map-label">The Base</span>
+    <span class="scent-map-value">{{ base_notes }}</span>
+  </div>
+</div>

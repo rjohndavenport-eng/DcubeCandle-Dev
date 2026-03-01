@@ -7,9 +7,11 @@
     <a class="product-card-link" href="{{ target_product.url }}">
       <div class="product-image">
         {% if target_product.featured_image %}
-          {{ target_product.featured_image | image_url: width: 900 | image_tag: class: 'product-image-media', loading: 'lazy', alt: target_product.featured_image.alt | default: target_product.title }}
+          {{ target_product.featured_image | image_url: width: 1200, height: 1200, crop: 'center' | image_tag: class: 'product-image-media', loading: 'lazy', alt: target_product.featured_image.alt | default: target_product.title }}
         {% else %}
-          <span class="product-image-label">{{ target_product.title }}</span>
+          <div class="product-image-placeholder">
+            <span class="product-image-label">{{ target_product.title }}</span>
+          </div>
         {% endif %}
       </div>
       <div class="product-info">

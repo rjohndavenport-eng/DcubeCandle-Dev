@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dcube Candle - Master Identity System (COMPLETE)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Montserrat:wght@300;400;500&family=Assistant:wght@300;400&family=La+Belle+Aurore&family=Tenor+Sans&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@400;500;600&family=Italiana&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shopify-theme-dcube/assets/site.css">
+    <style>
+        :root {
+            /* Default Base Tokens */
+            --color-bg: #FFFFFF;
+            --color-surface: #FAFAFA;
+            --color-text: #1E1A20;
+            --color-muted: #5A5560;
+            --color-accent: #4A148C;
+            --color-accent-soft: #F3E5F5;
+            --color-gold: #C8973A;
+            --color-border: #E4D8F2;
+            --shadow-color: rgba(74, 20, 140, 0.05);
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-accent: 'Italiana', serif;
+            --umbra-shadow: 0 2px 4px var(--shadow-color), 0 4px 8px var(--shadow-color), 0 8px 16px var(--shadow-color), 0 16px 32px var(--shadow-color);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.mode-night {
+            --color-bg: #1A0B2E;
+            --color-surface: #25143D;
+            --color-text: #F3E5F5;
+            --color-muted: #A08ABF;
+            --color-accent: #B388FF;
+            --color-accent-soft: #311B92;
+            --color-gold: #FFD54F;
+            --color-border: #4A148C;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Tactile Overlay */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.025; mix-blend-mode: overlay;
+        }
+
+        body { padding: 80px 40px; background: var(--color-bg); color: var(--color-text); font-family: var(--font-sans); line-height: 1.6; }
+        .preview-section { margin-bottom: 120px; max-width: 1200px; margin-left: auto; margin-right: auto; position: relative; }
+        .preview-header { border-bottom: 1px solid var(--color-border); padding-bottom: 20px; margin-bottom: 40px; font-family: var(--font-serif); font-size: 28px; }
+        
+        /* Buttons */
+        .btn-lab { border: 1px solid var(--color-border); padding: 12px 20px; background: var(--color-surface); color: var(--color-text); font-size: 10px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-lab:hover { background: var(--color-accent); color: white; transform: translateY(-2px); }
+        .mode-toggle { position: fixed; bottom: 40px; right: 40px; z-index: 10000; background: var(--color-accent); color: white; border: none; padding: 12px 24px; border-radius: 40px; font-size: 10px; font-weight: 600; cursor: pointer; box-shadow: var(--umbra-shadow); }
+
+        /* Layout */
+        .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 60px; align-items: start; }
+        .card { box-shadow: var(--umbra-shadow); border: 1px solid var(--color-border); background: var(--color-surface); padding: 40px; transition: all 0.5s ease; position: relative; overflow: hidden; }
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+        .color-swatch { border: 1px solid var(--color-border); padding: 15px; border-radius: 4px; background: var(--color-surface); text-align: center; }
+        .color-box { height: 80px; border-radius: 2px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.05); }
+
+        /* Rituals */
+        .unboxing-demo { width: 240px; height: 320px; position: relative; cursor: pointer; perspective: 1000px; margin: 0 auto; }
+        .unboxing-box { position: absolute; inset: 0; background: var(--color-surface); border: 1px solid var(--color-border); z-index: 2; display: flex; align-items: center; justify-content: center; transition: all 0.8s ease; }
+        .unboxing-product { position: absolute; width: 80%; height: 80%; top: 10%; left: 10%; background: linear-gradient(135deg, var(--color-accent-soft), var(--color-bg)); z-index: 1; transition: all 0.8s ease; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border); font-family: var(--font-serif); font-style: italic; color: var(--color-accent); }
+        .unboxing-demo:hover .unboxing-box { transform: translateY(-40px) rotateX(15deg); opacity: 0.9; }
+        .unboxing-demo:hover .unboxing-product { transform: translateY(50px); }
+
+        .strike-demo { width: 180px; height: 180px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: 0.5s; }
+        .strike-glow { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%); opacity: 0; transition: 0.5s; }
+        .strike-demo:hover { border-color: var(--color-gold); box-shadow: 0 0 30px rgba(200, 151, 58, 0.3); }
+        .strike-demo:hover .strike-glow { opacity: 0.5; }
+
+        .bloom-demo { width: 80px; height: 80px; background: var(--color-accent); margin: 40px auto; position: relative; transition: 0.5s; }
+        .bloom-ring { position: absolute; inset: -5px; border: 1px solid var(--color-accent); opacity: 0; transition: 0.8s; }
+        .bloom-demo:hover .bloom-ring { inset: -40px; opacity: 0.3; border-radius: 50%; }
+
+        /* Elements */
+        .wax-seal { width: 64px; height: 64px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; padding: 14px; box-shadow: var(--umbra-shadow); margin: 0 auto; }
+        .scent-map { border: 1px solid var(--color-border); padding: 30px; background: var(--color-surface); }
+        .scent-tier { padding: 10px 0; font-size: 13px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; }
+        .sunbeam-box { height: 120px; background: var(--color-surface); position: relative; overflow: hidden; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+        .sunbeam { position: absolute; top: -50%; left: -20%; width: 50%; height: 200%; background: linear-gradient(105deg, transparent, rgba(200, 151, 58, 0.15), transparent); transform: rotate(25deg); animation: drift 12s infinite alternate linear; }
+        @keyframes drift { from { transform: translateX(-15%) rotate(25deg); } to { transform: translateX(15%) rotate(25deg); } }
+
+        .burn-gauge { width: 4px; height: 120px; background: var(--color-border); margin: 0 auto; position: relative; }
+        .burn-progress { position: absolute; top: 0; left: 0; width: 100%; height: 40%; background: var(--color-accent); }
+        .burn-marker { position: absolute; left: 15px; font-size: 9px; color: var(--color-muted); text-transform: uppercase; white-space: nowrap; }
+
+        .blueprint-cube { width: 100px; height: 100px; border: 1px solid var(--color-accent); position: relative; margin: 0 auto; opacity: 0.3; }
+        .blueprint-line { position: absolute; background: var(--color-accent); height: 1px; width: 140%; left: -20%; top: 50%; transform: rotate(45deg); }
+
+        /* DNA */
+        .watermark-container { height: 200px; background: var(--color-surface); position: relative; overflow: hidden; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; }
+        .watermark-text { position: absolute; font-family: var(--font-serif); font-size: 240px; color: var(--color-accent); opacity: 0.05; left: -20px; bottom: -60px; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <button class="mode-toggle" onclick="toggleNightMode()">✨ TOGGLE ATMOSPHERE</button>
+
+    <header class="preview-section" style="margin-bottom: 80px;">
+        <h1 id="main-brand-title" style="font-family: var(--font-serif); font-size: 56px; margin-bottom: 10px;">Dcube Candle <span style="font-weight: 300;">Master Identity</span></h1>
+        <p id="main-brand-subtitle" style="font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--color-gold);">The synchronized architectural system.</p>
+    </header>
+
+    <!-- SECTION 1: LAVENDER LAB -->
+    <section class="preview-section">
+        <h2 class="preview-header">1. The Lavender Lab (Palette Explorer)</h2>
+        <div style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+            <button class="btn-lab" onclick="setMood('classic')">CLASSIC</button>
+            <button class="btn-lab" onclick="setMood('dusty')">DUSTY</button>
+            <button class="btn-lab" onclick="setMood('ethereal')">ETHEREAL</button>
+            <button class="btn-lab" onclick="setMood('midnight')">MIDNIGHT</button>
+        </div>
+        <div class="color-grid">
+            <div class="color-swatch"><div class="color-box" id="swatch-accent" style="background: var(--color-accent);"></div><strong>Accent</strong></div>
+            <div class="color-swatch"><div class="color-box" id="swatch-soft" style="background: var(--color-accent-soft);"></div><strong>Mist</strong></div>
+            <div class="color-swatch"><div class="color-box" style="background: var(--color-gold);"></div><strong>Gold</strong></div>
+            <div class="color-swatch"><div class="color-box" style="background: var(--color-text);"></div><strong>Text</strong></div>
+            <div class="color-swatch"><div class="color-box" style="background: var(--color-surface);"></div><strong>Surface</strong></div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: TYPOGRAPHY LAB -->
+    <section class="preview-section">
+        <h2 class="preview-header">2. The Typography Lab (Voice Explorer)</h2>
+        <div style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+            <button class="btn-lab" onclick="setFont('classic')">MODERN CLASSIC</button>
+            <button class="btn-lab" onclick="setFont('architectural')">ARCHITECTURAL</button>
+            <button class="btn-lab" onclick="setFont('editorial')">EDITORIAL</button>
+            <button class="btn-lab" onclick="setFont('serene')">SERENE ZEN</button>
+        </div>
+        <div class="comp-grid">
+            <div id="type-sample">
+                <h3 id="sample-h1" style="font-family: var(--font-serif); font-size: 32px; margin-bottom: 10px;">The Geometric Soul</h3>
+                <p id="sample-body" style="font-size: 14px;">Our candles are architectural markers of time, designed to ground your space in the present moment.</p>
+                <p id="sample-accent" style="font-family: var(--font-accent); font-size: 24px; margin-top: 15px; color: var(--color-accent);">Signed by Brianna</p>
+            </div>
+            <p id="sample-poetic" style="font-family: var(--font-serif); font-size: 24px; line-height: 1.6;">
+                A scent that <em style="font-style: italic; color: var(--color-gold);">whispers</em> of lavender fields, embraced by the clarity of the cube.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTION RITUALS -->
+    <section class="preview-section">
+        <h2 class="preview-header">3. Interaction Rituals (The Experience)</h2>
+        <div class="comp-grid">
+            <div class="card" style="text-align: center;">
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 20px;">The Unboxing Reveal</h3>
+                <div class="unboxing-demo">
+                    <div class="unboxing-box"><span>DCUBE</span></div>
+                    <div class="unboxing-product">REVEAL</div>
+                </div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 20px;">The Match Strike</h3>
+                <div class="strike-demo">
+                    <div class="strike-glow"></div>
+                    <span style="font-family: var(--font-serif); font-style: italic;">Hover to Light</span>
+                </div>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 20px;">The Scent Bloom</h3>
+                <div class="bloom-demo">
+                    <div class="bloom-ring"></div>
+                    <div class="bloom-ring" style="transition-delay: 0.2s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: ADVANCED VISUAL ELEMENTS -->
+    <section class="preview-section">
+        <h2 class="preview-header">4. Advanced Visual Elements (The Details)</h2>
+        <div class="comp-grid">
+            <div>
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 15px;">The Wax Seal & Sunbeam</h3>
+                <div class="wax-seal" style="margin-bottom: 20px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"></circle><ellipse cx="12" cy="14" rx="4" ry="6"></ellipse></svg></div>
+                <div class="sunbeam-box"><div class="sunbeam"></div></div>
+            </div>
+            <div class="scent-map">
+                <h3 style="font-family: var(--font-serif); font-size: 22px; margin-bottom: 15px;">Scent Journey</h3>
+                <div class="scent-tier"><strong>Top</strong><span>Bergamot, Mist</span></div>
+                <div class="scent-tier"><strong>Heart</strong><span>Lavender, Clary Sage</span></div>
+                <div class="scent-tier"><strong>Base</strong><span>Honey, Sandalwood</span></div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 30px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <div class="burn-gauge"><div class="burn-progress"></div><div class="burn-marker" style="top:0;">Fresh</div><div class="burn-marker" style="bottom:0;">Memory</div></div>
+                    <span style="font-size: 11px;">BURN GAUGE</span>
+                </div>
+                <div style="text-align: center;">
+                    <div class="blueprint-cube"><div class="blueprint-line"></div><div class="blueprint-line" style="transform:rotate(-45deg);"></div></div>
+                    <span style="font-size: 9px; letter-spacing: 1px; display: block; margin-top: 10px;">ARCHITECTURAL PLAN</span>
+                </div>
+                <div style="text-align: center; border-top: 1px solid var(--color-border); padding-top: 10px;">
+                    <p style="font-family: var(--font-serif); font-size: 18px; color: var(--color-accent);">27.3364° N, 82.5307° W</p>
+                    <span style="font-size: 9px; letter-spacing: 2px;">SARASOTA, FL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 & 6: LOGO DNA & ATMOSPHERE -->
+    <section class="preview-section">
+        <h2 class="preview-header">5 & 6. Logo DNA & Atmosphere Lab</h2>
+        <div style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap;">
+            <button class="btn-lab" onclick="setAtmo('gallery')">THE GALLERY</button>
+            <button class="btn-lab" onclick="setAtmo('sanctuary')">THE SANCTUARY</button>
+            <button class="btn-lab" onclick="setAtmo('studio')">THE STUDIO</button>
+        </div>
+        <div class="comp-grid">
+            <div class="watermark-container">
+                <div class="watermark-text" id="dna-watermark">D</div>
+                <p style="position: relative; z-index: 2; font-family: var(--font-serif); font-style: italic;">Structural Soul</p>
+            </div>
+            <div id="atmo-zone" class="card" style="text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                <h2 id="atmo-title" style="font-family: var(--font-serif); margin-bottom: 10px;">ENVIRONMENT STUDY</h2>
+                <p id="atmo-desc" style="font-size: 13px; max-width: 250px; margin: 0 auto;">Select an atmosphere above to recalibrate spatial depth.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: NARRATIVE & SOCIAL PROOF -->
+    <section class="preview-section">
+        <h2 class="preview-header">7. Narrative & Social Proof (The Voice)</h2>
+        <div class="comp-grid">
+            <div class="card">
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 15px;">Scent Chapter Formula</h3>
+                <p style="font-size: 18px; font-family: var(--font-serif); margin-bottom: 10px; color: var(--color-accent);">"A whisper of wild fields before the first frost."</p>
+                <p style="font-size: 13px; line-height: 1.7; opacity: 0.8;">French Lavender held by a base of warm sandalwood and wild honey. Architectural serenity for the modern home.</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="card" style="padding: 25px; border-left: 4px solid var(--color-gold);">
+                    <p style="font-style: italic; font-size: 14px; margin-bottom: 5px;">"The cube shape is a piece of art on my nightstand even unlit."</p>
+                    <span style="font-size: 10px; color: var(--color-muted);">— ELEANOR R., NY</span>
+                </div>
+                <div class="card" style="padding: 25px; border-left: 4px solid var(--color-accent);">
+                    <p style="font-style: italic; font-size: 14px; margin-bottom: 5px;">"Finally, a lavender candle that feels clean and modern."</p>
+                    <span style="font-size: 10px; color: var(--color-muted);">— MARCUS T., FL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: PHOTOGRAPHIC INTELLIGENCE & PIPELINE -->
+    <section class="preview-section">
+        <h2 class="preview-header">8. Visual Pipeline (Asset Intelligence)</h2>
+        <p style="margin-bottom: 30px; font-size: 14px; color: var(--color-muted);">Our autonomous pipeline ensures every image matches the "Vision Scheme" before deployment.</p>
+        
+        <div class="comp-grid">
+            <!-- 400% Zoom Gate -->
+            <div class="card" style="padding: 0;">
+                <div style="background: #000; height: 200px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                    <div style="color: #fff; font-family: var(--font-serif); font-size: 80px; transform: scale(4); opacity: 0.9;">DCUBE</div>
+                    <div style="position: absolute; inset: 0; border: 2px solid var(--color-gold); pointer-events: none;"></div>
+                </div>
+                <div style="padding: 30px;">
+                    <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 10px;">The 400% Crispness Gate</h3>
+                    <p style="font-size: 12px;">Labels must remain sharp at ultra-high zoom. No AI artifacts allowed on protected text.</p>
+                </div>
+            </div>
+
+            <!-- Composition Calibration -->
+            <div class="card" style="padding: 0; background: var(--color-accent-soft);">
+                <div style="height: 200px; display: flex; align-items: center; justify-content: center; position: relative;">
+                    <!-- Rule of Thirds Grid -->
+                    <div style="position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; opacity: 0.1;">
+                        <div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div>
+                        <div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div>
+                        <div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div><div style="border: 1px solid var(--color-accent);"></div>
+                    </div>
+                    <div style="width: 80px; height: 80px; background: white; box-shadow: var(--umbra-shadow); position: relative; z-index: 2;"></div>
+                </div>
+                <div style="padding: 30px;">
+                    <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 10px;">The Cube Rule (75% Fill)</h3>
+                    <p style="font-size: 12px;">Automated centering and scaling to ensure a consistent grid across the storefront.</p>
+                </div>
+            </div>
+
+            <!-- Batch Pipeline Progress -->
+            <div class="card" style="padding: 30px;">
+                <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 20px;">Asset Pipeline Status</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 11px;"><span>Calibration</span><span style="color: var(--color-accent);">COMPLETE</span></div>
+                    <div style="height: 4px; background: var(--color-accent-soft);"><div style="width: 100%; height: 100%; background: var(--color-accent);"></div></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 11px;"><span>Batch Processing</span><span style="color: var(--color-muted);">WAITING FOR RAW</span></div>
+                    <div style="height: 4px; background: var(--color-accent-soft);"><div style="width: 10%; height: 100%; background: var(--color-muted);"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: BACKGROUND & LIGHTING STUDIES -->
+    <section class="preview-section">
+        <h2 class="preview-header">9. Background & Lighting Studies (The Treatment)</h2>
+        <p style="margin-bottom: 30px; font-size: 14px; color: var(--color-muted);">Visual definitions for the background and lighting profiles to be applied across the catalog.</p>
+        
+        <div class="comp-grid">
+            <!-- Example 1: Studio High-Key -->
+            <div class="card" style="padding: 0; background: #FAFAFA;">
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                    <!-- Soft Studio Lighting Simulation -->
+                    <div style="position: absolute; inset: 0; background: radial-gradient(circle at 30% 30%, #fff 0%, transparent 70%); opacity: 0.8;"></div>
+                    <!-- Product with Umbra Shadow -->
+                    <div style="width: 100px; height: 100px; background: white; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; z-index: 2;"></div>
+                </div>
+                <div style="padding: 30px; border-top: 1px solid var(--color-border);">
+                    <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 10px;">01. Studio High-Key</h3>
+                    <p style="font-size: 12px;">Background: <code>#FAFAFA</code>. Shadow: Multi-layered neutral umbra. Lighting: 5500K Day-neutral.</p>
+                </div>
+            </div>
+
+            <!-- Example 2: Atmospheric Lavender -->
+            <div class="card" style="padding: 0; background: linear-gradient(135deg, #F3E5F5 0%, #FFFFFF 100%);">
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                    <!-- Scent Bloom Lighting Simulation -->
+                    <div class="sunbeam" style="opacity: 0.2; transform: rotate(15deg);"></div>
+                    <div style="width: 100px; height: 100px; background: white; border: 1px solid #E4D8F2; box-shadow: 0 30px 60px rgba(74, 20, 140, 0.12); position: relative; z-index: 2;"></div>
+                </div>
+                <div style="padding: 30px; border-top: 1px solid var(--color-border);">
+                    <h3 style="font-size: 10px; text-transform: uppercase; color: var(--color-muted); margin-bottom: 10px;">02. Atmospheric Mist</h3>
+                    <p style="font-size: 12px;">Background: Lavender-Mist Gradient. Shadow: Saturated Lavender tint. Lighting: Soft window beam.</p>
+                </div>
+            </div>
+
+            <!-- Example 3: Nocturnal Ritual -->
+            <div class="card" style="padding: 0; background: #1A0B2E;">
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                    <!-- Amber Glow Lighting Simulation -->
+                    <div style="position: absolute; bottom: -20%; width: 150%; height: 80%; background: radial-gradient(circle, rgba(200, 151, 58, 0.2) 0%, transparent 70%);"></div>
+                    <div style="width: 100px; height: 100px; background: #25143D; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 0 40px rgba(0,0,0,0.6); position: relative; z-index: 2;"></div>
+                </div>
+                <div style="padding: 30px; border-top: 1px solid #4A148C;">
+                    <h3 style="font-size: 10px; text-transform: uppercase; color: #A08ABF; margin-bottom: 10px;">03. Nocturnal Ritual</h3>
+                    <p style="font-size: 12px; color: #F3E5F5;">Background: Midnight. Shadow: Negative space absorption. Lighting: Warm amber "wick-glow."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const state = {
+            moods: {
+                classic: { acc: '#4A148C', soft: '#F3E5F5' },
+                dusty: { acc: '#7E6B8F', soft: '#E6E1EB' },
+                ethereal: { acc: '#B39DDB', soft: '#F9F7FA' },
+                midnight: { acc: '#311B92', soft: '#EDE7F6' }
+            },
+            fonts: {
+                classic: { h: "'Cormorant Garamond'", b: "'Inter'", a: "'Italiana'" },
+                architectural: { h: "'Montserrat'", b: "'Inter'", a: "'Playfair Display'" },
+                editorial: { h: "'Bodoni Moda'", b: "'Assistant'", a: "'La Belle Aurore'" },
+                serene: { h: "'Tenor Sans'", b: "'Noto Serif'", a: "'Montserrat'" }
+            },
+            atmos: {
+                gallery: { bg: 'var(--color-bg)', bord: '1px solid var(--color-text)', shad: 'none' },
+                sanctuary: { bg: 'var(--color-accent-soft)', bord: 'none', shad: '0 30px 60px rgba(74,20,140,0.1)' },
+                studio: { bg: 'var(--color-surface)', bord: '1px solid var(--color-border)', shad: '0 10px 20px rgba(0,0,0,0.05)' }
+            }
+        };
+
+        function setMood(k) {
+            const m = state.moods[k];
+            document.documentElement.style.setProperty('--color-accent', m.acc);
+            document.documentElement.style.setProperty('--color-accent-soft', m.soft);
+            document.getElementById('swatch-accent').style.background = m.acc;
+            document.getElementById('swatch-soft').style.background = m.soft;
+        }
+
+        function setFont(k) {
+            const f = state.fonts[k];
+            document.documentElement.style.setProperty('--font-serif', f.h);
+            document.documentElement.style.setProperty('--font-sans', f.b);
+            document.documentElement.style.setProperty('--font-accent', f.a);
+            
+            // Apply to all samples
+            const targets = ['main-brand-title', 'main-brand-subtitle', 'sample-h1', 'sample-body', 'sample-accent', 'sample-poetic', 'atmo-title'];
+            targets.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    if(id.includes('h1') || id.includes('title')) el.style.fontFamily = f.h;
+                    if(id.includes('body')) el.style.fontFamily = f.b;
+                    if(id.includes('accent')) el.style.fontFamily = f.a;
+                    if(id.includes('poetic')) el.style.fontFamily = f.h;
+                }
+            });
+        }
+
+        function setAtmo(k) {
+            const a = state.atmos[k];
+            const z = document.getElementById('atmo-zone');
+            z.style.background = a.bg;
+            z.style.border = a.bord;
+            z.style.boxShadow = a.shad;
+            document.getElementById('atmo-title').innerText = k.toUpperCase();
+        }
+
+        function toggleNightMode() {
+            document.body.classList.toggle('mode-night');
+        }
+    </script>
+</body>
+</html>

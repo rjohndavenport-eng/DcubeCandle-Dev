@@ -1,0 +1,38 @@
+{
+  "brand_identity": {
+    "name": "Dcube Candle",
+    "pillar": "Architectural Serenity",
+    "color_palette": {
+      "background_primary": "#FAFAFA",
+      "background_secondary": "#F3E5F5",
+      "accent_primary": "#4A148C",
+      "accent_gold": "#C8973A"
+    }
+  },
+  "visual_rules": {
+    "aspect_ratio": "1:1 (Square)",
+    "target_dimensions": "2048x2048",
+    "file_format": "WEBP (Lossless/High-Quality)",
+    "composition": {
+      "subject_fill": "75%",
+      "alignment": "Center",
+      "margins": "10% safe zone"
+    },
+    "lighting": {
+      "type": "Soft Window Light (Diffuse)",
+      "shadows": "Deep Umbra, Multi-layered (CSS: 0 16px 32px rgba(74,20,140,0.05))",
+      "highlights": "No harsh specular hotspots on glass"
+    },
+    "post_processing": {
+      "grain": "2% monochromatic noise (Linen effect)",
+      "saturation": "-5% (Desaturated/Calm)",
+      "sharpness": "Standard (Do not over-sharpen text)"
+    }
+  },
+  "guardrails": {
+    "logo_protection": "STRICT. Do not regenerate text.",
+    "label_integrity": "Must pass 400% zoom check.",
+    "background_replacement": "Allowed (Masking Only for product edge)",
+    "generative_fill": "Allowed for background extension ONLY."
+  }
+}

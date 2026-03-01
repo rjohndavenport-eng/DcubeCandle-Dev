@@ -29,21 +29,22 @@
 
     <!-- Center: logo -->
     <div class="site-header__logo">
-      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }} — Home">
+      <a href="{{ routes.root_url }}" class="logo-link" aria-label="{{ shop.name }} — Home">
         {%- if settings.logo != blank -%}
           {{ settings.logo | image_url: width: 640 | image_tag:
+             class: 'header-logo',
              alt: shop.name,
              widths: '160,240,320,480,640',
-             loading: 'eager',
-             width: 180,
-             height: 56 }}
+             loading: 'eager' }}
         {%- else -%}
           <img
             src="{{ 'dcube_350x.webp' | asset_url }}"
+            class="header-logo"
             alt="{{ shop.name }} — {{ settings.tagline | default: 'Purveyor of Luxury Scents' }}"
-            width="180"
-            height="56"
+            width="350"
+            height="350"
             loading="eager"
+            style="max-width: {{ settings.logo_width | default: 180 }}px; height: auto;"
           >
         {%- endif -%}
       </a>

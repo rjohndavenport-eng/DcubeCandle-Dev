@@ -1,15 +1,17 @@
 {%- liquid
   assign seo_title = page_title | default: shop.name
-  if current_tags
+
+  if request.page_type == 'product'
+    assign scent_note = product.metafields.custom.scent_note | default: product.type
+    assign seo_title = product.title | append: ' | ' | append: scent_note | append: ' Cube Candle | ' | append: shop.name
+  elsif current_tags
     assign meta_tags = current_tags | join: ', '
     assign seo_title = seo_title | append: ' - ' | append: meta_tags
   endif
+
   if current_page != 1
     assign seo_title = seo_title | append: ' - Page ' | append: current_page
   endif
-  unless seo_title contains shop.name
-    assign seo_title = seo_title | append: ' | ' | append: shop.name
-  endunless
 
   assign seo_description = page_description | default: settings.meta_description_default | default: shop.meta_description | default: 'Purveyor of Luxury Scents'
   assign seo_image = page_image | default: settings.og_image | default: settings.logo

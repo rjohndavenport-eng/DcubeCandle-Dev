@@ -1,0 +1,39 @@
+{%- liquid
+  assign seal_label = label | default: 'LTD EDITION'
+-%}
+<div class="wax-seal-wrapper" style="text-align: center; margin: 20px auto;">
+  <style>
+    .wax-seal-ui {
+      width: 64px; height: 64px;
+      background: var(--color-accent);
+      color: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 
+        inset 0 2px 4px rgba(255,255,255,0.2),
+        inset 0 -2px 4px rgba(0,0,0,0.3),
+        var(--umbra-shadow);
+      position: relative;
+      padding: 14px;
+      margin: 0 auto;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .wax-seal-ui:hover { transform: scale(1.1) rotate(5deg); }
+    .wax-seal-ui svg { width: 100%; height: 100%; }
+    .wax-seal-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+      margin-top: 12px; color: var(--color-accent);
+      text-transform: uppercase;
+    }
+  </style>
+  <div class="wax-seal-ui">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="12" cy="8" r="3"></circle>
+      <ellipse cx="12" cy="14" rx="4" ry="6"></ellipse>
+      <line x1="8" y1="11" x2="6" y2="9"></line>
+      <line x1="16" y1="11" x2="18" y2="9"></line>
+    </svg>
+  </div>
+  <div class="wax-seal-label">{{ seal_label }}</div>
+</div>
