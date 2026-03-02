@@ -166,6 +166,14 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           display: block !important;
         }
 
+        /* On touch/mobile, no hover exists — hide secondary to prevent bleed-through.
+           Uses hover:none (more reliable than pointer:coarse — covers Instagram iOS in-app browser) */
+        @media (hover: none) {
+          .dcube-secondary-img {
+            display: none !important;
+          }
+        }
+
         /* Ensure product labels render above image stack */
         .product-item__label-list {
           z-index: 10;
@@ -180,6 +188,10 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           left: 0 !important;
           width: 100% !important;
           height: 100% !important;
+          max-width: none !important;
+          max-height: none !important;
+          object-fit: cover !important;
+          object-position: center !important;
           z-index: 5 !important;
         }
 
