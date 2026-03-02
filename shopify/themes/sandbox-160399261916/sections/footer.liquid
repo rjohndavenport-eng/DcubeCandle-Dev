@@ -7,6 +7,10 @@
     --text-color: {{ settings.footer_text_color.red }}, {{ settings.footer_text_color.green }}, {{ settings.footer_text_color.blue }};
     --border-color: {{ border_color.red }}, {{ border_color.green }}, {{ border_color.blue }};
   }
+
+  #shopify-section-{{ section.id }} svg {
+    color: #7E6B8F !important; /* Dusty Accent */
+  }
 </style>
 
 <footer class="footer {% if settings.footer_background == settings.background %}footer--bordered{% endif %}">
