@@ -1,0 +1,64 @@
+{
+  "palette": "dusty",
+  "typography": "modern_classic",
+  "atmosphere": "sanctuary",
+  "locked": true,
+  "source": "preview-brand.html",
+  "generated": "2026-03-01",
+
+  "tokens": {
+    "color_accent":       { "hex": "#7E6B8F", "rgb": "126, 107, 143" },
+    "color_mist":         { "hex": "#E6E1EB", "rgb": "230, 225, 235" },
+    "color_gold":         { "hex": "#C8973A", "rgb": "200, 151, 58"  },
+    "color_text":         { "hex": "#1E1A20", "rgb": "30, 26, 32"    },
+    "color_background":   { "hex": "#FFFFFF", "rgb": "255, 255, 255" },
+    "color_muted":        { "hex": "#5A5560", "rgb": "90, 85, 96"    },
+    "color_border":       { "hex": "#D1C9DB", "rgb": "209, 201, 219" },
+    "shadow_color":       { "rgba": "rgba(126, 107, 143, 0.1)"       },
+    "font_heading":       "Cormorant Garamond",
+    "font_body":          "Inter",
+    "font_accent":        "Italiana",
+    "heading_weight":     300
+  },
+
+  "shopify_css_vars": {
+    "--primary-button-background":   "126, 107, 143",
+    "--secondary-button-background": "200, 151, 58",
+    "--primary-button-text-color":   "255, 255, 255",
+    "--secondary-button-text-color": "255, 255, 255",
+    "--background":                  "255, 255, 255",
+    "--secondary-background":        "230, 225, 235",
+    "--heading-color":               "30, 26, 32",
+    "--text-color":                  "30, 26, 32",
+    "--border-color":                "209, 201, 219",
+    "--root-primary-button-background": "126, 107, 143",
+    "--root-primary-button-text-color": "255, 255, 255",
+    "--heading-font-family":         "'Cormorant Garamond', serif",
+    "--heading-font-weight":         "300",
+    "--text-font-family":            "'Inter', sans-serif",
+    "--font-accent":                 "'Italiana', serif",
+    "--color-accent":                "rgb(126, 107, 143)",
+    "--color-accent-soft":           "rgb(230, 225, 235)",
+    "--color-gold":                  "rgb(200, 151, 58)",
+    "--color-text":                  "rgb(30, 26, 32)",
+    "--color-muted":                 "rgb(90, 85, 96)",
+    "--color-border":                "rgb(209, 201, 219)",
+    "--color-surface":               "rgb(230, 225, 235)",
+    "--umbra-shadow":                "0 30px 60px rgba(126, 107, 143, 0.1)"
+  },
+
+  "known_drifts_corrected": [
+    {
+      "var": "--border-color",
+      "was": "230, 225, 235 (#E6E1EB)",
+      "now": "209, 201, 219 (#D1C9DB)",
+      "fixed": "2026-03-01"
+    },
+    {
+      "var": "atc_button_background (product.json)",
+      "was": "#282828",
+      "now": "#7E6B8F",
+      "fixed": "2026-03-01"
+    }
+  ]
+}
