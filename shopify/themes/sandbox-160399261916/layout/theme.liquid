@@ -157,15 +157,9 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           opacity: 1 !important;
         }
 
-        /* ─── IMAGE STACK CONTAINER — must clip the slide ─── */
-        /* Focal's .aspect-ratio img forces position:absolute on both images.
-           overflow:hidden here (on their direct parent) is required for the
-           translateY slide to be clipped at the card boundary. */
-        .product-item__aspect-ratio {
-          overflow: hidden !important;
-        }
-
         /* ─── SECONDARY IMAGE — absolute behind primary ─── */
+        /* No overflow:hidden on container — it breaks the padding-bottom aspect-ratio trick.
+           Clip-path on the primary handles the reveal without needing a clipping ancestor. */
         .dcube-secondary-img {
           position: absolute !important;
           inset: 0 !important;
@@ -183,7 +177,9 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           z-index: 10;
         }
 
-        /* ─── PRIMARY IMAGE — on top, slides up to reveal secondary ─── */
+        /* ─── PRIMARY IMAGE — on top, wipes upward to reveal secondary ─── */
+        /* clip-path inset(0→100% from top) = top edge disappears first, simulating slide-up.
+           No overflow:hidden needed on any ancestor. */
         .dcube-primary-img {
           position: absolute !important;
           top: 0 !important;
@@ -191,12 +187,12 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           width: 100% !important;
           height: 100% !important;
           z-index: 5 !important;
-          background: #fff;
-          transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) !important;
+          clip-path: inset(0 0 0 0);
+          transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1) !important;
         }
         @media (pointer: fine) {
           .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
-            transform: translateY(-100%) !important; /* Full slide — reveals secondary completely */
+            clip-path: inset(100% 0 0 0) !important; /* wipe up: top exits first */
           }
           /* DCUBE: Solo image fallback ritual — subtle scale + soft glow */
           .product-item:hover .dcube-primary-img--solo {
@@ -210,9 +206,10 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease !important;
         }
 
-        /* ─── prefers-reduced-motion — crossfade instead of slide ─── */
+        /* ─── prefers-reduced-motion — crossfade instead of wipe ─── */
         @media (prefers-reduced-motion: reduce) {
           .dcube-primary-img {
+            clip-path: none !important;
             transition: opacity 0.3s ease !important;
           }
           .dcube-secondary-img {
@@ -221,7 +218,7 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           }
           @media (pointer: fine) {
             .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
-              transform: none !important;
+              clip-path: none !important;
               opacity: 0 !important;
             }
             .product-item:hover .dcube-secondary-img {
