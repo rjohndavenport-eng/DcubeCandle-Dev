@@ -286,6 +286,13 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           margin-right: auto;
         }
 
+        /* ─── GLOBAL BUTTON BACKSTOP — prevents section-level color leaks ─── */
+        .button--primary,
+        .shopify-payment-button__button--unbranded {
+          background: rgb(126, 107, 143) !important;
+          color: rgb(255, 255, 255) !important;
+        }
+
       </style>
     {%- endif -%}
 

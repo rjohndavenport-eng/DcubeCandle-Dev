@@ -111,7 +111,7 @@
           "cycle_speed": 10,
           "background": "#E6E1EB",
           "text_color": "#000000",
-          "button_background": "#000000",
+          "button_background": "#7E6B8F",
           "button_text_color": "#ffffff"
         }
       },
@@ -289,29 +289,8 @@
       },
       "custom-font": {
         "type": "custom-font",
-        "blocks": {
-          "image_847CPj": {
-            "type": "image",
-            "settings": {
-              "name": "Copperplate Gothic Std 29BC",
-              "custom_font_weight": "none",
-              "custom_font_style": "none",
-              "custom_font_url": "https://cdn.shopify.com/s/files/1/0706/6412/6684/files/Copperplate-Gothic-Std-29-BC.ttf?v=1722977137",
-              "apply_h1": true,
-              "apply_h2": true,
-              "apply_h3": true,
-              "apply_h4": true,
-              "apply_h5": true,
-              "apply_h6": true,
-              "apply_span": true,
-              "apply_p": true,
-              "apply_custom": "a, button, .shopify-policy__body *, .contact , .newsletter-modal, .page-content"
-            }
-          }
-        },
-        "block_order": [
-          "image_847CPj"
-        ],
+        "blocks": {},
+        "block_order": [],
         "settings": {
           "enable": false
         }
