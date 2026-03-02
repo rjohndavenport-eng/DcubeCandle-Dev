@@ -1,218 +1,258 @@
 /**
- * CODEX-EDITOR
- * Batch background removal + styled compositing for DCube product images.
+ * CODEX-EDITOR v2 — OpenAI gpt-image-1 backend
  *
  * Pipeline per image:
- *   1. removeBackground() → product on transparent RGBA PNG (in-memory)
- *   2. generateBackground()  → 2000×2000 Sharp instance matching variant
- *   3. Composite product: centered, scaled to target height ratio
- *   4. Export 2000×2000 WebP @ q=92
- *   5. Update manifest.json entry (status, prompt_used, params_used, failure_reason)
+ *   1. rembg extracts product onto transparent background (RGBA PNG)
+ *   2. Pad/centre to 1024×1024 square PNG (required by images.edit)
+ *   3. openai.images.edit(model=gpt-image-1, image=product-transparent, prompt)
+ *      → OpenAI fills the transparent zone with the styled scene
+ *   4. Upscale result to 2048×2048, export WebP q=92
+ *   5. Update manifest.json
  *
- * Variants:
- *   coastal_lifestyle — warm sand (bottom 45%) + soft sky (top 55%) + bokeh overlay
- *   clean_studio      — cream/off-white radial gradient, subtle soft shadow under product
+ * Fallback (glass/translucent products where rembg < 15% opaque):
+ *   Skip rembg → use openai.images.generate with original photo as reference
  */
 
+import 'dotenv/config';
+import OpenAI, { toFile } from 'openai';
 import { removeBackground } from '@imgly/background-removal-node';
 import sharp from 'sharp';
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
-import { dirname } from 'path';
 import { pathToFileURL } from 'url';
+import { dirname } from 'path';
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const OUTPUT_SIZE  = 2000;           // px, square
-const WEBP_QUALITY = 92;
+const EDIT_SIZE     = '1024x1024';   // images.edit input/output size
+const OUTPUT_SIZE   = 2048;          // final export px (square)
+const WEBP_QUALITY  = 92;
+const MIN_OPAQUE    = 0.15;          // below this → skip rembg, use generate fallback
 
-// Product framing targets (as fraction of OUTPUT_SIZE height)
-const FRAME = {
-  candle:     { minH: 0.70, maxH: 0.80 },
-  diffuser:   { minH: 0.60, maxH: 0.75 },
-  room_spray: { minH: 0.65, maxH: 0.78 },
-  gift_set:   { minH: 0.65, maxH: 0.78 },
-};
-const DEFAULT_FRAME = { minH: 0.65, maxH: 0.78 };
-
-// DCube brand palette
-const BRAND = {
-  offWhite:   { r: 250, g: 249, b: 246 },   // #faf9f6
-  cream:      { r: 245, g: 240, b: 228 },   // warm cream
-  sandLight:  { r: 232, g: 210, b: 175 },   // pale sand
-  sandMid:    { r: 196, g: 165, b: 120 },   // mid sand
-  skyLight:   { r: 188, g: 214, b: 225 },   // coastal sky
-  skyMid:     { r: 155, g: 192, b: 210 },   // deeper sky
-  skyDeep:    { r: 124, g: 168, b: 195 },   // horizon line
-};
-
-// ── Paths ─────────────────────────────────────────────────────────────────────
 const MANIFEST_PATH = 'D:/onedrive/Desktop/becandle/dcube-sandbox-catalog/image-export/products/_styled/manifest.json';
 
-// ── Background generators ─────────────────────────────────────────────────────
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-/**
- * COASTAL LIFESTYLE background
- * Sky-to-horizon gradient top 55%, warm sand bottom 45%.
- * A soft radial blur ellipse simulates bokeh/light bloom near the horizon.
- */
-async function makeCoastalBackground() {
-  const S = OUTPUT_SIZE;
+// ── Style prompts ──────────────────────────────────────────────────────────────
+//
+// These are tuned to the reference images:
+//   - Sarasota Sunshine candle beach hero
+//   - Diffuser beach lifestyle set
+//   - Diffuser studio gift box
+//
+const PROMPTS = {
+  coastal_lifestyle: `
+Premium luxury product sitting on warm sandy beach.
+Turquoise ocean and bright blue sky with soft clouds in background.
+Shallow depth-of-field bokeh on the ocean.
+Warm golden sunlight bloom from the upper right corner.
+Small natural props at the base of the product: one halved citrus orange slice, one small starfish, one seashell — all resting on sand. Props do not cover any text or label.
+Fine beach sand in the foreground showing natural texture.
+Photorealistic premium lifestyle product photography.
+Ultra high quality. Soft cinematic lighting.
+The product pixels are masked and must not be changed in any way. Only generate the background scene. Do not redraw, reinterpret, smear, blur, or hallucinate any text, logo, label, or product surface. Every letter and marking must remain pixel-perfect as provided.
+`.trim(),
 
-  // Sky gradient: top row = skyDeep, horizon row = skyLight
-  // Sand gradient: horizon row = sandLight, bottom row = sandMid
-  // Build as SVG then rasterize — gives smooth linear gradients with no banding.
-  const horizonY = Math.round(S * 0.52);  // horizon line
+  clean_studio: `
+Premium luxury product on a pure white to soft cream gradient studio surface.
+Clean bright studio lighting from upper left. Soft elegant shadow beneath the product.
+No props. Minimal composition. Sophisticated luxury brand aesthetic.
+Photorealistic premium studio product photography. Ultra high quality.
+The product pixels are masked and must not be changed in any way. Only generate the background scene. Do not redraw, reinterpret, smear, blur, or hallucinate any text, logo, label, or product surface. Every letter and marking must remain pixel-perfect as provided.
+`.trim(),
+};
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${S}" height="${S}">
-    <defs>
-      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="rgb(${BRAND.skyDeep.r},${BRAND.skyDeep.g},${BRAND.skyDeep.b})"/>
-        <stop offset="100%" stop-color="rgb(${BRAND.skyLight.r},${BRAND.skyLight.g},${BRAND.skyLight.b})"/>
-      </linearGradient>
-      <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stop-color="rgb(${BRAND.sandLight.r},${BRAND.sandLight.g},${BRAND.sandLight.b})"/>
-        <stop offset="100%" stop-color="rgb(${BRAND.sandMid.r},${BRAND.sandMid.g},${BRAND.sandMid.b})"/>
-      </linearGradient>
-      <!-- warm golden bloom at horizon -->
-      <radialGradient id="bloom" cx="50%" cy="${Math.round(horizonY / S * 100)}%" r="60%">
-        <stop offset="0%"   stop-color="rgb(255,235,190)" stop-opacity="0.55"/>
-        <stop offset="100%" stop-color="rgb(255,235,190)" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <!-- sky -->
-    <rect x="0" y="0" width="${S}" height="${horizonY}" fill="url(#sky)"/>
-    <!-- sand -->
-    <rect x="0" y="${horizonY}" width="${S}" height="${S - horizonY}" fill="url(#sand)"/>
-    <!-- horizon bloom -->
-    <rect x="0" y="0" width="${S}" height="${S}" fill="url(#bloom)"/>
-  </svg>`;
+// ── Step 1: rembg extraction ──────────────────────────────────────────────────
+async function extractForeground(inputPath) {
+  const fileUrl  = pathToFileURL(inputPath).href;
+  const blob     = await removeBackground(fileUrl, {
+    model: 'medium',
+    output: { format: 'image/png', quality: 1 },
+  });
+  const buf      = Buffer.from(await blob.arrayBuffer());
 
-  // Rasterize SVG → apply subtle gaussian blur to simulate depth-of-field in background
-  const bg = await sharp(Buffer.from(svg))
-    .resize(S, S)
-    .blur(6)   // soft bokeh on background before product is composited
+  // Measure opaque fraction
+  const { data, info } = await sharp(buf).raw().toBuffer({ resolveWithObject: true });
+  let opaque = 0;
+  for (let i = 3; i < data.length; i += 4) { if (data[i] > 30) opaque++; }
+  const opaqueFrac = opaque / (info.width * info.height);
+
+  return { buf, opaqueFrac };
+}
+
+// ── Step 2: Pad to square PNG ─────────────────────────────────────────────────
+//
+// images.edit requires a square PNG.
+// We centre the extracted product in a 1024×1024 transparent canvas.
+//
+async function padToSquare(fgBuf, size = 1024) {
+  const meta = await sharp(fgBuf).metadata();
+
+  // Scale so the product fills ~80% of the target square
+  const targetFill = Math.round(size * 0.80);
+  const scale      = Math.min(targetFill / meta.width, targetFill / meta.height);
+  const scaledW    = Math.round(meta.width  * scale);
+  const scaledH    = Math.round(meta.height * scale);
+
+  const resized = await sharp(fgBuf)
+    .resize(scaledW, scaledH, { fit: 'fill' })
     .toBuffer();
 
-  return bg;
+  const left = Math.round((size - scaledW) / 2);
+  const top  = Math.round((size - scaledH) / 2);
+
+  return sharp({
+    create: { width: size, height: size, channels: 4,
+              background: { r: 0, g: 0, b: 0, alpha: 0 } },
+  })
+    .composite([{ input: resized, left, top }])
+    .png()
+    .toBuffer();
 }
 
-/**
- * CLEAN STUDIO background
- * Off-white radial gradient (center brighter, edges slightly warmer).
- * Soft shadow ellipse at bottom center.
- */
-async function makeStudioBackground() {
-  const S = OUTPUT_SIZE;
+// ── Step 3a: images.edit — product on transparent → fill background ───────────
+//
+// We pass an EXPLICIT mask (separate PNG) in addition to the image so OpenAI has
+// no ambiguity about what to touch:
+//   mask transparent (alpha=0)  → OpenAI generates here  (the background)
+//   mask opaque    (alpha=255)  → OpenAI preserves here  (the product + label)
+//
+// We also harden the product alpha before sending (any alpha > 30 → 255) so
+// semi-transparent edges are fully opaque and the label is never partially "in"
+// the edit zone.
+//
+async function callEdit(squarePngBuf, prompt) {
+  // Harden alpha + build explicit mask in one pass
+  const { data, info } = await sharp(squarePngBuf)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${S}" height="${S}">
-    <defs>
-      <radialGradient id="studio" cx="50%" cy="42%" r="65%">
-        <stop offset="0%"   stop-color="rgb(255,254,252)"/>
-        <stop offset="60%"  stop-color="rgb(${BRAND.offWhite.r},${BRAND.offWhite.g},${BRAND.offWhite.b})"/>
-        <stop offset="100%" stop-color="rgb(${BRAND.cream.r},${BRAND.cream.g},${BRAND.cream.b})"/>
-      </radialGradient>
-      <!-- drop shadow ellipse at base -->
-      <radialGradient id="shadow" cx="50%" cy="50%" r="50%">
-        <stop offset="0%"   stop-color="rgb(180,170,155)" stop-opacity="0.35"/>
-        <stop offset="100%" stop-color="rgb(180,170,155)" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <rect x="0" y="0" width="${S}" height="${S}" fill="url(#studio)"/>
-    <!-- ground shadow -->
-    <ellipse cx="${S/2}" cy="${Math.round(S * 0.875)}" rx="${Math.round(S*0.28)}" ry="${Math.round(S*0.06)}"
-             fill="url(#shadow)"/>
-  </svg>`;
+  const hardened = Buffer.alloc(data.length);
+  const maskData = Buffer.alloc(data.length);
 
-  const bg = await sharp(Buffer.from(svg))
-    .resize(S, S)
-    .blur(2)
+  for (let i = 0; i < data.length; i += 4) {
+    const isProduct = data[i + 3] > 30;
+
+    // Hardened image: fully opaque product, fully transparent background
+    hardened[i]     = data[i];
+    hardened[i + 1] = data[i + 1];
+    hardened[i + 2] = data[i + 2];
+    hardened[i + 3] = isProduct ? 255 : 0;
+
+    // Mask: opaque (255) = preserve product, transparent (0) = edit background
+    maskData[i]     = 255;
+    maskData[i + 1] = 255;
+    maskData[i + 2] = 255;
+    maskData[i + 3] = isProduct ? 255 : 0;
+  }
+
+  const hardenedPng = await sharp(hardened, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  }).png().toBuffer();
+
+  const maskPng = await sharp(maskData, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  }).png().toBuffer();
+
+  const imageFile = await toFile(hardenedPng, 'product.png', { type: 'image/png' });
+  const maskFile  = await toFile(maskPng,     'mask.png',    { type: 'image/png' });
+
+  const response = await openai.images.edit({
+    model:   'gpt-image-1',
+    image:   imageFile,
+    mask:    maskFile,
+    prompt,
+    size:    EDIT_SIZE,
+    quality: 'high',
+    n:       1,
+  });
+
+  const b64 = response.data[0].b64_json;
+  return Buffer.from(b64, 'base64');
+}
+
+// ── Step 3b: images.generate fallback — for transparent/glass products ────────
+//
+// When rembg can't extract the product (glass, translucent), we send the
+// original photo to images.generate and ask OpenAI to replace the background
+// while keeping the product intact.
+//
+async function callGenerate(originalPath, prompt) {
+  const originalBuf = readFileSync(originalPath);
+
+  // Convert to square PNG for the API
+  const squareBuf = await sharp(originalBuf)
+    .resize(1024, 1024, { fit: 'cover', position: 'centre' })
+    .png()
     .toBuffer();
 
-  return bg;
+  const imageFile = await toFile(squareBuf, 'product.png', { type: 'image/png' });
+
+  const response = await openai.images.edit({
+    model:   'gpt-image-1',
+    image:   imageFile,
+    prompt:  `${prompt}\n\nThe background of this product photo should be replaced with the described scene. The product itself — including all text, labels, logo, and product shape — must remain completely unchanged.`,
+    size:    EDIT_SIZE,
+    quality: 'high',
+    n:       1,
+  });
+
+  const b64 = response.data[0].b64_json;
+  return Buffer.from(b64, 'base64');
 }
 
-// ── Scale product to fit framing target ──────────────────────────────────────
-
-function computeProductScale(productW, productH, category) {
-  const frame = FRAME[category] || DEFAULT_FRAME;
-  const targetH = OUTPUT_SIZE * ((frame.minH + frame.maxH) / 2);
-  const scale   = targetH / productH;
-
-  const scaledW = Math.round(productW * scale);
-  const scaledH = Math.round(productH * scale);
-
-  // Safety: never exceed OUTPUT_SIZE
-  const clampedW = Math.min(scaledW, OUTPUT_SIZE - 20);
-  const clampedH = Math.min(scaledH, OUTPUT_SIZE - 20);
-
-  return { width: clampedW, height: clampedH };
+// ── Step 4: upscale → 2048×2048 WebP ─────────────────────────────────────────
+async function finalise(imageBuf) {
+  return sharp(imageBuf)
+    .resize(OUTPUT_SIZE, OUTPUT_SIZE, { fit: 'cover', position: 'centre' })
+    .webp({ quality: WEBP_QUALITY })
+    .toBuffer();
 }
 
-// ── Core edit function ────────────────────────────────────────────────────────
-
+// ── Core per-image edit ───────────────────────────────────────────────────────
 async function editImage(entry) {
   const { id, input_path, output_path, category, variant } = entry;
+  const prompt = PROMPTS[variant] ?? PROMPTS.coastal_lifestyle;
 
   console.log(`[CODEX-EDITOR] [${id}] [${input_path.split('/').pop()}] [${variant}] → processing`);
 
   try {
-    // 1. Convert Windows path to file:// URL so rembg can detect MIME type from extension
-    const inputFileUrl = pathToFileURL(input_path).href;
+    // 1. Extract foreground with rembg
+    console.log(`[CODEX-EDITOR] [${id}] extracting foreground…`);
+    const { buf: fgBuf, opaqueFrac } = await extractForeground(input_path);
+    console.log(`[CODEX-EDITOR] [${id}] opaque fraction: ${(opaqueFrac * 100).toFixed(1)}%`);
 
-    // Remove background → returns a Blob; convert to Buffer for sharp
-    console.log(`[CODEX-EDITOR] [${id}] removing background…`);
-    const fgBlob = await removeBackground(inputFileUrl, {
-      model: 'small',           // 'small' = fastest, still very accurate for product shots
-      output: {
-        format: 'image/png',
-        quality: 1,
-      },
-    });
-    const fgBuffer = Buffer.from(await fgBlob.arrayBuffer());
+    let resultBuf;
+    let strategy;
 
-    // 2. Get product dimensions from the extracted foreground
-    const fgMeta   = await sharp(fgBuffer).metadata();
-    const { width: fgW, height: fgH } = fgMeta;
+    if (opaqueFrac >= MIN_OPAQUE) {
+      // ── Standard path: transparent product → images.edit fills background ──
+      console.log(`[CODEX-EDITOR] [${id}] padding to square → calling gpt-image-1 edit…`);
+      const squarePng = await padToSquare(fgBuf);
+      strategy   = `rembg(medium) + gpt-image-1 edit, opaque=${(opaqueFrac*100).toFixed(0)}%`;
+      resultBuf  = await callEdit(squarePng, prompt);
+    } else {
+      // ── Fallback: glass/translucent product → generate with original ────────
+      console.log(`[CODEX-EDITOR] [${id}] low opaque fraction — using gpt-image-1 generate fallback…`);
+      strategy   = `gpt-image-1 generate (original photo, opaque=${(opaqueFrac*100).toFixed(0)}% too low for rembg)`;
+      resultBuf  = await callGenerate(input_path, prompt);
+    }
 
-    // 3. Scale to framing target
-    const { width: scaledW, height: scaledH } = computeProductScale(fgW, fgH, category);
-    const fgScaled = await sharp(fgBuffer)
-      .resize(scaledW, scaledH, { fit: 'fill' })
-      .toBuffer();
+    // 4. Upscale + WebP
+    const output = await finalise(resultBuf);
 
-    // 4. Generate background
-    const bgBuffer = variant === 'coastal_lifestyle'
-      ? await makeCoastalBackground()
-      : await makeStudioBackground();
-
-    // 5. Composite: center product on background
-    const left = Math.round((OUTPUT_SIZE - scaledW) / 2);
-    const top  = Math.round((OUTPUT_SIZE - scaledH) / 2);
-
-    // For candles/diffusers: shift slightly upward (visual weight centers better below midpoint)
-    const verticalOffset = category === 'candle' ? Math.round(OUTPUT_SIZE * 0.03) : 0;
-
-    const composite = await sharp(bgBuffer)
-      .composite([{
-        input: fgScaled,
-        left,
-        top: top - verticalOffset,
-      }])
-      .webp({ quality: WEBP_QUALITY })
-      .toBuffer();
-
-    // 6. Write output
+    // Write
     const outDir = dirname(output_path);
     if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
+    writeFileSync(output_path, output);
 
-    writeFileSync(output_path, composite);
-
-    console.log(`[CODEX-EDITOR] [${id}] [${output_path.split('/').pop()}] [${variant}] SUCCESS [${output_path}]`);
+    const sizeKB = Math.round(output.length / 1024);
+    console.log(`[CODEX-EDITOR] [${id}] [${output_path.split('/').pop()}] SUCCESS [${sizeKB} KB]`);
 
     return {
       ...entry,
-      status: 'SUCCESS',
-      prompt_used: `rembg(model=small) + ${variant} background + composite(center, vertOffset=${verticalOffset})`,
-      params_used: `OUTPUT_SIZE=${OUTPUT_SIZE}, WEBP_QUALITY=${WEBP_QUALITY}, scale=${(scaledH/OUTPUT_SIZE).toFixed(2)} of frame`,
+      status:        'SUCCESS',
+      prompt_used:   prompt.slice(0, 120) + '…',
+      params_used:   strategy,
       failure_reason: '',
     };
 
@@ -220,56 +260,55 @@ async function editImage(entry) {
     console.error(`[CODEX-EDITOR] [${id}] FAILED: ${err.message}`);
     return {
       ...entry,
-      status: 'FAILED',
-      prompt_used: '',
-      params_used: '',
+      status:        'FAILED',
+      prompt_used:   '',
+      params_used:   '',
       failure_reason: err.message,
     };
   }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
-
 async function main() {
+  if (!process.env.OPENAI_API_KEY) {
+    console.error('[CODEX-EDITOR] OPENAI_API_KEY not set — check .env file');
+    process.exit(1);
+  }
+
   const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
   const pending  = manifest.filter(e => e.status === 'PENDING');
 
-  console.log(`[CODEX-EDITOR] ${pending.length} PENDING entries to process (${manifest.length} total)`);
+  console.log(`[CODEX-EDITOR] ${pending.length} PENDING entries to process (model: gpt-image-1)`);
 
-  // Process in batches of 5
-  const BATCH_SIZE = 5;
+  const BATCH_SIZE = 3;   // OpenAI rate limit — 3 parallel is safe
   const updated    = [...manifest];
 
   for (let i = 0; i < pending.length; i += BATCH_SIZE) {
-    const batch     = pending.slice(i, i + BATCH_SIZE);
-    const batchNum  = Math.floor(i / BATCH_SIZE) + 1;
-    const totalBatches = Math.ceil(pending.length / BATCH_SIZE);
+    const batch    = pending.slice(i, i + BATCH_SIZE);
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+    const total    = Math.ceil(pending.length / BATCH_SIZE);
 
-    console.log(`\n[CODEX-EDITOR] ── BATCH ${batchNum}/${totalBatches} ──────────────────────────────`);
+    console.log(`\n[CODEX-EDITOR] ── BATCH ${batchNum}/${total} ──────────────────────────────`);
 
-    // Run batch sequentially (rembg is memory-intensive; parallel causes OOM on some machines)
+    // Run batch sequentially to respect rate limits and avoid OOM
     for (const entry of batch) {
       const result = await editImage(entry);
-      const idx = updated.findIndex(e => e.id === entry.id);
+      const idx    = updated.findIndex(e => e.id === entry.id);
       updated[idx] = result;
-
-      // Flush manifest after every image so partial runs are resumable
       writeFileSync(MANIFEST_PATH, JSON.stringify(updated, null, 2));
     }
 
     const batchResults = batch.map(e => updated.find(u => u.id === e.id));
-    const successes    = batchResults.filter(e => e.status === 'SUCCESS').length;
-    const failures     = batchResults.filter(e => e.status === 'FAILED').length;
-    console.log(`[CODEX-EDITOR] BATCH ${batchNum} complete — ${successes} SUCCESS, ${failures} FAILED`);
+    const ok  = batchResults.filter(e => e.status === 'SUCCESS').length;
+    const bad = batchResults.filter(e => e.status === 'FAILED').length;
+    console.log(`[CODEX-EDITOR] BATCH ${batchNum} complete — ${ok} SUCCESS, ${bad} FAILED`);
   }
 
-  const total    = updated.length;
-  const success  = updated.filter(e => e.status === 'SUCCESS').length;
-  const failed   = updated.filter(e => e.status === 'FAILED').length;
-  const skipped  = updated.filter(e => e.status === 'PENDING').length;
+  const success = updated.filter(e => e.status === 'SUCCESS').length;
+  const failed  = updated.filter(e => e.status === 'FAILED').length;
 
-  console.log(`\n[CODEX-EDITOR] ═══ COMPLETE ════════════════════════════════════════`);
-  console.log(`[CODEX-EDITOR] ${total} total | ${success} SUCCESS | ${failed} FAILED | ${skipped} PENDING/SKIPPED`);
+  console.log(`\n[CODEX-EDITOR] ═══ COMPLETE ════════════════════════════`);
+  console.log(`[CODEX-EDITOR] ${updated.length} total | ${success} SUCCESS | ${failed} FAILED`);
 
   if (failed > 0) {
     console.log('\n[CODEX-EDITOR] FAILURES:');

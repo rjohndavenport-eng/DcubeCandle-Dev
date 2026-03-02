@@ -37,6 +37,13 @@ IMPLEMENTATION NOTE: This section is similar to the dynamic "Text with icons" se
       --section-background: {{ section_background.red }}, {{ section_background.green }}, {{ section_background.blue }};
       --vertical-breather: 40px; /* Inner spacing is smaller on this section */
     }
+
+    #shopify-section-{{ section.id }} .text-with-icons__icon-wrapper svg {
+      width: 48px;
+      height: 48px;
+      display: block;
+      margin: 0 auto;
+    }
   </style>
 
   <section class="section {% unless blends_with_background or is_boxed %}section--flush{% endunless %}">

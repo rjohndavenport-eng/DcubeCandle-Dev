@@ -38,7 +38,9 @@
     </div>
     
     <div class="unboxing-content">
-      {% render 'icon' with 'dcube-bee', width: 40, height: 40 %}
+      <div style="width: 40px; height: 40px; margin-bottom: 20px;">
+        {% render 'icon' with 'dcube-bee', width: 40, height: 40 %}
+      </div>
       <h2 style="font-family: var(--heading-font-family); font-size: 42px; margin: 20px 0;">{{ section.settings.title }}</h2>
       <p style="font-size: 18px; line-height: 1.8; opacity: 0.8; margin-bottom: 40px;">{{ section.settings.text }}</p>
       <a href="{{ section.settings.link }}" class="button button--primary">{{ section.settings.link_text }}</a>

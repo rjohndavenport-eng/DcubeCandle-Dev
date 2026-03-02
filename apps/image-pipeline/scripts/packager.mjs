@@ -8,13 +8,15 @@
  */
 
 import sharp from 'sharp';
-import { readFileSync, writeFileSync, existsSync, statSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, statSync, renameSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 const MANIFEST_PATH = 'D:/onedrive/Desktop/becandle/dcube-sandbox-catalog/image-export/products/_styled/manifest.json';
 const OUTPUT_DIR    = 'D:/onedrive/Desktop/becandle/dcube-sandbox-catalog/image-export/products/_styled';
 const REPORT_PATH   = `${OUTPUT_DIR}/REPORT.md`;
 
-const TARGET_SIZE = 2000;
+const TARGET_SIZE = 2048;
 const WEBP_Q      = 92;
 
 async function enforceSquare(entry) {
@@ -33,7 +35,10 @@ async function enforceSquare(entry) {
     .webp({ quality: WEBP_Q })
     .toBuffer();
 
-  writeFileSync(entry.output_path, fixed);
+  // Write to temp file then rename to avoid Windows file-lock errors
+  const tmp = join(tmpdir(), `dcube_${entry.id}_${Date.now()}.webp`);
+  writeFileSync(tmp, fixed);
+  renameSync(tmp, entry.output_path);
   return { ...entry, notes: (entry.notes + ' [packager: resized to 2000x2000]').trim() };
 }
 

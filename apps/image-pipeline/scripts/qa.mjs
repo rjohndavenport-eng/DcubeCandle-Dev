@@ -16,7 +16,7 @@ const OUTPUT_DIR    = 'D:/onedrive/Desktop/becandle/dcube-sandbox-catalog/image-
 const CONTACT_PATH  = `${OUTPUT_DIR}/qc_contact_sheet.png`;
 const FAILURES_PATH = `${OUTPUT_DIR}/FAILURES.json`;
 
-const EXPECTED_SIZE = 2000;
+const EXPECTED_SIZE = 2048;
 const MIN_BYTES     = 40_000;     //  40 KB (room spray bottles compress smaller than candle jars)
 const MAX_BYTES     = 8_000_000;  //   8 MB
 
