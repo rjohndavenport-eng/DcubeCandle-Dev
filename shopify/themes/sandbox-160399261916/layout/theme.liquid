@@ -151,15 +151,9 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
                       0 2px 12px rgba(126, 107, 143, 0.08);
         }
 
-        /* Override Focal's image-wrapper--multiple cross-fade that hides primary image */
-        .product-item:hover .product-item__image-wrapper--multiple .product-item__primary-image.dcube-primary-img {
-          visibility: visible !important;
-          opacity: 1 !important;
-        }
-
-        /* ─── SECONDARY IMAGE — absolute behind primary ─── */
-        /* No overflow:hidden on container — it breaks the padding-bottom aspect-ratio trick.
-           Clip-path on the primary handles the reveal without needing a clipping ancestor. */
+        /* ─── SECONDARY IMAGE — sits behind primary at full size ─── */
+        /* Focal fades the primary out on hover; this image is revealed underneath.
+           z-index must be lower than primary. No overflow or clipping needed. */
         .dcube-secondary-img {
           position: absolute !important;
           inset: 0 !important;
@@ -177,9 +171,9 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           z-index: 10;
         }
 
-        /* ─── PRIMARY IMAGE — on top, wipes upward to reveal secondary ─── */
-        /* clip-path inset(0→100% from top) = top edge disappears first, simulating slide-up.
-           No overflow:hidden needed on any ancestor. */
+        /* ─── PRIMARY IMAGE — on top; Focal's built-in opacity crossfade handles reveal ─── */
+        /* DO NOT override Focal's hover fade here — that fade IS the reveal mechanism.
+           We only set stacking and sizing. */
         .dcube-primary-img {
           position: absolute !important;
           top: 0 !important;
@@ -187,47 +181,16 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           width: 100% !important;
           height: 100% !important;
           z-index: 5 !important;
-          clip-path: inset(0 0 0 0);
-          transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1) !important;
-        }
-        @media (pointer: fine) {
-          .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
-            clip-path: inset(100% 0 0 0) !important; /* wipe up: top exits first */
-          }
-          /* DCUBE: Solo image fallback ritual — subtle scale + soft glow */
-          .product-item:hover .dcube-primary-img--solo {
-            transform: scale(1.04) translateY(-5px) !important;
-            filter: brightness(1.02);
-          }
         }
 
-        /* ─── SINGLE-IMAGE FALLBACK — micro-lift + glow only ─── */
+        /* ─── SINGLE-IMAGE FALLBACK — subtle lift + glow ─── */
         .dcube-primary-img--solo {
           transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease !important;
         }
-
-        /* ─── prefers-reduced-motion — crossfade instead of wipe ─── */
-        @media (prefers-reduced-motion: reduce) {
-          .dcube-primary-img {
-            clip-path: none !important;
-            transition: opacity 0.3s ease !important;
-          }
-          .dcube-secondary-img {
-            opacity: 0 !important;
-            transition: opacity 0.3s ease !important;
-          }
-          @media (pointer: fine) {
-            .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
-              clip-path: none !important;
-              opacity: 0 !important;
-            }
-            .product-item:hover .dcube-secondary-img {
-              opacity: 1 !important;
-            }
-            .product-item:hover .dcube-primary-img--solo {
-              transform: none !important;
-              opacity: 0.9 !important;
-            }
+        @media (pointer: fine) {
+          .product-item:hover .dcube-primary-img--solo {
+            transform: scale(1.04) translateY(-5px) !important;
+            filter: brightness(1.02);
           }
         }
 
