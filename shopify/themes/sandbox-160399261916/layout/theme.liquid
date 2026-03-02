@@ -186,11 +186,16 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
             transform: translateY(-45%);
           }
+          /* DCUBE: Solo image fallback ritual — subtle scale + soft glow */
+          .product-item:hover .dcube-primary-img--solo {
+            transform: scale(1.05);
+            filter: brightness(1.02);
+          }
         }
 
         /* ─── SINGLE-IMAGE FALLBACK — micro-lift + glow only ─── */
         .dcube-primary-img--solo {
-          transition: box-shadow 0.4s ease !important;
+          transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.4s ease !important;
         }
 
         /* ─── prefers-reduced-motion — crossfade instead of slide ─── */
@@ -210,6 +215,10 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
             .product-item:hover .dcube-secondary-img {
               opacity: 1;
             }
+            .product-item:hover .dcube-primary-img--solo {
+              transform: none !important;
+              opacity: 0.9;
+            }
           }
         }
 
@@ -221,15 +230,24 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
         p, body, .rte, nav,
         .button, .button--primary, .button--outline,
         input, select, textarea {
-          font-family: 'Inter', sans-serif;
+          font-family: 'Inter', sans-serif !important;
         }
 
         /* RTE body text — enforce brand text color, prevent purple/orange pollution */
         .rte, .rte p, .rte li, .rte td {
-          color: rgb(30, 26, 32);
+          color: rgb(30, 26, 32) !important;
+          font-family: 'Inter', sans-serif !important;
         }
         .rte span[style*="color"] {
           color: inherit !important;
+        }
+        
+        /* Product descriptions: Editorial Scent Chapter (Narrative) */
+        .product-form__description.rte p:first-of-type {
+          font-family: 'Cormorant Garamond', serif !important;
+          font-size: 1.1em;
+          font-style: italic;
+          color: rgb(126, 107, 143) !important; /* Dusty Accent */
         }
 
         /* Product card title — enforce brand text color, override any admin inline styles */

@@ -21,7 +21,7 @@
     "error_color": "#de2a2a",
     "header_background": "#ffffff",
     "header_text_color": "#000000",
-    "footer_background": "#d1c3fa",
+    "footer_background": "#E6E1EB",
     "footer_text_color": "#000000",
     "primary_button_background": "#a25fe7",
     "secondary_button_background": "#a25fe7",
@@ -109,7 +109,7 @@
           "announcement_text_size": "normal",
           "autoplay": true,
           "cycle_speed": 10,
-          "background": "#d1c3fa",
+          "background": "#E6E1EB",
           "text_color": "#000000",
           "button_background": "#000000",
           "button_text_color": "#ffffff"
@@ -220,8 +220,8 @@
           "static-text-with-icons-0": {
             "type": "item",
             "settings": {
-              "icon": "picto-box",
-              "custom_icon": "shopify://shop_images/5530754_-_Copy.png",
+              "icon": "dcube-shipping",
+              "custom_icon": "",
               "custom_icon_width": 50,
               "title": "shipping policy",
               "content": "<p>We only ship within the U.S, Free shipping with the purchase of $75 or more</p>"
@@ -230,8 +230,8 @@
           "static-text-with-icons-1": {
             "type": "item",
             "settings": {
-              "icon": "picto-phone",
-              "custom_icon": "shopify://shop_images/vegan.png",
+              "icon": "dcube-vegan",
+              "custom_icon": "",
               "custom_icon_width": 50,
               "title": "100% Vegan",
               "content": "<p>Paraffin Free, Made In Sarasota, Phthalate Free, Sustainable, Reusable</p>"
@@ -240,8 +240,8 @@
           "static-text-with-icons-2": {
             "type": "item",
             "settings": {
-              "icon": "picto-lock",
-              "custom_icon": "shopify://shop_images/726559.png",
+              "icon": "dcube-secure",
+              "custom_icon": "",
               "custom_icon_width": 50,
               "title": "Secure payment",
               "content": "<p>Your payment information is processed securely.</p>"
@@ -313,7 +313,7 @@
           "image_847CPj"
         ],
         "settings": {
-          "enable": true
+          "enable": false
         }
       }
     },

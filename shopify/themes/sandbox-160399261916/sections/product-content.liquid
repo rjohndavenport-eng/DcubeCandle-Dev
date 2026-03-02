@@ -337,11 +337,30 @@
   </section>
 {%- endif -%}
 
-{%- comment -%}DCUBE RITUALS — Scent Bloom + Burn Gauge{%- endcomment -%}
-<div class="container" style="margin-top: 60px; margin-bottom: 60px;">
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 900px; margin: 0 auto;">
-    {% render 'scent-chapter' %}
-    {% render 'burn-gauge' %}
+{%- comment -%}DCUBE RITUALS — Scent Bloom + Burn Gauge — balanced sanctuary layout ───{%- endcomment -%}
+<div class="container dcube-rituals-container" style="margin-top: 80px; margin-bottom: 80px;">
+  <style>
+    .dcube-rituals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    @media screen and (max-width: 740px) {
+      .dcube-rituals-grid {
+        gap: 40px;
+      }
+    }
+  </style>
+  <div class="dcube-rituals-grid">
+    <div class="dcube-ritual-item">
+      {% render 'scent-chapter' %}
+    </div>
+    <div class="dcube-ritual-item">
+      {% render 'burn-gauge' %}
+    </div>
   </div>
 </div>
 
