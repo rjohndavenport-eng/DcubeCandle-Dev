@@ -152,7 +152,7 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
         }
 
         /* Override Focal's image-wrapper--multiple cross-fade that hides primary image */
-        .product-item__image-wrapper--multiple:hover .product-item__primary-image.dcube-primary-img {
+        .product-item:hover .product-item__image-wrapper--multiple .product-item__primary-image.dcube-primary-img {
           visibility: visible !important;
           opacity: 1 !important;
         }
@@ -164,31 +164,33 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           z-index: 1;
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          object-fit: contain;
           object-position: center;
           opacity: 1;
           display: block;
+          background: #fdfdfd; /* Solid backdrop for unboxing ritual */
         }
 
         /* Ensure product labels render above image stack */
         .product-item__label-list {
-          z-index: 3;
+          z-index: 10;
         }
 
         /* ─── PRIMARY IMAGE — on top, slides up to reveal secondary ─── */
         .dcube-primary-img {
           position: relative;
-          z-index: 2;
+          z-index: 5;
           display: block;
-          transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1);
+          background: #fff;
+          transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) !important;
         }
         @media (pointer: fine) {
           .product-item:hover .dcube-primary-img:not(.dcube-primary-img--solo) {
-            transform: translateY(-45%);
+            transform: translateY(-80%); /* Stronger architectural slide */
           }
           /* DCUBE: Solo image fallback ritual — subtle scale + soft glow */
           .product-item:hover .dcube-primary-img--solo {
-            transform: scale(1.05);
+            transform: scale(1.04) translateY(-5px);
             filter: brightness(1.02);
           }
         }
