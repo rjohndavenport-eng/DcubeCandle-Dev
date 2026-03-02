@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "slideshow": {
+      "type": "slideshow",
+      "blocks": {
+        "hero-slide": {
+          "type": "image",
+          "settings": {
+            "subheading": "Dedicated to supporting special needs children and their families",
+            "title": "Hand Crafted Luxury Scents",
+            "button_1_text": "SHOP NOW",
+            "button_1_link": "/collections/all",
+            "button_2_text": "",
+            "text_position": "middle_left",
+            "text_color": "#1E1A20",
+            "button_background": "#7E6B8F",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#E6E1EB",
+            "overlay_opacity": 60
+          }
+        }
+      },
+      "block_order": ["hero-slide"],
+      "settings": {
+        "section_height": "large",
+        "transition_type": "sweep",
+        "autoplay": false,
+        "cycle_speed": 5,
+        "background": "rgba(0,0,0,0)"
+      }
+    },
+    "unboxing-reveal": {
+      "type": "unboxing-product",
+      "settings": {
+        "title": "The Unboxing Ritual",
+        "text": "Luxury is found in the transition. Each DCube candle arrives as an architectural moment — designed to be unwrapped slowly.",
+        "link": "/collections/all",
+        "link_text": "EXPLORE COLLECTION"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collections",
+      "blocks": {
+        "our-collection": {
+          "type": "collection",
+          "settings": {
+            "collection": "all",
+            "label": "",
+            "button_text": "View all",
+            "button_url": "/collections/all"
+          }
+        }
+      },
+      "block_order": ["our-collection"],
+      "settings": {
+        "subheading": "",
+        "title": "Our Collection",
+        "products_count": 10,
+        "products_per_row": 5,
+        "stack_products": true,
+        "show_cta": false,
+        "background": "rgba(0,0,0,0)",
+        "text_color": "rgba(0,0,0,0)",
+        "button_background": "rgba(0,0,0,0)",
+        "button_text_color": "rgba(0,0,0,0)"
+      }
+    }
+  },
+  "order": [
+    "slideshow",
+    "unboxing-reveal",
+    "featured-collection"
+  ]
+}

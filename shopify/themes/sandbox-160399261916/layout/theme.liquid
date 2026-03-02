@@ -98,7 +98,7 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
           --secondary-button-background: 200, 151, 58 !important;
           --primary-button-text-color: 255, 255, 255 !important;
           --secondary-button-text-color: 255, 255, 255 !important;
-          --border-color: 230, 225, 235 !important;
+          --border-color: 209, 201, 219 !important;
           /* Typography */
           --heading-font-family: 'Cormorant Garamond', serif !important;
           --heading-font-weight: 300 !important;
@@ -111,10 +111,24 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
         .button--primary {
           background-color: rgb(126, 107, 143) !important;
           color: rgb(255, 255, 255) !important;
+          position: relative;
+          overflow: hidden;
         }
         .button--primary:hover {
           background-color: rgb(107, 90, 122) !important;
         }
+
+        /* HOVER-TO-LIGHT (Match Strike) — warm gold radial bloom on CTA hover */
+        .button--primary::after {
+          content: '';
+          position: absolute;
+          inset: -60%;
+          background: radial-gradient(circle, rgba(200, 151, 58, 0.35) 0%, transparent 65%);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .button--primary:hover::after { opacity: 1; }
 
         /* HEADING FONT FIX: force Cormorant Garamond regardless of theme font-weight setting */
         .heading, h1, h2, h3, h4, h5, h6 {

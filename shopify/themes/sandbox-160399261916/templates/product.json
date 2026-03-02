@@ -29,10 +29,10 @@
           "type": "buy_buttons",
           "settings": {
             "show_payment_button": true,
-            "atc_button_background": "#282828",
+            "atc_button_background": "#7E6B8F",
             "atc_button_text_color": "#ffffff",
-            "buy_now_button_background": "#f5f5f5",
-            "buy_now_button_text_color": "#282828"
+            "buy_now_button_background": "#E6E1EB",
+            "buy_now_button_text_color": "#1E1A20"
           }
         },
         "d671e58d-d4e5-4471-ae33-f59d18537bd1": {
