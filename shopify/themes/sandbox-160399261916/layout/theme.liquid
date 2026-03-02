@@ -278,6 +278,10 @@ NOTE TO DEVELOPERS: welcome to Focal theme! We hope that you will enjoy editing 
       </style>
     {%- endif -%}
 
+    {%- if settings.enable_dusty_sanctuary_palette -%}
+    <link rel="stylesheet" href="{{ 'dcube-mobile-fixes.css' | asset_url }}">
+    {%- endif -%}
+
 	{{ shop.metafields.loox["global_html_head"] }}
 </head>
 

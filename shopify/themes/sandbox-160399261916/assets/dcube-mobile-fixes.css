@@ -1,0 +1,82 @@
+/* ═══════════════════════════════════════════════════════════════════
+   dcube-mobile-fixes.css — DCube Mobile Stabilization (Focal Safe Mode)
+   Loaded LAST in <head> — overrides theme.css, styles.css, and DCube
+   inline <style> block for mobile breakpoints only.
+   Desktop hover ritual (crossfade, solo lift) is UNTOUCHED.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── PRODUCT CARD CONTAINER ──────────────────────────────────────────
+   Force a stable square container on mobile.
+   - aspect-ratio: 1/1 replaces inline padding-bottom trick
+   - overflow: hidden clips both images to the card boundary
+   - padding-bottom: 0 cancels the legacy fallback value
+   ─────────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 768px) {
+  .product-item__aspect-ratio {
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* ─── PRIMARY IMAGE ─────────────────────────────────────────────────
+     position: relative removes the absolute stacking context on mobile.
+     Container height is established by aspect-ratio: 1/1 above, so
+     height: 100% resolves correctly against the parent's computed height.
+     transform: none cancels any inherited translateY or scale from Focal.
+     ─────────────────────────────────────────────────────────────────── */
+  .dcube-primary-img {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+    max-width: none !important;
+    max-height: none !important;
+    z-index: auto !important;
+  }
+
+  /* ─── SOLO CARD HOVER — disable lift animation on touch ─────────────
+     The lift/glow is scoped to @media (pointer: fine) in the inline block,
+     but we explicitly cancel it here as a belt-and-suspenders failsafe.
+     ─────────────────────────────────────────────────────────────────── */
+  .dcube-primary-img--solo {
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── TYPOGRAPHY — HERO HEADING LINE-HEIGHT ───────────────────────────
+   Phase 3 audit: .heading--large line-height is 1.11111 at mobile sizes.
+   Cormorant Garamond at 32-40px with 1.11 leading is too tight at 320px.
+   Increasing to 1.3 improves scannability on small screens.
+   ─────────────────────────────────────────────────────────────────── */
+@media screen and (max-width: 740px) {
+  .heading--large {
+    line-height: 1.3 !important;
+  }
+}
+
+/* ─── ACCESSIBILITY — REDUCED MOTION ─────────────────────────────────
+   Respect prefers-reduced-motion for accessibility and low-end Android
+   performance. Disables solo card animation and Focal reveal animations.
+   ─────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dcube-primary-img--solo {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  [reveal] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [reveal-visibility] {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
