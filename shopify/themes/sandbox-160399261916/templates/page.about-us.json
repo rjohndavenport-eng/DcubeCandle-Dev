@@ -1,28 +1,36 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
+    "hero": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "reveal_on_scroll": false,
+        "section_height": "medium",
+        "subheading": "Sarasota, FL",
+        "title": "About Us",
+        "content": "<p>We are DCube Candle Co. — a family brand dedicated to supporting special needs children and their families. Hand-poured, small-batch luxury scents made with love.</p>",
+        "button_text": "Our Collection",
+        "button_link": "/collections/all",
+        "link_style": "button",
+        "background_type": "full_width",
+        "text_width": "medium",
+        "text_position": "middle_center",
+        "text_color": "#1E1A20",
+        "button_background": "#7E6B8F",
+        "button_text_color": "#ffffff",
+        "overlay_color": "#E6E1EB",
+        "overlay_opacity": 80
+      }
+    },
     "main": {
       "type": "main-page",
-      "custom_css": [
-        ".container {padding-bottom: 20px; background-image: url(https://cdn.shopify.com/s/files/1/0706/6412/6684/files/story_image.jpg?v=1723644205); background-repeat: no-repeat; background-position: center;}",
-        "h1.heading.h2 {color: purple;}",
-        ".rte {color: purple !important;}"
-      ],
       "settings": {
-        "show_title": true,
+        "show_title": false,
         "page_width": "medium"
       }
     }
   },
   "order": [
+    "hero",
     "main"
   ]
 }

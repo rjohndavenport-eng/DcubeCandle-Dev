@@ -50,6 +50,7 @@
       class="product-item__aspect-ratio aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}"
       style="padding-bottom: {{ 100.0 | divided_by: product.featured_media.preview_image.aspect_ratio }}%; --aspect-ratio: {{ product.featured_media.preview_image.aspect_ratio }}"
     >
+      <div class="dcube-unbox" aria-hidden="true"></div>
       <img
         class="product-item__primary-image"
         loading="lazy"

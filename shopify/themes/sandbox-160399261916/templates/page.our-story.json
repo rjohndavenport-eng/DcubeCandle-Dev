@@ -1,27 +1,35 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
+    "hero": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "reveal_on_scroll": false,
+        "section_height": "medium",
+        "subheading": "The DeCubellis Family",
+        "title": "Our Story",
+        "content": "<p>Every candle carries a flame lit in memory of Brianna. A story of love, loss, and light — poured into each hand-crafted cube.</p>",
+        "button_text": "",
+        "link_style": "link",
+        "background_type": "full_width",
+        "text_width": "medium",
+        "text_position": "middle_center",
+        "text_color": "#1E1A20",
+        "button_background": "#7E6B8F",
+        "button_text_color": "#ffffff",
+        "overlay_color": "#E6E1EB",
+        "overlay_opacity": 80
+      }
+    },
     "main": {
       "type": "main-page",
-      "custom_css": [
-        ".container {padding: 20px; background-image: url(https://cdn.shopify.com/s/files/1/0706/6412/6684/files/story.jpg?v=1723744904); background-repeat: no-repeat; background-position: center;}",
-        "h1.heading.h2,span {color: purple;}"
-      ],
       "settings": {
-        "show_title": true,
+        "show_title": false,
         "page_width": "medium"
       }
     }
   },
   "order": [
+    "hero",
     "main"
   ]
 }

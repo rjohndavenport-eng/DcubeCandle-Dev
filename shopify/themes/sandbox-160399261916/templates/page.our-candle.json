@@ -28,9 +28,9 @@
             "title": "Best Seller",
             "link_text": "Shop Now",
             "link_url": "shopify://collections/best-seller",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 19
+            "text_color": "#1E1A20",
+            "overlay_color": "#E6E1EB",
+            "overlay_opacity": 55
           }
         },
         "collection_mXWXcT": {
@@ -41,9 +41,9 @@
             "title": "New Arrivals",
             "link_text": "Shop Now",
             "link_url": "shopify://collections/new-arrivals",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
+            "text_color": "#1E1A20",
+            "overlay_color": "#E6E1EB",
+            "overlay_opacity": 55
           }
         },
         "collection_7MXEqE": {
@@ -54,9 +54,9 @@
             "title": "Coming Soon",
             "link_text": "Shop Now",
             "link_url": "shopify://collections/coming-soon",
-            "text_color": "rgba(0,0,0,0)",
-            "overlay_color": "#000000",
-            "overlay_opacity": 30
+            "text_color": "#1E1A20",
+            "overlay_color": "#E6E1EB",
+            "overlay_opacity": 55
           }
         }
       },
