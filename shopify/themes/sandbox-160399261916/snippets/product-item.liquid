@@ -38,7 +38,7 @@
 
   <a href="{{ product.url }}" class="product-item-meta__title">{{ product.title }}</a>
 
-  <div class="product-item__image-wrapper {% if settings.show_secondary_image and product.media.size > 1 and hide_secondary_image != true %}product-item__image-wrapper--multiple{% endif %}">
+  <div class="product-item__image-wrapper {% if product.media.size > 1 and hide_secondary_image != true %}product-item__image-wrapper--multiple{% endif %}">
     {%- if product_labels != blank and reduced_content != true -%}
       <div class="product-item__label-list label-list">
         {{- product_labels -}}
@@ -50,9 +50,9 @@
       class="product-item__aspect-ratio aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}"
       style="padding-bottom: {{ 100.0 | divided_by: product.featured_media.preview_image.aspect_ratio }}%; --aspect-ratio: {{ product.featured_media.preview_image.aspect_ratio }}"
     >
-      {%- comment -%}DCUBE: Determine if secondary image is available for Unboxing Stack{%- endcomment -%}
+      {%- comment -%}DCUBE: Determine if secondary image is available for Unboxing Stack (enforced for ritual) {%- endcomment -%}
       {%- assign dcube_has_secondary = false -%}
-      {%- if settings.show_secondary_image and product.media.size > 1 and product.media[1].media_type == 'image' and hide_secondary_image != true -%}
+      {%- if product.media.size > 1 and product.media[1].media_type == 'image' and hide_secondary_image != true -%}
         {%- assign dcube_has_secondary = true -%}
       {%- endif -%}
 
