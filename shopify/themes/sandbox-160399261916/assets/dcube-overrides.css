@@ -1,0 +1,143 @@
+/* ═══════════════════════════════════════════════════════════════════
+   dcube-overrides.css — DCube Ritual System v2
+   Loaded LAST in <head> — overrides all prior stylesheets.
+   Contains: Unboxing Reveal, Hover-to-Light, Scent Bloom, color tokens.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── GLOBAL BRAND COLOR TOKENS ─────────────────────────────────────
+   Used by scent-chapter.liquid and other components via var(--color-*).
+   ─────────────────────────────────────────────────────────────────── */
+:root {
+  --color-accent:      #7E6B8F;
+  --color-accent-soft: #E6E1EB;
+  --color-border:      rgba(209, 201, 219, 0.6);
+  --color-surface:     #E6E1EB;
+  --color-gold:        #C8973A;
+  --color-text:        #1E1A20;
+  --color-bg:          #FFFFFF;
+}
+
+/* ─── RITUAL 1 — UNBOXING REVEAL ─────────────────────────────────────
+   Stable media contract: aspect-ratio container with lid + underlay.
+   Lid (primary image) slides up on hover to reveal underlay (secondary).
+   ─────────────────────────────────────────────────────────────────── */
+
+/* Stable media wrapper */
+.dcube-card-media {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(209, 201, 219, 0.6);
+  border-radius: 12px;
+  background: #E6E1EB;
+  aspect-ratio: 1 / 1;
+}
+
+/* When nested inside Focal's aspect-ratio container — fill it absolutely */
+.product-item__aspect-ratio > .dcube-card-media {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: unset;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Layers fill the box */
+.dcube-card-media__underlay,
+.dcube-card-media__lid {
+  position: absolute;
+  inset: 0;
+}
+
+/* Images fill and center — position:absolute so multiple imgs (primary + swatch variants)
+   stack as layers inside the lid rather than flowing vertically */
+.dcube-card-media__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Lid is what moves — sits on top */
+.dcube-card-media__lid {
+  z-index: 2;
+  transform: translateY(0);
+  transition: transform 520ms cubic-bezier(.2, .8, .2, 1),
+              box-shadow 240ms ease,
+              filter 240ms ease;
+}
+
+/* Underlay stays put — behind the lid */
+.dcube-card-media__underlay { z-index: 1; }
+
+/* Ensure product labels render above the lid */
+.product-item__label-list { z-index: 10; position: relative; }
+
+/* Desktop hover: slide lid up to reveal underlay */
+@media (hover: hover) and (pointer: fine) {
+  .product-item:hover .dcube-card-media--stack .dcube-card-media__lid {
+    transform: translateY(-45%);
+  }
+
+  /* Solo: no slide, only Hover-to-Light on the card */
+  .product-item:hover .dcube-card-media--solo .dcube-card-media__lid {
+    transform: none;
+    filter: brightness(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  }
+}
+
+/* Touch devices: no hover slide — stable display */
+@media (hover: none), (pointer: coarse) {
+  .dcube-card-media__lid { transform: none !important; }
+}
+
+/* Reduced motion: crossfade instead of slide */
+@media (prefers-reduced-motion: reduce) {
+  .dcube-card-media__lid {
+    transition: opacity 180ms ease !important;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .product-item:hover .dcube-card-media--stack .dcube-card-media__lid {
+      opacity: 0;
+      transform: none !important;
+    }
+  }
+}
+
+/* Neutralize Focal's "multiple image crossfade hides primary" rule.
+   The lid IS the primary — we don't want Focal fading it out. */
+.product-item__image-wrapper--multiple:hover .product-item__primary-image {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* ─── RITUAL 2 — HOVER-TO-LIGHT (CTA Glow) ──────────────────────────
+   Primary CTAs lift and glow with Dusty Accent on hover.
+   Scoped to pointer:fine (desktop) — no transform on touch.
+   ─────────────────────────────────────────────────────────────────── */
+.button--primary,
+.shopify-payment-button__button--unbranded {
+  transition: transform 200ms ease, box-shadow 240ms ease, filter 240ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button--primary:hover,
+  .shopify-payment-button__button--unbranded:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(126, 107, 143, 0.35);
+    filter: brightness(1.04);
+  }
+}
+
+/* ─── RITUAL 3 — SCENT BLOOM ─────────────────────────────────────────
+   scent-chapter.liquid has inline CSS for bloom rings.
+   These are fallback overrides ensuring correct color tokens apply.
+   ─────────────────────────────────────────────────────────────────── */
+.bloom-ring {
+  border-color: var(--color-accent, #7E6B8F);
+  transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}

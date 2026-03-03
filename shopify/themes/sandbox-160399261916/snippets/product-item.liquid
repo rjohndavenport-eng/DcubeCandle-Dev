@@ -50,47 +50,80 @@
       class="product-item__aspect-ratio aspect-ratio {% if settings.product_image_size != 'natural' %}aspect-ratio--{{ settings.product_image_size }}{% endif %}"
       style="padding-bottom: {{ 100.0 | divided_by: product.featured_media.preview_image.aspect_ratio }}%; --aspect-ratio: {{ product.featured_media.preview_image.aspect_ratio }}"
     >
-      {%- comment -%}DCUBE: Determine if secondary image is available for Unboxing Stack (enforced for ritual) {%- endcomment -%}
+      {%- comment -%}DCUBE: Unboxing Reveal — dcube-card-media stack/solo system{%- endcomment -%}
       {%- assign dcube_has_secondary = false -%}
       {%- if product.media.size > 1 and product.media[1].media_type == 'image' and hide_secondary_image != true -%}
         {%- assign dcube_has_secondary = true -%}
       {%- endif -%}
 
       {%- if dcube_has_secondary -%}
-        <img
-          class="dcube-secondary-img"
-          loading="lazy"
-          sizes="{{ sizes_attribute }}"
-          {% render 'image-attributes', image: product.media[1], sizes: '200,300,400,500,600,700,800,900,1000,1100,1200' %}
-        >
-      {%- endif -%}
-
-      <img
-        class="product-item__primary-image dcube-primary-img{% unless dcube_has_secondary %} dcube-primary-img--solo{% endunless %}"
-        loading="lazy"
-        data-media-id="{{ product.featured_media.id | escape }}"
-        sizes="{{ sizes_attribute }}"
-        {% render 'image-attributes',
-          image: product.featured_media,
-          sizes: '200,300,400,500,600,700,800,900,1000,1100,1200'
-        %}
-      >
-
-      {%- if settings.product_color_display == 'swatch' -%}
-        {%- assign featured_media = product.variants | map: 'featured_media' -%}
-
-        {%- for media in featured_media -%}
-          {%- unless media == product.featured_media -%}
+        <div class="dcube-card-media dcube-card-media--stack">
+          <div class="dcube-card-media__underlay">
             <img
-              class="product-item__primary-image dcube-primary-img{% unless dcube_has_secondary %} dcube-primary-img--solo{% endunless %}"
-              hidden
-              data-media-id="{{ media.id | escape }}"
+              class="dcube-card-media__img"
               loading="lazy"
               sizes="{{ sizes_attribute }}"
-              {% render 'image-attributes', image: media, sizes: '200,300,400,500,600,700,800,900,1000,1100,1200' %}
+              {% render 'image-attributes', image: product.media[1], sizes: '200,300,400,500,600,700,800,900,1000,1100,1200' %}
             >
-          {%- endunless -%}
-        {%- endfor -%}
+          </div>
+          <div class="dcube-card-media__lid">
+            <img
+              class="dcube-card-media__img product-item__primary-image"
+              loading="lazy"
+              data-media-id="{{ product.featured_media.id | escape }}"
+              sizes="{{ sizes_attribute }}"
+              {% render 'image-attributes',
+                image: product.featured_media,
+                sizes: '200,300,400,500,600,700,800,900,1000,1100,1200'
+              %}
+            >
+            {%- if settings.product_color_display == 'swatch' -%}
+              {%- assign featured_media = product.variants | map: 'featured_media' -%}
+              {%- for media in featured_media -%}
+                {%- unless media == product.featured_media -%}
+                  <img
+                    class="dcube-card-media__img product-item__primary-image"
+                    hidden
+                    data-media-id="{{ media.id | escape }}"
+                    loading="lazy"
+                    sizes="{{ sizes_attribute }}"
+                    {% render 'image-attributes', image: media, sizes: '200,300,400,500,600,700,800,900,1000,1100,1200' %}
+                  >
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- else -%}
+        <div class="dcube-card-media dcube-card-media--solo">
+          <div class="dcube-card-media__lid">
+            <img
+              class="dcube-card-media__img product-item__primary-image"
+              loading="lazy"
+              data-media-id="{{ product.featured_media.id | escape }}"
+              sizes="{{ sizes_attribute }}"
+              {% render 'image-attributes',
+                image: product.featured_media,
+                sizes: '200,300,400,500,600,700,800,900,1000,1100,1200'
+              %}
+            >
+            {%- if settings.product_color_display == 'swatch' -%}
+              {%- assign featured_media = product.variants | map: 'featured_media' -%}
+              {%- for media in featured_media -%}
+                {%- unless media == product.featured_media -%}
+                  <img
+                    class="dcube-card-media__img product-item__primary-image"
+                    hidden
+                    data-media-id="{{ media.id | escape }}"
+                    loading="lazy"
+                    sizes="{{ sizes_attribute }}"
+                    {% render 'image-attributes', image: media, sizes: '200,300,400,500,600,700,800,900,1000,1100,1200' %}
+                  >
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
       {%- endif -%}
     </a>
 
