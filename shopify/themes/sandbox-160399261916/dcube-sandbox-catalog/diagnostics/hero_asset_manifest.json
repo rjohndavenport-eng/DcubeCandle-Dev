@@ -1,0 +1,81 @@
+{
+  "generated": "2026-03-02",
+  "sprint": 1,
+  "slides": [
+    {
+      "id": "slide-1-brand",
+      "slug": "slide-1__brand-statement",
+      "product_name": "Sarasota Sunshine",
+      "desktop_file": "slide-1__brand-statement__desktop.webp",
+      "mobile_file": "slide-1__brand-statement__mobile.webp",
+      "mobile_dimensions": "1200x1600",
+      "mobile_size_bytes": 168680,
+      "text_position": "middle_left",
+      "text_color": "#1E1A20",
+      "overlay_color": "#F3E5F5",
+      "overlay_opacity": 10,
+      "composition_verdict": "NEEDS_REEGEN",
+      "candle_position": "centered",
+      "text_safe_zone": "none"
+    },
+    {
+      "id": "slide-2-coastal",
+      "slug": "slide-2__coastal-collection",
+      "product_name": "Fresh Start",
+      "desktop_file": "slide-2__coastal-collection__desktop.webp",
+      "mobile_file": "slide-2__coastal-collection__mobile.webp",
+      "mobile_dimensions": "1200x1600",
+      "text_position": "middle_left",
+      "text_color": "#1E1A20",
+      "overlay_color": "#F3E5F5",
+      "overlay_opacity": 5,
+      "composition_verdict": "NEEDS_REGEN",
+      "candle_position": "centered",
+      "text_safe_zone": "none"
+    },
+    {
+      "id": "slide-3-evening",
+      "slug": "slide-3__evening-mood",
+      "product_name": "Sarasota Sunshine (evening)",
+      "desktop_file": "slide-3__evening-mood__desktop.webp",
+      "mobile_file": "slide-3__evening-mood__mobile.webp",
+      "mobile_dimensions": "1200x1600",
+      "text_position": "middle_left",
+      "text_color": "#F8F2EC",
+      "overlay_color": "#0a0e1a",
+      "overlay_opacity": 15,
+      "composition_verdict": "CSS_SUFFICIENT",
+      "candle_position": "center-dominant but dark background",
+      "text_safe_zone": "left zone readable via dark bg contrast"
+    },
+    {
+      "id": "slide-4-gifting",
+      "slug": "slide-4__gifting-premium",
+      "product_name": "Sweet Serenity",
+      "desktop_file": "slide-4__gifting-premium__desktop.webp",
+      "mobile_file": "slide-4__gifting-premium__mobile.webp",
+      "mobile_dimensions": "1200x1600",
+      "text_position": "middle_left",
+      "text_color": "#1E1A20",
+      "overlay_color": "#F3E5F5",
+      "overlay_opacity": 8,
+      "composition_verdict": "NEEDS_REGEN",
+      "candle_position": "centered",
+      "text_safe_zone": "none"
+    }
+  ],
+  "deploy_checklist": {
+    "sprint_1": [
+      "Upload all 8 WebP files to Shopify theme assets",
+      "Push slideshow.liquid (mobile_image_asset support + per-slide class hook)",
+      "Push templates/index.json (slide config)",
+      "Push dcube-overrides.css (ritual system)",
+      "Push dcube-mobile-fixes.css v3 (hero height + product card fixes + gradient)"
+    ],
+    "sprint_2": [
+      "Re-generate slides 1, 2, 4 mobile WebP with wider composition (candle lower-right)",
+      "Re-upload 3 mobile WebP files to Shopify assets",
+      "Update object-position in dcube-mobile-fixes.css to right bottom (will work with re-generated images)"
+    ]
+  }
+}

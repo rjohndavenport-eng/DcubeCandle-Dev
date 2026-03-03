@@ -57,9 +57,11 @@
         {%- endif -%}
 
         {%- capture slide_content -%}
-          <div class="slideshow__image-wrapper {% if mobile_image != blank %}hidden-pocket{% endif %}" {% if section.settings.transition_type == 'reveal' %}reveal-visibility{% endif %}>
+          <div class="slideshow__image-wrapper {% if mobile_image != blank or block.settings.mobile_image_asset != blank %}hidden-pocket{% endif %}" {% if section.settings.transition_type == 'reveal' %}reveal-visibility{% endif %}>
             {%- if image != blank -%}
               <img draggable="false" class="slideshow__image" loading="{% if forloop.index > 2 %}lazy{% else %}eager{% endif %}" sizes="{% if split_image != blank %}(min-width: 1000px) 50vw{% else %}100vw{% endif %}" {% render 'image-attributes', image: image, sizes: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' %}>
+            {%- elsif block.settings.image_asset != blank -%}
+              <img draggable="false" class="slideshow__image" loading="{% if forloop.index > 2 %}lazy{% else %}eager{% endif %}" src="{{ block.settings.image_asset | asset_url }}" width="2000" height="900" sizes="100vw">
             {%- else -%}
               {% capture image_name %}lifestyle-{% cycle '1', '2' %}{%- endcapture -%}
               {{- image_name | placeholder_svg_tag: 'slideshow__image slideshow__image--placeholder' -}}
@@ -76,6 +78,10 @@
           {%- if mobile_image != blank -%}
             <div class="slideshow__image-wrapper hidden-lap-and-up" {% if section.settings.transition_type == 'reveal' %}reveal-visibility{% endif %}>
               <img draggable="false" class="slideshow__image" loading="{% if forloop.index > 2 %}lazy{% else %}eager{% endif %}" sizes="100vw" {% render 'image-attributes', image: mobile_image, sizes: '600,700,800,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000' %}>
+            </div>
+          {%- elsif block.settings.mobile_image_asset != blank -%}
+            <div class="slideshow__image-wrapper hidden-lap-and-up" {% if section.settings.transition_type == 'reveal' %}reveal-visibility{% endif %}>
+              <img draggable="false" class="slideshow__image" loading="{% if forloop.index > 2 %}lazy{% else %}eager{% endif %}" src="{{ block.settings.mobile_image_asset | asset_url }}" width="1200" height="1600" sizes="100vw">
             </div>
           {%- endif -%}
 
@@ -140,7 +146,7 @@
         {%- capture slide_attributes -%}
           {{ block.shopify_attributes }}
           id="block-{{ section.id }}-{{ block.id }}"
-          class="slideshow__slide {% if split_image != blank %}slideshow__slide--split{% endif %} {% if section.settings.transition_type == 'sweep' %}slideshow__slide--sweep{% endif %}"
+          class="slideshow__slide slideshow__slide--{{ block.id | handleize }} {% if split_image != blank %}slideshow__slide--split{% endif %} {% if section.settings.transition_type == 'sweep' %}slideshow__slide--sweep{% endif %}"
           {% unless forloop.first %}hidden{% endunless %}
           {% if section.settings.section_height == 'auto' %}
             style="--image-aspect-ratio: {{ image_aspect_ratio }}; --mobile-image-aspect-ratio: {{ mobile_image.aspect_ratio | default: 1 }};"
@@ -274,6 +280,18 @@
           "id": "mobile_image",
           "label": "Mobile image",
           "info": "1000 x 1400px .jpg recommended. If none is set, desktop image will be used."
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Desktop image (theme asset filename)",
+          "info": "Filename only, e.g. hero-slide-1.webp. Used when no image picker image is set."
+        },
+        {
+          "type": "text",
+          "id": "mobile_image_asset",
+          "label": "Mobile image (theme asset filename)",
+          "info": "Filename only, e.g. hero-slide-1-mobile.webp."
         },
         {
           "type": "header",

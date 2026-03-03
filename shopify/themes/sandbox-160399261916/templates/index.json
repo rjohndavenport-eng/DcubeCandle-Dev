@@ -3,9 +3,11 @@
     "slideshow": {
       "type": "slideshow",
       "blocks": {
-        "hero-slide": {
+        "slide-1-brand": {
           "type": "image",
           "settings": {
+            "image_asset": "slide-1__brand-statement__desktop.webp",
+            "mobile_image_asset": "slide-1__brand-statement__mobile.webp",
             "subheading": "Dedicated to supporting special needs children and their families",
             "title": "Hand Crafted Luxury Scents",
             "button_1_text": "SHOP NOW",
@@ -15,17 +17,71 @@
             "text_color": "#1E1A20",
             "button_background": "#7E6B8F",
             "button_text_color": "#ffffff",
-            "overlay_color": "#E6E1EB",
-            "overlay_opacity": 60
+            "overlay_color": "#F3E5F5",
+            "overlay_opacity": 10
+          }
+        },
+        "slide-2-coastal": {
+          "type": "image",
+          "settings": {
+            "image_asset": "slide-2__coastal-collection__desktop.webp",
+            "mobile_image_asset": "slide-2__coastal-collection__mobile.webp",
+            "subheading": "Small-batch soy candles hand poured in Sarasota, FL",
+            "title": "Inspired by Coastal Serenity",
+            "button_1_text": "SHOP COLLECTION",
+            "button_1_link": "/collections/all",
+            "button_2_text": "",
+            "text_position": "middle_left",
+            "text_color": "#1E1A20",
+            "button_background": "#7E6B8F",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#F3E5F5",
+            "overlay_opacity": 5
+          }
+        },
+        "slide-3-evening": {
+          "type": "image",
+          "settings": {
+            "image_asset": "slide-3__evening-mood__desktop.webp",
+            "mobile_image_asset": "slide-3__evening-mood__mobile.webp",
+            "subheading": "Warm amber. Cool moonlight. One perfect moment.",
+            "title": "Light Your Evening",
+            "button_1_text": "SHOP NOW",
+            "button_1_link": "/collections/all",
+            "button_2_text": "",
+            "text_position": "middle_left",
+            "text_color": "#F8F2EC",
+            "button_background": "#C8973A",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#0a0e1a",
+            "overlay_opacity": 15
+          }
+        },
+        "slide-4-gifting": {
+          "type": "image",
+          "settings": {
+            "image_asset": "slide-4__gifting-premium__desktop.webp",
+            "mobile_image_asset": "slide-4__gifting-premium__mobile.webp",
+            "subheading": "Curated gift sets for every occasion",
+            "title": "Give the Gift of Luxury",
+            "button_1_text": "SHOP GIFTS",
+            "button_1_link": "/collections/all",
+            "button_2_text": "",
+            "text_position": "middle_left",
+            "text_color": "#1E1A20",
+            "button_background": "#C8973A",
+            "button_text_color": "#ffffff",
+            "overlay_color": "#F3E5F5",
+            "overlay_opacity": 8
           }
         }
       },
-      "block_order": ["hero-slide"],
+      "block_order": ["slide-1-brand", "slide-2-coastal", "slide-3-evening", "slide-4-gifting"],
       "settings": {
         "section_height": "large",
         "transition_type": "sweep",
-        "autoplay": false,
-        "cycle_speed": 5,
+        "autoplay": true,
+        "cycle_speed": 6,
         "background": "rgba(0,0,0,0)"
       }
     },
