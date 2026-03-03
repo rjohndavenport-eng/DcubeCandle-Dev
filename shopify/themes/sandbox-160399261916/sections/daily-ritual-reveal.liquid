@@ -1,0 +1,529 @@
+{%- comment -%}
+  DCube Daily Ritual Reveal — v2.1
+  Architect: CODEX-SHOPIFY-THEME-EXPERT-1
+
+  DATA SOURCE PRIORITY:
+    1. section.settings.featured_collection
+    2. collections['dcube-featured-pool']
+    3. collections['candle'] (auto tag-collection, first 5)
+    4. Visual fallback state
+
+  ROTATION: Index = (year × 37 + day_of_year) mod pool_size
+  Deterministic per calendar day. Liquid-based. No JS date logic.
+{%- endcomment -%}
+
+{%- liquid
+  assign ritual_pool   = nil
+  assign ritual_source = 'none'
+
+  if section.settings.featured_collection != blank
+    assign ritual_pool   = section.settings.featured_collection.products
+    assign ritual_source = 'featured_collection'
+  endif
+
+  if ritual_pool == nil or ritual_pool.size == 0
+    assign _dcoll = collections['dcube-featured-pool']
+    if _dcoll != blank and _dcoll.products.size > 0
+      assign ritual_pool   = _dcoll.products
+      assign ritual_source = 'dcube-featured-pool'
+    endif
+  endif
+
+  if ritual_pool == nil or ritual_pool.size == 0
+    assign _ccoll = collections['candle']
+    if _ccoll != blank and _ccoll.products.size > 0
+      assign ritual_pool   = _ccoll.products
+      assign ritual_source = 'candle-tag'
+    endif
+  endif
+
+  assign today_product = nil
+  assign ritual_index  = 0
+  assign pool_size     = 0
+
+  if ritual_pool != nil and ritual_pool.size > 0
+    assign ritual_pool_sorted = ritual_pool | sort: 'created_at'
+    assign pool_size    = ritual_pool_sorted.size
+    assign _year        = 'now' | date: '%Y' | plus: 0
+    assign _doy         = 'now' | date: '%j' | plus: 0
+    assign _seed        = _year | times: 37 | plus: _doy
+    assign ritual_index = _seed | modulo: pool_size
+    assign today_product = ritual_pool_sorted[ritual_index]
+  endif
+
+-%}
+{%- assign _sk_year = 'now' | date: '%Y' -%}
+{%- assign _sk_doy  = 'now' | date: '%j' -%}
+{%- assign storage_key = 'dcube_ritual_completed_' | append: _sk_year | append: '_' | append: _sk_doy -%}
+
+<!-- DCUBE RITUAL: source={{ ritual_source }} pool={{ pool_size }} index={{ ritual_index }} product={{ today_product.handle | default: 'none' }} -->
+
+<style>
+  /* ── Scope: #shopify-section-{{ section.id }} ──────────────────── */
+  #shopify-section-{{ section.id }} {
+    padding-block: var(--vertical-breather);
+    background: rgb(var(--secondary-background));
+  }
+
+  /* Section container */
+  .dcube-ritual-wrap {
+    max-width: 540px;
+    margin-inline: auto;
+    padding-inline: var(--container-gutter, 24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* Section header */
+  .dcube-ritual-header {
+    text-align: center;
+  }
+  .dcube-ritual-header__sub {
+    display: block;
+    font-family: var(--text-font-family);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent, rgb(126, 107, 143));
+    margin-bottom: 8px;
+  }
+
+  /* ── Stage: the cube ─────────────────────────────────────────────── */
+  .dcube-ritual-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;          /* CLS = 0 — height locked */
+    overflow: hidden;
+    border-radius: var(--block-border-radius, 12px);
+    border: 1px solid rgb(var(--border-color));
+    background: rgb(var(--secondary-background));
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .dcube-ritual-stage:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-accent, rgb(126, 107, 143));
+  }
+
+  /* ── LID ───────────────────────────────────────────────────────── */
+  .dcube-ritual-lid {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    will-change: transform;
+    transform: translateY(0);
+    transition:
+      transform 480ms cubic-bezier(.22, .61, .36, 1),
+      opacity   480ms cubic-bezier(.22, .61, .36, 1);
+  }
+
+  .dcube-ritual-lid__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Cue label: "Hover to Reveal" — fades out on reveal */
+  .dcube-ritual-lid__cue {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.48);
+    color: #fff;
+    font-family: var(--text-font-family);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 240ms ease;
+  }
+
+  /* Shimmer overlay — opacity-only pulse on mobile IntersectionObserver */
+  .dcube-ritual-lid__shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.18) 50%,
+      transparent 60%
+    );
+    background-size: 200% 200%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+  }
+
+  @keyframes dcube-shimmer-pulse {
+    0%, 100% { opacity: 0; background-position: 100% 100%; }
+    50%       { opacity: 1; background-position:   0%   0%; }
+  }
+  .dcube-ritual--shimmer .dcube-ritual-lid__shimmer {
+    animation: dcube-shimmer-pulse 2.4s ease-in-out infinite;
+  }
+
+  /* Glow pseudo: opacity-based — NO box-shadow animation */
+  .dcube-ritual-lid__glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 2px var(--color-accent, rgb(126, 107, 143)),
+      0 8px 40px rgba(126, 107, 143, 0.45);
+    opacity: 0;
+    transition: opacity 480ms ease;
+  }
+  .dcube-ritual--completed:not(.dcube-ritual--revealed) .dcube-ritual-lid__glow {
+    opacity: 1;
+  }
+
+  /* ── BASE (revealed product) ─────────────────────────────────────── */
+  .dcube-ritual-base {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dcube-ritual-base__link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: rgb(var(--heading-color));
+  }
+
+  .dcube-ritual-base__img {
+    width: 100%;
+    flex: 1 1 60%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    min-height: 0;
+  }
+
+  .dcube-ritual-base__meta {
+    flex: 0 0 auto;
+    padding: 20px;
+    background: rgb(var(--background));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dcube-ritual-base__title {
+    font-family: var(--heading-font-family);
+    font-size: var(--heading-h4-font-size, 24px);
+    font-weight: var(--heading-font-weight, 400);
+    color: rgb(var(--heading-color));
+    margin: 0;
+  }
+
+  .dcube-ritual-base__price {
+    font-family: var(--text-font-family);
+    font-size: 0.95rem;
+    color: var(--color-accent, rgb(126, 107, 143));
+    margin: 0;
+  }
+
+  .dcube-ritual-base__cta {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    pointer-events: none; /* parent <a> handles navigation */
+  }
+
+  /* ── ANIMATION STATES ───────────────────────────────────────────── */
+
+  /* Completed: lid slightly ajar */
+  .dcube-ritual--completed:not(.dcube-ritual--revealed) .dcube-ritual-lid {
+    transform: translateY(4px);
+  }
+
+  /* Revealed: lid slides up */
+  .dcube-ritual--revealed .dcube-ritual-lid {
+    transform: translateY(-75%);
+  }
+
+  /* Cue fades out once revealed */
+  .dcube-ritual--revealed .dcube-ritual-lid__cue {
+    opacity: 0;
+  }
+
+  /* ── FALLBACK STATE ──────────────────────────────────────────────── */
+  .dcube-ritual-fallback {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    border-radius: var(--block-border-radius, 12px);
+    overflow: hidden;
+    background: rgb(var(--secondary-background));
+  }
+  .dcube-ritual-fallback__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .dcube-ritual-fallback__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 32px;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+  }
+  .dcube-ritual-fallback__content .button {
+    color: #fff;
+  }
+
+  /* ── AUDIO STATUS ────────────────────────────────────────────────── */
+  /* No visible UI for audio — it's ambient only */
+
+  /* ── RESPONSIVE ─────────────────────────────────────────────────── */
+  @media screen and (min-width: 741px) {
+    .dcube-ritual-wrap { max-width: 480px; }
+  }
+</style>
+
+<section
+  id="shopify-section-{{ section.id }}"
+  class="shopify-section shopify-section--daily-ritual-reveal"
+>
+  <div class="dcube-ritual-wrap">
+
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <header class="dcube-ritual-header">
+        {%- if section.settings.subheading != blank -%}
+          <span class="dcube-ritual-header__sub">{{ section.settings.subheading }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="heading h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if today_product != blank -%}
+
+      {%- assign lid_media  = today_product.featured_media -%}
+      {%- assign base_media = today_product.media[1] | default: today_product.featured_media -%}
+      {%- assign lid_w  = lid_media.preview_image.width  | at_most: 600 -%}
+      {%- assign lid_h  = lid_media.preview_image.height | at_most: 600 -%}
+      {%- assign base_w = base_media.preview_image.width  | at_most: 600 -%}
+      {%- assign base_h = base_media.preview_image.height | at_most: 600 -%}
+
+      <div
+        class="dcube-ritual-stage"
+        data-ritual
+        data-storage-key="{{ storage_key }}"
+        data-product-url="{{ today_product.url }}"
+        data-sound-enabled="{{ section.settings.enable_sound }}"
+        aria-label="Unbox today's featured scent"
+        role="button"
+        tabindex="0"
+      >
+
+        {%- comment -%} BASE — always present behind lid {%- endcomment -%}
+        <div class="dcube-ritual-base" aria-hidden="true">
+          <a
+            href="{{ today_product.url }}"
+            class="dcube-ritual-base__link"
+            tabindex="-1"
+            data-product-link
+          >
+            {%- if base_media != blank -%}
+              <img
+                src="{{ base_media | image_url: width: 600 }}"
+                srcset="
+                  {{ base_media | image_url: width: 300 }} 300w,
+                  {{ base_media | image_url: width: 600 }} 600w"
+                sizes="(min-width: 741px) 480px, calc(100vw - 48px)"
+                alt="{{ today_product.title | escape }}"
+                width="{{ base_w }}"
+                height="{{ base_h }}"
+                loading="lazy"
+                class="dcube-ritual-base__img"
+              >
+            {%- endif -%}
+            <div class="dcube-ritual-base__meta">
+              <h3
+                class="dcube-ritual-base__title"
+                id="dcube-ritual-title-{{ section.id }}"
+              >
+                {{- today_product.title -}}
+              </h3>
+              <p class="dcube-ritual-base__price">
+                {{- today_product.price | money -}}
+              </p>
+              <span class="button button--primary dcube-ritual-base__cta" aria-hidden="true">
+                Discover Scent
+              </span>
+            </div>
+          </a>
+        </div>
+
+        {%- comment -%} LID — slides up to reveal base {%- endcomment -%}
+        <div class="dcube-ritual-lid" aria-hidden="true">
+          {%- if lid_media != blank -%}
+            <img
+              src="{{ lid_media | image_url: width: 600 }}"
+              srcset="
+                {{ lid_media | image_url: width: 300 }} 300w,
+                {{ lid_media | image_url: width: 600 }} 600w"
+              sizes="(min-width: 741px) 480px, calc(100vw - 48px)"
+              alt=""
+              width="{{ lid_w }}"
+              height="{{ lid_h }}"
+              loading="lazy"
+              class="dcube-ritual-lid__img"
+            >
+          {%- elsif section.settings.fallback_image != blank -%}
+            {%- assign fb = section.settings.fallback_image -%}
+            <img
+              src="{{ fb | image_url: width: 600 }}"
+              srcset="
+                {{ fb | image_url: width: 300 }} 300w,
+                {{ fb | image_url: width: 600 }} 600w"
+              sizes="(min-width: 741px) 480px, calc(100vw - 48px)"
+              alt=""
+              width="{{ fb.width | at_most: 600 }}"
+              height="{{ fb.height | at_most: 600 }}"
+              loading="lazy"
+              class="dcube-ritual-lid__img"
+            >
+          {%- endif -%}
+
+          <div class="dcube-ritual-lid__shimmer" aria-hidden="true"></div>
+          <div class="dcube-ritual-lid__glow"    aria-hidden="true"></div>
+
+          {%- comment -%} Hover cue — visible before first interaction {%- endcomment -%}
+          <span class="dcube-ritual-lid__cue" aria-hidden="true">
+            {%- if section.settings.cue_label != blank -%}
+              {{- section.settings.cue_label -}}
+            {%- else -%}
+              Hover to Reveal
+            {%- endif -%}
+          </span>
+        </div>
+
+      </div>{%- comment -%} .dcube-ritual-stage {%- endcomment -%}
+
+      {%- if section.settings.enable_sound -%}
+        <audio
+          id="dcube-ritual-audio-{{ section.id }}"
+          data-ritual-audio
+          preload="none"
+          aria-hidden="true"
+        >
+          <source src="{{ 'dcube-ritual-sound.webm' | asset_url }}" type="audio/webm">
+        </audio>
+      {%- endif -%}
+
+    {%- else -%}
+
+      <!-- DCUBE RITUAL: featured collection missing -->
+      <div class="dcube-ritual-fallback">
+        {%- if section.settings.fallback_image != blank -%}
+          {%- assign fb = section.settings.fallback_image -%}
+          <img
+            src="{{ fb | image_url: width: 800 }}"
+            srcset="
+              {{ fb | image_url: width: 400 }} 400w,
+              {{ fb | image_url: width: 800 }} 800w"
+            sizes="(min-width: 741px) 540px, calc(100vw - 48px)"
+            alt="DCube Core Collection"
+            width="{{ fb.width | at_most: 800 }}"
+            height="{{ fb.height | at_most: 600 }}"
+            loading="lazy"
+            class="dcube-ritual-fallback__img"
+          >
+        {%- endif -%}
+        <div class="dcube-ritual-fallback__content">
+          <a href="{{ routes.collections_url }}" class="button button--primary">
+            Explore the Sanctuary
+          </a>
+        </div>
+      </div>
+
+    {%- endif -%}
+
+  </div>{%- comment -%} .dcube-ritual-wrap {%- endcomment -%}
+</section>
+
+{%- comment -%} No-JS fallback: lid always open, product always visible {%- endcomment -%}
+<noscript>
+  <style>
+    #shopify-section-{{ section.id }} .dcube-ritual-lid       { transform: translateY(-75%) !important; }
+    #shopify-section-{{ section.id }} .dcube-ritual-lid__cue  { display: none !important; }
+    #shopify-section-{{ section.id }} .dcube-ritual-base      { visibility: visible !important; }
+    #shopify-section-{{ section.id }} .dcube-ritual-base a    { pointer-events: auto !important; }
+  </style>
+</noscript>
+
+<script src="{{ 'dcube-ritual.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Daily Ritual Reveal",
+  "class": "shopify-section--daily-ritual-reveal",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Today's Ritual"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Your daily sensory experience"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured collection",
+      "info": "Products from this collection rotate daily. If empty, falls back to 'dcube-featured-pool' collection, then products tagged 'candle'."
+    },
+    {
+      "type": "text",
+      "id": "cue_label",
+      "label": "Hover cue label",
+      "default": "Hover to Reveal",
+      "info": "Short label visible before interaction. E.g. 'Hover to Reveal' or 'Tap to Unbox'."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sound",
+      "label": "Enable sound on reveal",
+      "default": false,
+      "info": "Requires assets/dcube-ritual-sound.webm (<20KB). Plays only on user interaction."
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image",
+      "info": "Shown if the product pool is empty. Recommended: Core Collection hero image."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Daily Ritual Reveal"
+    }
+  ]
+}
+{% endschema %}
